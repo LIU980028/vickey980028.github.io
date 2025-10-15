@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[你的姓名] — 個人履歷</title>
+  <meta name="description" content="這是一份簡潔、印刷友善、可深色模式的個人履歷單檔模板。" />
+  <meta property="og:title" content="[你的姓名] — 個人履歷" />
+  <meta property="og:description" content="簡潔、印刷友善、可深色模式的個人履歷模板。" />
+  <meta property="og:type" content="profile" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>📄</text></svg>">
+  <style>
+    /*
+      ───────────────
+      個人履歷單檔模板
+      - 響應式 + 深色模式
+      - 列印/儲存 PDF 友善（A4）
+      - 純 HTML + CSS + 一點點 JS
+      - 以中文註解標示可編輯區塊
+      ───────────────
+    */
+
+    :root {
+      --bg: #ffffff;
+      --fg: #0f172a; /* slate-900 */
+      --muted: #475569; /* slate-600 */
+      --card: #f8fafc; /* slate-50 */
+      --line: #e2e8f0; /* slate-200 */
+      --accent: #2563eb; /* blue-600 */
+      --accent-weak: #dbeafe; /* blue-100 */
+      --badge: #0ea5e9; /* sky-500 */
+      --shadow: 0 10px 20px rgba(2, 6, 23, 0.06), 0 2px 6px rgba(2,6,23,0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1220; /* near slate-950 */
+        --fg: #e9eef8;
+        --muted: #cbd5e1; /* slate-300 */
+        --card: #0f172a; /* slate-900 */
+        --line: #1e293b; /* slate-800 */
+        --accent: #60a5fa; /* blue-400 */
+        --accent-weak: #0b255c; /* deep blue */
+        --badge: #38bdf8; /* sky-400 */
+        --shadow: none;
+      }
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+      font: 400 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Hiragino Sans", Arial, "Microsoft JhengHei", sans-serif;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+
+    .container {
+      max-width: 980px; margin: 32px auto; padding: 0 20px;
+    }
+
+    header.cv-header {
+      display: grid; gap: 16px; grid-template-columns: 1fr; align-items: center;
+      padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); box-shadow: var(--shadow);
+    }
+
+    @media (min-width: 860px) {
+      header.cv-header { grid-template-columns: 1.2fr 1fr; }
+    }
+
+    .identity h1 { margin: 0 0 6px; font-size: 34px; letter-spacing: .2px; }
+    .identity .tagline { color: var(--muted); font-size: 18px; }
+
+    .meta {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; align-items: start;
+    }
+    @media (min-width: 540px) { .meta { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .meta a, .meta span { color: var(--fg); text-decoration: none; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: transparent; display: flex; gap: 8px; align-items: center; }
+    .meta a:hover { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+    nav.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      appearance: none; border: 1px solid var(--accent); color: var(--accent); background: transparent; padding: 10px 14px; border-radius: 12px; cursor: pointer;
+      font-weight: 600; letter-spacing: .2px; transition: .2s ease; box-shadow: var(--shadow);
+    }
+    .btn:hover { background: var(--accent-weak); }
+    .btn.primary { background: var(--accent); color: white; }
+    .btn.primary:hover { filter: brightness(.95); }
+
+    main { margin-top: 26px; display: grid; grid-template-columns: 1fr; gap: 22px; }
+    @media (min-width: 960px) { main { grid-template-columns: 0.9fr 1.3fr; } }
+
+    section { border: 1px solid var(--line); border-radius: 16px; padding: 20px; background: var(--card); box-shadow: var(--shadow); }
+    section h2 { margin: 0 0 12px; font-size: 20px; letter-spacing: .3px; }
+    section .muted { color: var(--muted); }
+
+    /* 側欄（左欄） */
+    .sidebar section + section { margin-top: 16px; }
+
+    .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .tags li { background: color-mix(in oklab, var(--badge) 18%, transparent); border: 1px solid color-mix(in oklab, var(--badge) 40%, var(--line)); color: var(--fg); padding: 6px 10px; border-radius: 999px; font-size: 13px; }
+
+    .kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; }
+    .kv dt { color: var(--muted); }
+
+    /* 主要內容（右欄） */
+    .item { display: grid; gap: 4px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+    .item:last-child { border-bottom: none; }
+    .item header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .item header .role { font-weight: 700; }
+    .item header .period { color: var(--muted); font-size: 14px; }
+    .item .company a { color: var(--accent); text-decoration: none; }
+    .bullets { margin: 6px 0 0 18px; }
+    .bullets li { margin: 6px 0; }
+
+    .project-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 720px) { .project-grid { grid-template-columns: 1fr 1fr; } }
+    .project { border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: linear-gradient(180deg, color-mix(in oklab, var(--card), white 10%), var(--card)); }
+    .project h3 { margin: 0 0 6px; font-size: 16px; }
+    .project .meta-line { color: var(--muted); font-size: 14px; margin-bottom: 6px; }
+    .project a { color: var(--accent); text-decoration: none; }
+
+    footer.cv-footer { text-align: center; color: var(--muted); margin: 24px 0 40px; }
+
+    /* 列印樣式（A4） */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body { background: #fff !important; }
+      .container { max-width: 100%; margin: 0; padding: 0; }
+      header.cv-header, section { box-shadow: none; }
+      nav.actions, .back-to-top { display: none !important; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 12px; color: #555; }
+      .item { break-inside: avoid; }
+      .project { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="cv-header" role="banner">
+      <div class="identity">
+        <!-- 將下列內容改成你的個人資訊 -->
+        <h1>[你的姓名]</h1>
+        <div class="tagline">[你的職稱 / 求職目標] · [3–8 字的專長關鍵詞]</div>
+        <nav class="actions" aria-label="快速動作">
+          <button class="btn primary" onclick="window.print()">列印 / 另存 PDF</button>
+          <a class="btn" href="#projects">查看專案</a>
+          <a class="btn" href="#experience">查看經歷</a>
+        </nav>
+      </div>
+      <div class="meta" aria-label="聯絡資訊">
+        <!-- 可替換為你的 Email / 手機 / 個人網站 / GitHub / LinkedIn 等 -->
+        <a href="mailto:you@example.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor"/><path d="M4 7l8 6 8-6" stroke="currentColor"/></svg> you@example.com</a>
+        <a href="tel:+886-900-000-000" aria-label="Phone"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 10.8a15 15 0 006.6 6.6l3.1-3.1a1 1 0 011 .1c1 .6 2.2 1 3.4 1.1a1 1 0 011 1V21a1 1 0 01-1 1C10.3 22 2 13.7 2 3a1 1 0 011-1h4.5a1 1 0 011 1c.1 1.2.5 2.4 1.1 3.4a1 1 0 01.1 1l-3.1 3.4z" stroke="currentColor"/></svg> +886-900-000-000</a>
+        <a href="https://your-portfolio.example" target="_blank" rel="noopener">🔗 個人網站</a>
+        <a href="https://github.com/your-id" target="_blank" rel="noopener">💻 GitHub</a>
+        <a href="https://www.linkedin.com/in/your-id" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        <span>📍 台北｜可接受遠端/彈性</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- 側欄：概要、技能、關鍵字、語言等 -->
+      <aside class="sidebar" aria-label="側欄資訊">
+        <section aria-labelledby="about">
+          <h2 id="about">關於我</h2>
+          <p class="muted">以 2–4 句說明你的核心價值與亮點。例：具 3 年 Web 前端經驗，專長於設計到前端落地，建立設計系統、提升 Lighthouse 指標與可維護性。熱衷資料視覺化與效能優化，關注使用者體驗與可存取性。</p>
+        </section>
+
+        <section aria-labelledby="skills">
+          <h2 id="skills">技能</h2>
+          <!-- 將技能依類別分組，維持每項 1–3 個詞 -->
+          <h3 class="muted">程式 &amp; 工具</h3>
+          <ul class="tags">
+            <li>HTML5</li><li>CSS3 / SASS</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Vue</li><li>Node.js</li><li>REST / GraphQL</li><li>Git / GitHub</li>
+          </ul>
+          <h3 class="muted" style="margin-top:10px;">設計 / 其他</h3>
+          <ul class="tags">
+            <li>Figma</li><li>Design System</li><li>Accessibility (a11y)</li><li>SEO</li><li>資料視覺化</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="languages">
+          <h2 id="languages">語言能力</h2>
+          <dl class="kv">
+            <dt>中文</dt><dd>母語</dd>
+            <dt>英文</dt><dd>中上（TOEIC 8xx）</dd>
+            <dt>其他</dt><dd>—</dd>
+          </dl>
+        </section>
+
+        <section aria-labelledby="highlights">
+          <h2 id="highlights">亮點摘要</h2>
+          <ul>
+            <li>帶領 3 人小組重構前端，關鍵頁面 LCP 降至 <strong>1.9s</strong>。</li>
+            <li>建立 UI 元件庫，縮短開發時程 <strong>20%</strong>。</li>
+            <li>Side project 上榜 Product Hunt 日榜 Top 10。</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="certs">
+          <h2 id="certs">證照 / 獲獎</h2>
+          <ul>
+            <li>Google Analytics 個人資格（GAIQ），2024</li>
+            <li>公司半年黑客松第一名，2023 H2</li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- 主要內容：經歷、專案、教育等 -->
+      <div class="content">
+        <section id="experience" aria-labelledby="exp">
+          <h2 id="exp">工作經歷</h2>
+          <!-- 建議每段 3–5 個條列，強調結果與指標 -->
+          <div class="item">
+            <header>
+              <div>
+                <div class="role">前端工程師 · <span class="company"><a href="https://company.example" target="_blank" rel="noopener">某某科技</a></span></div>
+              </div>
+              <div class="period">2023/07 — 至今（台北）</div>
+            </header>
+            <ul class="bullets">
+              <li>主導首頁重構：以 CSR → 混合渲染，LCP 從 3.8s 降至 1.9s，CLS &lt; 0.03。</li>
+              <li>建立 UI 元件庫（React + Storybook），共 32 個元件，維護覆蓋率 85%。</li>
+              <li>導入 E2E 測試（Playwright）與 CI，PR 合併前失敗率下降 40%。</li>
+              <li>與設計/行銷協作，商品頁轉換率 +12%。</li>
+            </ul>
+          </div>
+          <div class="item">
+            <header>
+              <div>
+                <div class="role">網頁設計師 · <span class="company">自由工作者</span></div>
+              </div>
+              <div class="period">2021/09 — 2023/06（遠端）</div>
+            </header>
+            <ul class="bullets">
+              <li>承接 10+ 中小企業網站，平均交付 3 週內完成、滿意度 4.8/5。</li>
+              <li>為非營利組織打造募款頁，頁面捐款提升 18%。</li>
+              <li>SEO 優化：核心網路指標（CWV）全綠、自然流量 +35%。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="projects" aria-labelledby="proj">
+          <h2 id="proj">代表專案</h2>
+          <div class="project-grid">
+            <article class="project">
+              <h3>專案 A — 電商前台最佳化</h3>
+              <div class="meta-line">React · Next.js · Vercel · 2024</div>
+              <p>以增量式改造改善關鍵動線，提升轉換率與載入速度。</p>
+              <p><a href="#">Live</a> · <a href="#">GitHub</a></p>
+            </article>
+            <article class="project">
+              <h3>專案 B — 資料視覺化儀表板</h3>
+              <div class="meta-line">Vue · D3.js · 2023</div>
+              <p>互動式圖表與篩選，支援 CSV/JSON 匯入與狀態儲存。</p>
+              <p><a href="#">Live</a> · <a href="#">GitHub</a></p>
+            </article>
+            <article class="project">
+              <h3>專案 C — 個人部落格系統</h3>
+              <div class="meta-line">Astro · Tailwind · 2022</div>
+              <p>靜態產生 + 部署腳本，Lighthouse 全滿分。</p>
+              <p><a href="#">Live</a> · <a href="#">GitHub</a></p>
+            </article>
+            <article class="project">
+              <h3>專案 D — 非營利募款頁</h3>
+              <div class="meta-line">HTML/CSS/JS · 2021</div>
+              <p>行動優先設計，提升捐款轉換與平均捐款額。</p>
+              <p><a href="#">Live</a> · <a href="#">GitHub</a></p>
+            </article>
+          </div>
+        </section>
+
+        <section id="education" aria-labelledby="edu">
+          <h2 id="edu">學歷</h2>
+          <div class="item">
+            <header>
+              <div class="role">國立 ×× 大學 · 資訊工程學系（學士）</div>
+              <div class="period">2017 — 2021</div>
+            </header>
+            <ul class="bullets">
+              <li>課外：系學會設計長｜Google Developer Student Club 成員</li>
+              <li>作品：畢業專題獲院級優等</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="extras" aria-labelledby="extra">
+          <h2 id="extra">其他</h2>
+          <ul>
+            <li>興趣：路跑、咖啡手沖、攝影後製</li>
+            <li>社群：Medium 技術寫作（月均 3,000+ 閱讀）</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <p class="back-to-top" style="position:fixed; right:18px; bottom:18px; margin:0;">
+      <a class="btn" href="#top" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;" aria-label="回到頂部">↑ 回到頂部</a>
+    </p>
+
+    <footer class="cv-footer" role="contentinfo">
+      最後更新：<span id="updated">2025-10-15</span> · 模板授權：MIT（可自由修改/商用）
+    </footer>
+  </div>
+
+  <!-- 結構化資料（可選）：有助於搜尋引擎理解你的履歷資料 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "[你的姓名]",
+    "jobTitle": "[你的職稱]",
+    "email": "you@example.com",
+    "telephone": "+886-900-000-000",
+    "url": "https://your-portfolio.example",
+    "address": {"@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW"},
+    "sameAs": [
+      "https://github.com/your-id",
+      "https://www.linkedin.com/in/your-id"
+    ]
+  }
+  </script>
+
+  <script>
+    // 你可以把這段刪掉：自動將 <title> 依姓名更新
+    (function(){
+      var name = document.querySelector('.identity h1')?.textContent?.trim();
+      if (name && name !== '[你的姓名]') document.title = name + ' — 個人履歷';
+    })();
+  </script>
+</body>
+</html>
