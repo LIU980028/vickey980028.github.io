@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f8f9fc">
-<title>EchoRead V8 · Liquid Studio｜英文逐句・逐字跟讀</title>
-<meta name="description" content="EchoRead Liquid Studio：上傳文章、逐句朗讀、點字發音、慢速聽寫與語音跟讀。">
+<meta name="theme-color" content="#241638">
+<title>EchoRead V9 · Aurora Glass｜英文逐句・逐字跟讀</title>
+<meta name="description" content="EchoRead Aurora Glass：粉紫色霧面玻璃英語學習工作台，支援上傳文章、逐句朗讀、點字發音及跟讀。">
 <style>
 :root{--ink:#1b2333;--secondary:#677389;--muted:#9ba5b5;--line:#e7eaf1;--blue:#4a70de;--violet:#7f6be2;--paper:#fff;--page:#f8f9fc;--glass-edge:rgba(255,255,255,.96);--shadow:0 22px 70px rgba(48,66,101,.07);--radius:27px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--page);color:var(--ink);font:400 15px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI","Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 28% 24% at 88% 16%,rgba(193,189,247,.22),transparent 72%),radial-gradient(ellipse 30% 28% at 3% 73%,rgba(174,207,248,.20),transparent 74%);z-index:-1}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible,.sentence:focus-visible{outline:3px solid rgba(87,118,224,.4);outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.45}a{color:inherit;text-decoration:none}
@@ -30,21 +30,138 @@ body.quiet-mode .word-popover,body.quiet-mode .liquid-dock::after,body.quiet-mod
 @media (max-width:790px){.layout{display:flex;flex-direction:column}.sidebar{width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:start}.reading-area{width:100%}.hero-aside{display:none}.workhead{padding:23px 22px 18px}.progress-wrap{padding:0 22px 18px}.help-strip{margin:0 22px 16px}.sentences{margin:0 10px 14px;padding:0 10px 15px}.practice{margin-top:17px}}
 @media (max-width:580px){.shell{padding:0 12px 182px}header{height:76px}.brand{font-size:20px}.brand-mark{width:36px;height:36px}.tagline,.top-badge{display:none}.glass-toggle{font-size:11px;padding:8px 11px}.hero{padding:30px 5px 29px}.hero h1{font-size:35px;letter-spacing:-1.5px;margin:12px 0}.hero p{font-size:12px;line-height:1.8}.sidebar{display:flex;gap:12px}.sidebar .panel{padding:19px}.workhead{padding:21px 18px 17px}.workhead h2{font-size:19px}.workhead .minor{font-size:9px}.progress-wrap{padding:0 18px 17px}.help-strip{margin:0 18px 13px;padding:10px 12px;font-size:10px}.sentences{margin:0 6px 10px;padding:0 8px 12px;max-height:480px}.sentence{grid-template-columns:27px minmax(0,1fr) 28px;gap:8px;padding:15px 9px}.sentence .num{font-size:9px;width:25px}.sentence .content{font-size:17px;line-height:1.8}.sentence .speaker{height:30px;width:28px}.practice{padding:15px;gap:13px;flex-wrap:wrap}.practice>div:nth-child(3){flex:1;min-width:190px}.practice .mic{margin-left:auto}.voice-orb{height:74px;width:74px;flex-basis:74px}.dock-inside{gap:8px;padding:12px 12px 6px}.liquid-dock{bottom:14px;width:calc(100% - 20px);border-radius:25px}.liquid-dock::after{border-radius:23px}.dock-label{max-width:105px}.dock-kicker{font-size:8px}.dock-current{font-size:12px}.dock-info{display:none}.dock-actions{gap:5px}.circle-btn{height:34px;width:34px;font-size:14px}.circle-btn.main{height:44px;width:44px;font-size:19px}.repeat-btn{font-size:9px;padding:7px 8px}.dock-under{padding:0 13px 10px}.dock-under .tiny{display:none}.word-popover{width:min(290px,calc(100vw - 24px))}.footer-note{font-size:10px}}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* EchoRead V9 • Aurora Glass / functional mobile-first redesign */
+:root{
+ --ink:#fbf6ff;--secondary:#d4c7ec;--muted:#b8a8d1;
+ --line:rgba(246,212,255,.23);--blue:#a87dff;--violet:#be72ed;
+ --paper:#261c42;--page:#171025;--glass-edge:rgba(255,236,255,.60);
+ --shadow:0 20px 60px rgba(11,4,32,.20),inset 0 1px rgba(255,255,255,.14);--radius:28px;
+ --pink:#ff8de4;--pink2:#f765c6;--purple:#9973f7;--lavender:#f1ddff;
+}
+html{color-scheme:dark}
+body{
+ color:var(--ink);
+ background:
+  radial-gradient(ellipse 44% 34% at 9% 9%,rgba(165,102,232,.32),transparent 78%),
+  radial-gradient(ellipse 47% 42% at 93% 12%,rgba(253,104,179,.28),transparent 70%),
+  radial-gradient(ellipse 45% 33% at 58% 85%,rgba(101,88,236,.23),transparent 80%),
+  linear-gradient(140deg,#1d1234 0%,#251735 34%,#17142d 68%,#251432 100%);
+ background-attachment:fixed;
+}
+body:before{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.92;background:
+ radial-gradient(circle at 7% 27%,rgba(255,158,216,.22),transparent 17%),
+ radial-gradient(circle at 94% 60%,rgba(170,138,255,.25),transparent 24%),
+ radial-gradient(circle at 63% 5%,rgba(247,155,252,.16),transparent 18%);
+ filter:blur(14px)}
+body:after{content:"";position:fixed;width:min(34vw,440px);aspect-ratio:1;left:-12%;top:48%;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle at 31% 29%,rgba(255,255,255,.12),rgba(255,132,211,.14) 21%,rgba(119,91,231,.09) 54%,transparent 70%);filter:blur(2px);animation:aurora-orbit 23s ease-in-out infinite alternate}
+@keyframes aurora-orbit{to{transform:translate(14vw,-10vh) scale(1.12)}}
+@keyframes glass-aura{0%,100%{background-position:20% 50%}50%{background-position:80% 40%}}
+@keyframes soft-glow{0%,100%{box-shadow:0 0 0 1px rgba(255,167,246,.26),0 13px 32px rgba(246,78,191,.14)}50%{box-shadow:0 0 0 1px rgba(255,195,251,.66),0 13px 36px rgba(246,78,191,.32)}}
+button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible,.sentence:focus-visible{outline:2px solid #ff91e4;outline-offset:3px}
+.shell{max-width:1430px;padding:0 38px 185px}
+header{height:86px;border-bottom:1px solid rgba(255,238,255,.14)}
+.brand{font-size:25px;letter-spacing:-1.1px;color:#fff;font-weight:830;text-shadow:0 3px 20px rgba(255,191,247,.10)}
+.brand-mark{height:45px;width:45px;border-radius:16px;color:#fff;font-size:23px;background:linear-gradient(135deg,rgba(255,151,230,.65),rgba(131,96,246,.85));border:1px solid rgba(255,239,255,.42);box-shadow:0 8px 24px rgba(242,87,222,.20),inset 0 1px 1px rgba(255,255,255,.65),inset 0 -8px 15px rgba(116,55,188,.25)}
+.tagline{color:#d6c3ea;border-left-color:rgba(255,255,255,.23)}
+.top-badge{color:#e6c7fb;font-size:10px;letter-spacing:1.8px}
+.glass-toggle{color:#ffe9ff;border:1px solid rgba(255,224,251,.33);background:linear-gradient(125deg,rgba(241,192,254,.23),rgba(163,126,238,.13));box-shadow:inset 0 1px rgba(255,255,255,.21),0 8px 19px rgba(17,5,48,.15);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.glass-toggle:hover{background:rgba(255,161,230,.25)}
+.hero{padding:45px 0 34px;align-items:center}
+.eyebrow{color:#ffb5e8;font-size:11px;letter-spacing:3.5px}
+.hero h1{color:#fff;font-size:clamp(37px,4.1vw,57px);line-height:1.22;margin:14px 0 13px;font-weight:790;letter-spacing:-1.8px}
+.hero h1 em{background:linear-gradient(100deg,#ffc5eb,#f7a4ec 36%,#c6b0ff 85%);color:transparent;background-clip:text;-webkit-background-clip:text;filter:drop-shadow(0 5px 15px rgba(235,102,216,.18))}
+.hero p{color:#d3c2e6;font-size:14px;line-height:1.9}
+.hero-aside{color:#cbb2e4;border-color:rgba(255,204,247,.2)}.hero-aside .rule{background:#ffa5e3}
+.layout{grid-template-columns:304px minmax(0,1fr);gap:22px}
+.panel{position:relative;background:linear-gradient(137deg,rgba(95,61,133,.44),rgba(62,38,101,.55) 46%,rgba(56,39,88,.48));border:1px solid rgba(249,211,255,.27);box-shadow:0 23px 60px rgba(13,6,32,.25),inset 0 1px 0 rgba(255,255,255,.16);backdrop-filter:blur(29px) saturate(1.32);-webkit-backdrop-filter:blur(29px) saturate(1.32);border-radius:30px}
+.panel::before{content:"";pointer-events:none;position:absolute;inset:1px;border-radius:inherit;z-index:0;opacity:.78;background:linear-gradient(136deg,rgba(255,255,255,.17),transparent 25%,transparent 69%,rgba(238,191,255,.07));box-shadow:inset 1px 1px rgba(255,255,255,.13)}
+.panel>*{position:relative;z-index:1}
+.sidebar{gap:14px}.sidebar .panel{padding:25px}.panel-title{color:#fff;font-size:18px;font-weight:770}.muted{color:#d1c2e4;font-size:12px}
+.section-label{color:#bba7d8}.dropzone{border:1.25px dashed rgba(254,198,244,.44);border-radius:21px;padding:22px 12px;background:linear-gradient(150deg,rgba(229,156,248,.16),rgba(134,101,229,.10));color:#fff;box-shadow:inset 0 1px rgba(255,255,255,.07)}
+.dropzone:hover,.dropzone.drag{background:linear-gradient(160deg,rgba(242,166,243,.25),rgba(156,119,246,.19));border-color:rgba(255,202,252,.8)}
+.dropzone .emoji{color:#ffc0ed;font-size:28px}.dropzone small{color:#c7b8db}.file-info{color:#fbb8e7}.or{color:#bdacd8}
+.text-input{color:#fff;background:rgba(27,15,54,.35);border:1px solid rgba(234,193,254,.22);border-radius:18px;box-shadow:inset 0 1px 3px rgba(5,0,27,.16);font-size:12.5px;min-height:124px;line-height:1.7}
+.text-input::placeholder{color:#bba5d2}
+.button{border:1px solid rgba(255,225,255,.20);color:#fff;border-radius:17px;padding:13px 15px;background:linear-gradient(120deg,#fa82ce,#df70ec 55%,#a174f9);box-shadow:0 14px 25px rgba(240,87,192,.22),inset 0 1px rgba(255,255,255,.45),inset 0 -3px rgba(139,44,173,.16);font-size:12.5px;transition:transform .2s ease,box-shadow .2s ease}
+.button:hover:not(:disabled){box-shadow:0 16px 27px rgba(246,90,212,.32),inset 0 1px rgba(255,255,255,.54)}
+.button.secondary,.button.ghost{border:1px solid rgba(255,217,255,.29);background:linear-gradient(140deg,rgba(255,255,255,.18),rgba(186,131,255,.13));color:#fff;box-shadow:inset 0 1px rgba(255,255,255,.15),0 6px 16px rgba(15,6,37,.08);backdrop-filter:blur(16px)}
+.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:rgba(255,171,249,.25)}
+.control-block{border-top-color:rgba(255,238,255,.16)}
+.form-select{color:#fff;background:rgba(49,28,84,.64);border:1px solid rgba(234,193,254,.24);border-radius:16px;padding:12px}.form-select option{background:#32214d;color:#fff}
+.field-label,.toggle{color:#e1cfef}.rate-number{background:rgba(255,172,237,.18);color:#ffe9fd}.rate-row input,.toggle input{accent-color:#f98ddf}
+.privacy{color:#d1bbdd;background:linear-gradient(140deg,rgba(125,80,165,.20),rgba(106,66,131,.12));border:1px solid rgba(255,219,255,.18);border-radius:20px}
+.workspace{min-height:680px;overflow:hidden}
+.workhead{padding:30px 32px 22px}.workhead .minor{color:#d6adf6;letter-spacing:2.0px}.workhead h2{color:#fff;font-size:25px;letter-spacing:-.5px}.count-pill{background:linear-gradient(135deg,rgba(255,170,229,.24),rgba(187,139,255,.16));color:#ffe6f5;border:1px solid rgba(255,196,250,.37)}
+.progress-label{color:#d6c3e8}.progress-track{height:6px;background:rgba(236,203,255,.15)}.progress-fill{background:linear-gradient(90deg,#ff93d6,#c389ff,#9f8bff);box-shadow:0 0 15px rgba(249,108,227,.36)}
+.help-strip{margin-bottom:20px;border:1px solid rgba(255,212,254,.14);border-radius:16px;background:linear-gradient(130deg,rgba(248,149,235,.12),rgba(137,112,215,.10));color:#e4d0f0;padding:13px 15px}.help-strip strong{color:#ffc4ef}
+.sentences{scrollbar-color:rgba(255,175,245,.27) transparent}
+.sentence{border:1px solid rgba(255,226,255,.11);background:linear-gradient(130deg,rgba(186,136,228,.10),rgba(124,83,171,.10));border-radius:21px;margin-bottom:10px;padding:19px 16px;box-shadow:inset 0 1px rgba(255,255,255,.04);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+.sentence:hover{background:linear-gradient(125deg,rgba(245,157,239,.20),rgba(155,121,248,.16));border-color:rgba(255,201,249,.31);box-shadow:0 10px 28px rgba(19,5,48,.15);transform:translateY(-1px)}
+.sentence.active{border:1px solid rgba(255,178,238,.88);background:linear-gradient(114deg,rgba(223,111,215,.35),rgba(151,96,223,.30) 60%,rgba(108,91,189,.27));box-shadow:0 0 0 1px rgba(255,160,229,.16),0 0 34px rgba(251,95,202,.14),inset 0 1px rgba(255,255,255,.18);animation:soft-glow 5s ease-in-out infinite}
+.sentence .num{height:29px;width:30px;color:#d6bfe8;background:rgba(255,255,255,.10);border-radius:10px}
+.sentence.active .num{background:linear-gradient(135deg,rgba(255,165,229,.75),rgba(189,124,255,.70));color:#fff}
+.sentence .content{color:#fff7ff;font:400 19px/1.8 Georgia,"Times New Roman",serif;letter-spacing:.08px}
+.sentence .speaker{background:rgba(255,223,255,.13);border:1px solid rgba(255,226,255,.20);color:#ffe4f6;border-radius:13px}.sentence .speaker:hover{background:rgba(255,166,231,.30)}
+.sentence.done .num:after,.sentence.active.done .num:after{color:#ffc8f0}
+.sentence .content .word-token{color:inherit;text-decoration:underline dotted rgba(252,186,240,.56);text-underline-offset:5px}
+.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:rgba(253,132,217,.32);color:#fff;border-radius:7px}
+.sentence .content .word-token.selected{color:#fff;background:linear-gradient(135deg,rgba(251,126,208,.85),rgba(167,112,255,.80));border-radius:8px;box-shadow:0 0 20px rgba(244,105,208,.34),inset 0 1px rgba(255,255,255,.33)}
+.sentence .content .word-token.reading{color:#fff;background:rgba(255,168,235,.47)}
+.empty{color:#d5c3e4}.empty strong{color:#fff}
+/* Floating optical dock: deep-violet glass with neon pink rim */
+.liquid-dock{width:min(860px,calc(100% - 36px));bottom:22px;border-radius:32px;filter:drop-shadow(0 18px 36px rgba(13,3,38,.55))}
+.liquid-dock::before{inset:-1px;background:linear-gradient(114deg,rgba(255,208,253,.80),rgba(241,147,245,.62) 25%,rgba(172,146,250,.72) 52%,rgba(255,182,229,.68) 81%,rgba(255,225,253,.80));box-shadow:0 0 19px rgba(249,99,206,.25),0 22px 48px rgba(8,3,28,.29)}
+.liquid-dock::after{background:radial-gradient(ellipse 220px 100px at var(--light-x) var(--light-y),rgba(249,191,246,.36),transparent 75%),linear-gradient(130deg,rgba(103,65,145,.86),rgba(70,48,118,.80) 50%,rgba(77,52,118,.87));backdrop-filter:blur(28px) saturate(165%);-webkit-backdrop-filter:blur(28px) saturate(165%);box-shadow:inset 0 1px rgba(255,255,255,.25),inset 0 -2px 12px rgba(226,157,250,.18)}
+.dock-kicker{color:#eabbe9}.dock-current{color:#fff;font-weight:500}.dock-info{color:#e0c4ef}.dock-under #playStatus,.dock-under .tiny{color:#dbc0e9}
+.circle-btn{border:1px solid rgba(255,220,255,.22);background:linear-gradient(135deg,rgba(255,228,255,.24),rgba(196,139,249,.14));color:#fff;box-shadow:inset 0 1px rgba(255,255,255,.27),0 9px 20px rgba(28,5,61,.18)}
+.circle-btn:hover{box-shadow:inset 0 1px rgba(255,255,255,.36),0 10px 24px rgba(19,5,41,.22)}
+.circle-btn.main{background:linear-gradient(145deg,#ff9ddf,#ed6fe3 52%,#b77af6);color:white;border-color:rgba(255,229,255,.65);box-shadow:0 0 0 4px rgba(255,166,227,.16),0 0 31px rgba(253,111,231,.49),inset 0 1px rgba(255,255,255,.6)}
+.circle-btn.main:hover{box-shadow:0 0 0 4px rgba(255,167,236,.22),0 0 35px rgba(254,102,217,.65)}
+.repeat-btn{color:#f1d4f7;border:1px solid rgba(255,221,255,.24);background:rgba(255,197,249,.12)}.repeat-btn.on{color:#fff;background:rgba(243,131,213,.35)}
+/* Speech popover */
+.word-popover{background:linear-gradient(145deg,rgba(99,61,147,.94),rgba(65,42,112,.96) 52%,rgba(91,46,117,.96));border:1px solid rgba(255,195,251,.68);border-radius:25px;box-shadow:0 19px 50px rgba(15,4,42,.44),0 0 32px rgba(244,119,226,.23),inset 0 1px rgba(255,255,255,.30);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px)}
+.word-popover:before{background:radial-gradient(ellipse 180px 90px at var(--light-x) var(--light-y),rgba(255,213,252,.35),transparent 70%),linear-gradient(135deg,rgba(255,255,255,.15),transparent 55%)}
+.word-head{color:#dec3eb}.word-close{color:#fff;background:rgba(255,211,251,.18)}.word-value{color:#fff;font-size:28px}.word-buttons button{border:1px solid rgba(255,214,255,.29);color:#fceafa;background:rgba(234,167,246,.15);box-shadow:inset 0 1px rgba(255,255,255,.1)}.word-buttons button:first-child{background:linear-gradient(135deg,#f88cd8,#bc80ed);box-shadow:0 8px 20px rgba(241,103,208,.30)}
+/* Voice studio with floating glass orb */
+.practice{padding:25px 26px;gap:20px;min-height:175px}.practice h3{color:#fff;font-size:18px}.practice p{color:#d6c6e8}.practice h3 span{color:#e4cbef!important}.practice .recognition{color:#ead9f7}.practice .recognition b{color:#ffb5e7}.voice-status{color:#dbc1ee}.voice-dot{background:#e7aff3}.voice-meter i{background:#f68ddf}.practice.is-listening .voice-dot{background:#ff79ce;box-shadow:0 0 18px #ff74d5}
+.voice-orb{border:1px solid rgba(255,238,255,.79);background:radial-gradient(circle at 27% 19%,rgba(255,255,255,.95),rgba(255,179,239,.86) 17%,rgba(218,140,246,.74) 40%,rgba(157,94,231,.85) 69%,rgba(87,47,155,.92));box-shadow:0 0 30px rgba(232,106,222,.25),0 15px 30px rgba(17,7,57,.25),inset 0 2px 8px rgba(255,255,255,.90),inset -10px -15px 20px rgba(107,43,158,.33)}
+.voice-orb:before{background:conic-gradient(from 20deg,rgba(255,255,255,.12),rgba(255,255,255,.65),rgba(255,143,234,.58),rgba(138,109,247,.45),rgba(255,255,255,.48),rgba(255,255,255,.10))}
+.voice-orb:after{border-color:rgba(255,222,255,.68)}.voice-orb .stem{stroke:#a35eca}.practice.is-listening .voice-orb{box-shadow:0 0 45px rgba(251,107,218,.46),0 18px 37px rgba(30,6,68,.25),inset 0 1px 10px rgba(255,255,255,.85)}
+.practice.is-listening .voice-glow{background:radial-gradient(ellipse 60% 85% at 10% 70%,rgba(244,102,221,.33),transparent 85%)}
+.footer-note{color:#baa8d1}.toast{color:#fff;background:rgba(74,37,112,.94);border:1px solid rgba(255,196,247,.40);box-shadow:0 12px 32px rgba(14,3,38,.35)}
+body.quiet-mode .liquid-dock::after{background:rgba(66,42,105,.98)}body.quiet-mode .word-popover{backdrop-filter:blur(12px)}
+@media(max-width:1050px){.shell{padding:0 22px 185px}.layout{grid-template-columns:280px minmax(0,1fr);gap:18px}.hero{padding-top:28px}}
+@media(max-width:790px){.layout{display:flex;flex-direction:column}.sidebar{width:100%;display:grid;grid-template-columns:1fr 1fr}.reading-area{width:100%}.hero{padding:28px 0 25px}.hero-aside{display:none}}
+@media(max-width:580px){
+ .shell{padding:0 12px 190px}header{height:72px}.brand{font-size:20px}.brand-mark{height:39px;width:39px}.tagline,.top-badge{display:none}.glass-toggle{font-size:11px}
+ .hero{padding:20px 5px 23px}.eyebrow{letter-spacing:2px;font-size:9px}.hero h1{font-size:32px;line-height:1.25;letter-spacing:-1.1px;margin:11px 0}.hero p{font-size:12px;line-height:1.7}
+ .sidebar{display:flex;gap:12px}.sidebar .panel{padding:18px}.panel{border-radius:24px}.panel-title{font-size:17px}.privacy{font-size:10px}
+ .workhead{padding:21px 18px 17px}.workhead h2{font-size:20px}.help-strip{margin:0 14px 14px;font-size:10.5px}.progress-wrap{padding:0 18px 17px}
+ .sentences{margin:0 6px 10px;padding:0 8px 12px;max-height:505px}.sentence{grid-template-columns:27px minmax(0,1fr) 30px;gap:8px;padding:15px 10px;border-radius:16px;margin-bottom:8px}.sentence .content{font-size:17px;line-height:1.7}.sentence .num{width:27px}.sentence .speaker{height:30px;width:30px}
+ .practice{padding:17px;gap:12px}.voice-orb{width:77px;height:77px;flex-basis:77px}.practice .mic{margin-left:auto}
+ .liquid-dock{bottom:max(12px,env(safe-area-inset-bottom));width:calc(100% - 20px);border-radius:25px}.liquid-dock::after{border-radius:23px}.dock-inside{gap:6px;padding:12px 12px 6px}.dock-label{max-width:102px}.dock-current{font-size:11px}.dock-actions{gap:5px}.circle-btn{width:32px;height:32px;font-size:14px}.circle-btn.main{width:44px;height:44px;font-size:19px}.repeat-btn{padding:7px 8px;font-size:9px}.dock-under{padding:0 13px 9px}.word-popover{width:min(290px,calc(100vw - 24px))}
+}
+@media(prefers-reduced-motion:reduce){body:after,.sentence.active{animation:none!important}}
+/* Ensure the aurora canvas remains continuous during full-page scrolling. */
+html{background:#20132f}
+body{background-attachment:scroll}
+
 </style>
 </head>
 <body>
 <!-- SVG optical displacement creates a gently curved refractive lens. Subtle filter, with CSS blur fallback. -->
 <svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><filter id="liquid-refraction" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <div class="shell">
-<header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span>EchoRead <span class="tagline">LIQUID STUDIO</span></div><div class="glass-controls"><span class="top-badge">EDITION 08 / SIGNATURE</span><button id="glassToggle" class="glass-toggle" type="button" aria-pressed="true" title="關閉液態光效以提升閱讀舒適度">◈ 液態光感</button></div></header>
-<section class="hero"><div><div class="eyebrow">THE ART OF PRACTICE</div><h1>把英文，<br><em>練成自己的節奏。</em></h1><p>一次專注一句。輕點單字，聆聽發音。<br>在清晰的閱讀空間裡，讓聲音與光自然流動。</p></div><div class="hero-aside"><span class="rule"></span>LISTEN · REPEAT · GROW</div></section>
+<header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span>EchoRead <span class="tagline">AURORA GLASS</span></div><div class="glass-controls"><span class="top-badge">EDITION 09 / AURORA</span><button id="glassToggle" class="glass-toggle" type="button" aria-pressed="true" title="關閉液態光效以提升閱讀舒適度">✧ 光效開啟</button></div></header>
+<section class="hero"><div><div class="eyebrow">ECHO / YOUR ENGLISH SPACE</div><h1>讓每一句英文，<br><em>都有自己的光。</em></h1><p>用你的節奏，讀懂每一句英文。<br>點單字聽發音，跟著柔和的光練習。</p></div><div class="hero-aside"><span class="rule"></span>READ · LISTEN · SHINE</div></section>
 <div class="layout">
 <aside class="sidebar">
 <section class="panel"><h2 class="panel-title">建立練習</h2><div class="muted">帶入想練習的英文文章，讓內容成為自己的專屬教材。</div>
 <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>拖曳檔案或點擊上傳</b><small>TXT、DOCX、文字型 PDF</small></label>
 <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
 <div id="fileInfo" class="file-info" role="status"></div><div class="or">或是直接貼上文章</div>
-<textarea class="text-input" id="articleInput" spellcheck="false" placeholder="Paste your English text here…"></textarea><button class="button wide" id="parseBtn">✦ 產生逐句練習</button><button class="button ghost wide" id="sampleBtn">試用示範文章</button>
+<textarea class="text-input" id="articleInput" spellcheck="false" placeholder="Paste your English text here…"></textarea><button class="button wide" id="parseBtn">✧ 開始我的練習</button><button class="button ghost wide" id="sampleBtn">試用示範文章</button>
 <div class="control-block"><h2 class="panel-title">聲音偏好</h2><div class="section-label">VOICE / ACCENT</div><select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得英文語音…</option></select>
 <div class="rate-row"><span class="field-label">語速</span><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
 <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複朗讀目前句子</label>
@@ -52,7 +169,7 @@ body.quiet-mode .word-popover,body.quiet-mode .liquid-dock::after,body.quiet-mod
 <div class="privacy">🔒 文章在本機瀏覽器處理，不會送往 EchoRead 伺服器。Word / PDF 解析需要網路工具；麥克風辨識可能使用瀏覽器線上服務。</div>
 </aside>
 <main class="reading-area">
-<section class="panel workspace" aria-label="英文逐句練習"><div class="workhead"><div><div class="minor">YOUR PERSONAL READING SPACE</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點單字只聽該字；點卡片空白處播放整句。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
+<section class="panel workspace" aria-label="英文逐句練習"><div class="workhead"><div><div class="minor">AURORA · READING STUDIO</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點單字只聽該字；點卡片空白處播放整句。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
 <div class="progress-wrap"><div class="progress-label"><span>READING PROGRESS · 已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
 <div class="help-strip">✧ <strong>輕點有虛線底線的單字</strong>，會浮出發音工具；點整句空白或右側播放圖示，朗讀整句。</div>
 <div class="sentences" id="sentences"><div class="empty"><span class="big">✧</span><strong>今天想讀什麼英文？</strong><span>上傳文章或貼上文字，就能開始一字一句練習。</span></div></div>
@@ -64,7 +181,7 @@ body.quiet-mode .word-popover,body.quiet-mode .liquid-dock::after,body.quiet-mod
 </div>
 </div>
 <!-- Floating optical playback dock -->
-<div class="liquid-dock" id="liquidDock"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">NOW PLAYING · ECHOREAD</span><span class="dock-current" id="playerText">選擇一句英文開始練習</span></div><span id="nowPlaying" class="dock-info">尚未選擇句子</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="朗讀或暫停" aria-label="朗讀或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">按單字可開啟發音工具</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
+<div class="liquid-dock" id="liquidDock"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">NOW PLAYING · AURORA</span><span class="dock-current" id="playerText">選擇一句英文開始練習</span></div><span id="nowPlaying" class="dock-info">尚未選擇句子</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="朗讀或暫停" aria-label="朗讀或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">按單字可開啟發音工具</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
 <!-- Local pronunciation lens -->
 <div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD FOCUS</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇文章中的單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽單字</button><button type="button" id="slowWordBtn" disabled>◌ 慢速發音</button></div></div>
 <div class="toast" id="toast" role="alert" aria-live="polite"></div>
@@ -299,7 +416,7 @@ body.quiet-mode .word-popover,body.quiet-mode .liquid-dock::after,body.quiet-mod
     const glassToggle=$('glassToggle');
     glassToggle?.addEventListener('click',()=>{
       const quiet=document.body.classList.toggle('quiet-mode');
-      glassToggle.textContent=quiet?'✧ 啟用液態光感':'◈ 液態光感';
+      glassToggle.textContent=quiet?'✧ 啟用液態光感':'✧ 光效開啟';
       glassToggle.setAttribute('aria-pressed',String(!quiet));
       glassToggle.title=quiet?'開啟液態光效':'關閉液態光效以提升閱讀舒適度';
     });
