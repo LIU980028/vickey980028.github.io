@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#eef2f9" />
-  <title>EchoRead V5 — Liquid Voice｜英文逐句・逐字跟讀工作台</title>
+  <title>EchoRead V6 — Crystal Glass｜英文逐句・逐字跟讀工作台</title>
   <style>
 
 :root{
@@ -161,13 +161,163 @@ header:after{content:"";height:1px;position:absolute;bottom:0;left:0;right:0;bac
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @supports not (backdrop-filter:blur(10px)){.panel{background:rgba(255,255,255,.92)}.intro-ornament{background:rgba(255,255,255,.94)}}
 
+
+
+/* EchoRead V6: multi-layer crystal glass with visible refraction and live specular shine */
+:root{
+ --surface:rgba(255,255,255,.38);
+ --shadow:0 30px 70px rgba(39,75,117,.14),0 8px 21px rgba(47,73,104,.07),inset 0 1.5px 0 rgba(255,255,255,.94);
+ --glass-blur:26px;
+ --glass-alpha:.42;
+}
+body{
+ background:linear-gradient(132deg,#dfe9fc 0%,#e1edf3 33%,#eee1fa 67%,#dcefe9 100%);
+}
+body::before{
+ opacity:1;inset:-10%;filter:blur(12px);
+ background:
+ radial-gradient(ellipse 25% 27% at 6% 42%,rgba(71,150,241,.47),transparent 87%),
+ radial-gradient(ellipse 25% 25% at 45% 13%,rgba(174,139,248,.43),transparent 90%),
+ radial-gradient(ellipse 23% 26% at 93% 31%,rgba(107,215,215,.46),transparent 84%),
+ radial-gradient(ellipse 34% 21% at 72% 87%,rgba(244,165,179,.45),transparent 88%),
+ radial-gradient(ellipse 18% 28% at 22% 88%,rgba(137,186,252,.56),transparent 89%);
+ animation:glassSky 31s ease-in-out infinite alternate;
+}
+@keyframes glassSky{to{transform:translate(1.5%,-2%) scale(1.035)}}
+body::after{opacity:.14;background-image:radial-gradient(rgba(255,255,255,.92) .7px,transparent .9px);background-size:9px 9px}
+.shell{isolation:isolate;}
+.liquid-landscape{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.glass-blob{
+ position:absolute;border-radius:48% 52% 53% 47%;
+ border:1px solid rgba(255,255,255,.74);
+ background:radial-gradient(ellipse 28% 28% at 30% 22%, rgba(255,255,255,.94), transparent 100%),
+ linear-gradient(134deg,rgba(136,189,247,.42),rgba(243,159,229,.20) 44%,rgba(102,225,202,.28) 94%);
+ box-shadow:inset 12px 14px 20px rgba(255,255,255,.68),inset -16px -12px 28px rgba(84,138,201,.20),0 35px 65px rgba(70,92,135,.16);
+ filter:drop-shadow(0 6px 16px rgba(114,137,185,.1));
+ opacity:.90;
+ animation:blobFloat 19s ease-in-out infinite alternate;
+}
+.glass-blob.b1{width:430px;height:400px;top:280px;left:-210px;transform:rotate(-18deg)}
+.glass-blob.b2{width:470px;height:455px;top:310px;right:-170px;background:radial-gradient(ellipse 35% 24% at 30% 22%,rgba(255,255,255,.88),transparent 95%),linear-gradient(125deg,rgba(142,194,245,.54),rgba(227,153,242,.30) 46%,rgba(152,236,219,.26));animation-delay:-8s}
+.glass-blob.b3{width:330px;height:310px;top:980px;left:28%;opacity:.65;animation-delay:-3s}
+@keyframes blobFloat{to{translate:0 -22px;border-radius:53% 47% 44% 56%;}}
+.panel{
+ isolation:isolate;
+ background:
+ linear-gradient(125deg,rgba(255,255,255,.66) 0%,rgba(255,255,255,.34) 37%,rgba(255,255,255,.22) 72%,rgba(255,255,255,.44) 100%);
+ border:1.5px solid rgba(255,255,255,.92);
+ box-shadow:
+ 0 28px 58px rgba(59,85,133,.13),
+ 0 3px 10px rgba(61,92,139,.05),
+ inset 0 2px 0 rgba(255,255,255,.98),
+ inset 1px 0 0 rgba(255,255,255,.78),
+ inset -1px 0 0 rgba(184,211,245,.72),
+ inset 0 -2px 3px rgba(156,188,229,.22);
+ backdrop-filter:blur(var(--glass-blur)) saturate(1.55) brightness(1.07);
+ -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(1.55) brightness(1.07);
+}
+.panel::before{
+ content:"";position:absolute;inset:1px;border-radius:calc(var(--r) - 2px);pointer-events:none;z-index:1;
+ background:
+ linear-gradient(145deg,rgba(255,255,255,.44),rgba(255,255,255,0) 31%,rgba(255,255,255,.03) 70%,rgba(255,255,255,.22)),
+ radial-gradient(ellipse 76% 20% at 40% 0%,rgba(255,255,255,.56),transparent 80%);
+ box-shadow:inset 0 1px rgba(255,255,255,.8),inset 0 -1px rgba(226,239,255,.75);
+ opacity:.75;
+}
+.panel::after{
+ content:"";position:absolute;inset:1px;border-radius:calc(var(--r) - 2px);pointer-events:none;z-index:1;
+ background:radial-gradient(ellipse 320px 245px at var(--shine-x,-1000px) var(--shine-y,-1000px),rgba(255,255,255,.52),rgba(255,255,255,.17) 31%,transparent 75%);
+ opacity:.72;transition:opacity .25s ease;
+}
+/* Keep content above non-interactive glass specular layers */
+.panel > :not(.player-glow):not(.voice-glow){position:relative;z-index:2}
+.workspace{overflow:hidden}
+.sidebar{overflow:hidden}
+.workhead,.progress-wrap,.help-strip{z-index:2}
+.intro-ornament,.top-badge,.brand-mark,.feature-chip{
+ border:1px solid rgba(255,255,255,.94);
+ background:linear-gradient(141deg,rgba(255,255,255,.76),rgba(255,255,255,.23) 60%,rgba(255,255,255,.49));
+ backdrop-filter:blur(20px) saturate(1.65);
+ -webkit-backdrop-filter:blur(20px) saturate(1.65);
+ box-shadow:0 14px 28px rgba(71,112,152,.10),inset 0 1.5px rgba(255,255,255,1),inset 0 -1px rgba(151,175,217,.18);
+}
+.intro-ornament{position:relative;overflow:hidden}
+.intro-ornament::before{content:"";position:absolute;left:-24px;top:-65px;height:170px;width:105px;transform:rotate(30deg);border-radius:50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);filter:blur(11px);pointer-events:none}
+.dropzone{
+ background:linear-gradient(130deg,rgba(255,255,255,.49),rgba(229,240,255,.28));
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px rgba(129,167,219,.08)
+}
+.text-input,.form-select{background:rgba(255,255,255,.47);border:1px solid rgba(255,255,255,.72);box-shadow:inset 0 1px 1px rgba(255,255,255,.65),0 4px 12px rgba(64,93,136,.04)}
+.sentence{
+ background:linear-gradient(132deg,rgba(255,255,255,.68),rgba(255,255,255,.31) 58%,rgba(255,255,255,.53));
+ border:1.2px solid rgba(255,255,255,.88);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.98),0 8px 16px rgba(67,101,141,.045);
+ backdrop-filter:blur(8px) saturate(1.4);-webkit-backdrop-filter:blur(8px) saturate(1.4);
+ position:relative;overflow:hidden;
+}
+.sentence::before{
+ content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+ background:linear-gradient(112deg,transparent 5%,rgba(255,255,255,.48) 20%,transparent 43%);
+ opacity:.17;transition:transform .45s ease,opacity .3s;
+ transform:translateX(-90%);
+}
+.sentence:hover{transform:translateY(-2px) scale(1.002);border-color:#fff;box-shadow:0 14px 32px rgba(63,113,170,.12),inset 0 1px #fff}
+.sentence:hover::before{transform:translateX(105%);opacity:.76}
+.sentence.active{background:linear-gradient(135deg,rgba(234,247,255,.78),rgba(241,243,255,.48));border:1.3px solid rgba(108,170,247,.74);box-shadow:0 10px 23px rgba(70,130,224,.12),inset 0 1px #fff,0 0 0 1.5px rgba(185,215,255,.17)}
+.sentence .content{position:relative;z-index:1}
+.sentence .num,.sentence .speaker{position:relative;z-index:1}
+.player{
+ background:linear-gradient(155deg,rgba(255,255,255,.47),rgba(255,255,255,.24));
+ border-top:1px solid rgba(255,255,255,.85);
+}
+.circle-btn,.repeat-btn,.word-focus .word-buttons button{
+ background:radial-gradient(ellipse 85% 42% at 45% 0%,rgba(255,255,255,.98),transparent 95%),linear-gradient(150deg,rgba(255,255,255,.80),rgba(255,255,255,.28));
+ border:1.2px solid rgba(255,255,255,.96);
+ box-shadow:0 9px 18px rgba(80,108,153,.10),inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1px 1px rgba(136,179,232,.16);
+ backdrop-filter:blur(12px);
+}
+.circle-btn.main{
+ background:radial-gradient(ellipse 82% 28% at 46% 0%,rgba(255,255,255,.80),transparent 100%),linear-gradient(150deg,rgba(120,183,255,.96),rgba(63,120,224,.95));
+ box-shadow:0 12px 28px rgba(58,119,218,.27),inset 0 2px rgba(255,255,255,.65),inset 0 -2px rgba(38,87,163,.26);
+}
+.button.secondary,.button.ghost{
+ background:linear-gradient(150deg,rgba(255,255,255,.79),rgba(255,255,255,.31));
+ box-shadow:0 8px 17px rgba(80,119,162,.07),inset 0 1.5px 1px #fff,inset 0 -1px rgba(156,188,231,.22);
+}
+.glass-controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.glass-toggle{
+ background:linear-gradient(145deg,rgba(255,255,255,.79),rgba(255,255,255,.29));
+ color:#486f9b;border:1px solid rgba(255,255,255,.94);border-radius:999px;
+ box-shadow:0 7px 18px rgba(61,106,155,.08),inset 0 1px #fff;
+ padding:10px 14px;font-size:11px;font-weight:780;letter-spacing:.5px;transition:transform .18s,background .18s;
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.glass-toggle:hover{transform:translateY(-1px);background:rgba(255,255,255,.68)}
+/* Softer mode for users who want increased contrast */
+body.mist-mode .panel{background:linear-gradient(145deg,rgba(255,255,255,.91),rgba(255,255,255,.70));--glass-blur:32px}
+body.mist-mode .sentence{background:rgba(255,255,255,.86)}
+body.mist-mode .player{background:rgba(255,255,255,.82)}
+body.mist-mode .glass-blob{opacity:.35}
+@media(max-width:690px){
+ .glass-controls{width:100%;justify-content:space-between;gap:7px}
+ .glass-toggle,.top-badge{padding:8px 11px;font-size:10px}
+ .glass-blob.b1{left:-220px;top:410px}.glass-blob.b2{right:-290px;top:670px}
+ .panel::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){.glass-blob{animation:none!important}.sentence::before{display:none}}
+@supports not (backdrop-filter:blur(10px)){
+ .panel{background:rgba(255,255,255,.90)}
+ .sentence{background:rgba(255,255,255,.92)}
+}
+
   </style>
 </head>
 <body>
   <div class="shell">
-    <header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span> EchoRead <span class="tagline">/ Liquid Voice Studio</span></div><div class="top-badge">✧ LIQUID VOICE · V5.0</div></header>
-    <div class="intro"><div><div class="eyebrow">YOUR ENGLISH, REIMAGINED</div><h1>讓每一句英文，<br><span class="iridescent">都有自己的光。</span></h1><p>像使用一件精心設計的工具般自然。點一句聽整句、點單字聽發音，讓練習變得輕鬆。</p></div><div class="intro-ornament"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><b>Listen. Speak. Glow.</b><br><small>美好的聲音，值得被看見。</small></span></div></div>
-    <div class="feature-bar"><div class="feature-set"><span class="feature-chip"><strong>01</strong> 匯入文章</span><span class="feature-chip"><strong>02</strong> 點字發音</span><span class="feature-chip"><strong>03</strong> 自己跟讀</span></div><div class="feature-note">DESIGNED FOR YOUR VOICE</div></div>
+    <div class="liquid-landscape" aria-hidden="true"><span class="glass-blob b1"></span><span class="glass-blob b2"></span><span class="glass-blob b3"></span></div>
+    <header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span> EchoRead <span class="tagline">/ Liquid Voice Studio</span></div><div class="glass-controls"><div class="top-badge">✧ CRYSTAL GLASS · V6.0</div><button id="glassToggle" class="glass-toggle" type="button" aria-pressed="false" title="切換晶透玻璃與柔霧玻璃">◈ 晶透玻璃</button></div></header>
+    <div class="intro"><div><div class="eyebrow">THE GLASS STUDIO</div><h1>讓每一句英文，<br><span class="iridescent">都有自己的光。</span></h1><p>像使用一件精心設計的工具般自然。點一句聽整句、點單字聽發音。透光玻璃與細膩高光，讓練習更有質感。</p></div><div class="intro-ornament"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><b>Listen. Speak. Glow.</b><br><small>美好的聲音，值得被看見。</small></span></div></div>
+    <div class="feature-bar"><div class="feature-set"><span class="feature-chip"><strong>01</strong> 匯入文章</span><span class="feature-chip"><strong>02</strong> 點字發音</span><span class="feature-chip"><strong>03</strong> 自己跟讀</span></div><div class="feature-note">MADE OF LIGHT · BUILT FOR PRACTICE</div></div>
     <div class="layout">
       <aside class="panel sidebar">
         <section>
@@ -398,6 +548,27 @@ header:after{content:"";height:1px;position:absolute;bottom:0;left:0;right:0;bac
     els.repeatBtn.addEventListener('click',()=>{els.repeatToggle.checked=!els.repeatToggle.checked;syncRepeat();});els.repeatToggle.addEventListener('change',syncRepeat);
     els.micBtn.addEventListener('click',toggleMic);
     document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const tag=document.activeElement?.tagName;if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(tag))return;if(e.code==='Space'){e.preventDefault();togglePlay();}else if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();speak(Math.min(sentences.length-1,active+1));}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();speak(Math.max(0,active-1));}else if(e.key==='Escape'){stopSpeech();stopRecognition();setStatus('已停止');}});
+    // Crystal glass: real-time specular shine follows the cursor without affecting playback or text clicks.
+    const glassToggle=$('glassToggle');
+    glassToggle?.addEventListener('click',()=>{
+      const mist=document.body.classList.toggle('mist-mode');
+      glassToggle.textContent=mist?'◌ 柔霧玻璃':'◈ 晶透玻璃';
+      glassToggle.setAttribute('aria-pressed',String(mist));
+      glassToggle.title=mist?'現在是柔霧模式，點擊切回晶透玻璃':'現在是晶透模式，點擊切到柔霧玻璃';
+    });
+    if(window.matchMedia?.('(hover: hover) and (pointer: fine)').matches){
+      document.querySelectorAll('.panel').forEach(panel=>{
+        panel.addEventListener('pointermove',event=>{
+          const box=panel.getBoundingClientRect();
+          panel.style.setProperty('--shine-x',(event.clientX-box.left)+'px');
+          panel.style.setProperty('--shine-y',(event.clientY-box.top)+'px');
+        },{passive:true});
+        panel.addEventListener('pointerleave',()=>{
+          panel.style.setProperty('--shine-x','-1000px');
+          panel.style.setProperty('--shine-y','-1000px');
+        },{passive:true});
+      });
+    }
     if('speechSynthesis' in window){fillVoices();window.speechSynthesis.addEventListener?.('voiceschanged',fillVoices);setTimeout(fillVoices,550);}else fillVoices();
     els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;
     if(!els.articleInput.value.trim()){els.articleInput.value=sample;loadArticle(sample,'English Presentation · Sample');}
