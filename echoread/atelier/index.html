@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>EchoRead Atelier V3｜英文逐句與單字點讀練習</title>
+  <style>
+    :root { --ink:#1b3035;--sub:#64777a;--accent:#147d78;--accent-dark:#0e6662;--mint:#e7f6f3;--paper:#f6f8f7;--white:#fff;--line:#dfe9e6;--peach:#fff4e9;--shadow:0 20px 65px rgba(23,54,56,.085);--r:21px; }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(ellipse at 13% 0%,#e9f6f2 0%,transparent 29%),radial-gradient(ellipse at 92% 2%,#fcf1e8 0%,transparent 32%),var(--paper);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.55} button,input,select,textarea{font:inherit} button{cursor:pointer} button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(20,125,120,.26);outline-offset:2px} a{color:inherit}
+    .shell{max-width:1350px;margin:auto;padding:0 34px 50px}
+    header{height:87px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(20,57,54,.11)}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:21px;letter-spacing:-.7px}.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:var(--accent);color:white;box-shadow:0 6px 20px #147d7833;font-size:20px}.tagline{font-size:13px;color:var(--sub);font-weight:600}.top-badge{background:#fff;border:1px solid var(--line);border-radius:40px;padding:7px 13px;font-size:12px;color:var(--sub)}
+    .intro{padding:30px 2px 26px;display:flex;gap:20px;justify-content:space-between;align-items:end}.eyebrow{color:var(--accent);font-size:12px;font-weight:850;letter-spacing:2px}.intro h1{font-size:clamp(29px,3.4vw,43px);letter-spacing:-1.6px;margin:8px 0 6px;font-weight:850;line-height:1.25}.intro p{margin:0;color:var(--sub);font-size:15px}.intro-ornament{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px 18px;display:flex;gap:11px;align-items:center;color:var(--accent);font-size:15px;box-shadow:0 6px 24px #15575112;white-space:nowrap}
+    .layout{display:grid;grid-template-columns:355px minmax(0,1fr);gap:20px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}.sidebar{padding:23px;display:flex;flex-direction:column;gap:20px}.panel-title{font-size:17px;font-weight:800;letter-spacing:-.2px;margin:0 0 6px}.muted{color:var(--sub);font-size:12.5px}.section-label{font-size:12px;font-weight:800;letter-spacing:.6px;color:#718784;margin-bottom:9px}.dropzone{display:block;text-align:center;border:1.5px dashed #a8ceca;border-radius:16px;padding:21px 12px;background:#f8fcfb;transition:.18s;cursor:pointer}.dropzone.drag{background:var(--mint);border-color:var(--accent);transform:scale(1.01)}.dropzone .emoji{font-size:29px;line-height:1}.dropzone b{display:block;margin-top:7px;font-size:14px}.dropzone small{display:block;color:var(--sub);font-size:11px;margin-top:4px}.file-info{margin-top:8px;color:var(--accent-dark);font-size:12px;word-break:break-all;display:none}.or{text-align:center;font-size:11px;color:#9aaba8;margin:7px 0 9px}.text-input{resize:vertical;min-height:112px;max-height:330px;border:1px solid var(--line);border-radius:13px;padding:12px 13px;width:100%;font-size:13px;line-height:1.6;background:#fcfdfd;color:var(--ink)}.button{border:0;border-radius:12px;padding:11px 15px;font-weight:750;font-size:13px;background:var(--accent);color:white;transition:.15s}.button:hover{background:var(--accent-dark)}.button:disabled{opacity:.45;cursor:not-allowed}.button.secondary{color:var(--accent-dark);background:var(--mint)}.button.secondary:hover{background:#d5eee9}.button.ghost{border:1px solid var(--line);background:white;color:var(--ink)}.button.ghost:hover{background:#f5faf8}.button.wide{width:100%;margin-top:9px}.row{display:flex;align-items:center;justify-content:space-between;gap:13px}.control-block{padding-top:16px;border-top:1px solid var(--line)}.field-label{font-size:12px;color:#4a6765;font-weight:760}.form-select{width:100%;padding:10px;background:#fbfdfc;border:1px solid var(--line);border-radius:11px;min-width:0;color:var(--ink);font-size:12px}.rate-row{display:flex;align-items:center;gap:8px;margin-top:12px}.rate-row input{flex:1;accent-color:var(--accent);width:60px}.rate-number{background:var(--mint);border-radius:8px;padding:4px 7px;color:var(--accent-dark);font-variant-numeric:tabular-nums;font-size:12px;font-weight:800}.toggle{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:13px;color:var(--ink);cursor:pointer}.toggle input{accent-color:var(--accent);width:16px;height:16px;margin:0}.privacy{margin-top:auto;border-radius:12px;padding:12px;background:#f5f8f7;color:#708681;font-size:11px;display:flex;gap:8px}
+    .workspace{min-width:0;overflow:hidden}.workhead{padding:25px 27px 18px;display:flex;align-items:start;justify-content:space-between;gap:18px}.workhead .minor{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:1px}.workhead h2{margin:5px 0 5px;font-size:22px;line-height:1.3;font-weight:820;letter-spacing:-.6px;word-break:break-word}.count-pill{font-size:12px;color:var(--accent-dark);background:var(--mint);padding:7px 10px;white-space:nowrap;border-radius:20px;font-weight:800}.progress-wrap{padding:0 27px 18px}.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--sub);margin-bottom:7px}.progress-track{height:7px;overflow:hidden;border-radius:15px;background:#e8efed}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#69baa7,#167d76);border-radius:15px;transition:width .3s}
+    .help-strip{margin:0 27px 17px;border-radius:13px;background:var(--peach);padding:10px 12px;color:#8a6140;font-size:12px;display:flex;align-items:center;gap:8px}.sentences{padding:0 18px 19px;display:flex;flex-direction:column;gap:9px;max-height:570px;overflow-y:auto;scrollbar-color:#cee1dd transparent}.sentence{border:1px solid #e9eeeb;border-radius:14px;display:grid;grid-template-columns:36px minmax(0,1fr) 32px;align-items:start;gap:10px;padding:15px 12px;transition:background .17s,border-color .17s,box-shadow .17s;text-align:left;width:100%;background:white;color:var(--ink)}.sentence:hover{background:#f8fcfa;border-color:#c0ded8}.sentence.active{background:#f0faf7;border-color:#62aaa0;box-shadow:0 0 0 1px rgba(20,125,120,.13)}.sentence .num{font-size:11px;font-weight:800;color:#85a19c;background:#f4f7f6;min-height:25px;min-width:25px;padding:4px;border-radius:8px;text-align:center}.sentence.active .num{background:var(--accent);color:white}.sentence .content{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.65;letter-spacing:.03px;overflow-wrap:anywhere}.sentence .speaker{font-size:16px;color:var(--accent);margin-top:2px;text-align:center}.sentence.done .num:after{content:" ✓";color:var(--accent);font-size:10px}.sentence.done.active .num:after{color:white}.empty{padding:52px 36px;text-align:center;color:var(--sub)}.empty .big{font-size:49px;display:block;margin-bottom:14px}.empty strong{color:var(--ink);display:block;font-size:18px;margin-bottom:5px}
+    .player{border-top:1px solid var(--line);padding:18px 27px;background:#fcfefd}.player-head{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--sub);font-weight:700}.now-playing{color:var(--accent-dark)}.player-text{font-family:Georgia,"Times New Roman",serif;font-size:16px;margin:6px 0 14px;line-height:1.5;min-height:25px;word-wrap:break-word}.actions{display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap}.circle-btn{width:40px;height:40px;border-radius:50%;border:1px solid #d8e7e3;background:white;color:var(--accent-dark);font-size:18px;font-weight:700;display:grid;place-items:center}.circle-btn:hover{background:var(--mint)}.circle-btn.main{height:52px;width:52px;background:var(--accent);color:white;border-color:var(--accent);font-size:22px}.circle-btn.main:hover{background:var(--accent-dark)}.repeat-btn{font-size:11px;border-radius:20px;border:1px solid var(--line);padding:7px 10px;background:white;color:var(--sub);font-weight:700}.repeat-btn.on{background:var(--mint);color:var(--accent);border-color:#a9d8d1}.status{font-size:11px;min-height:18px;text-align:center;color:#8c9997;margin-top:8px}
+    .practice{margin-top:20px;padding:20px 22px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start}.practice h3{margin:0 0 3px;font-size:16px}.practice p{margin:0;color:var(--sub);font-size:12px}.recognition{font-size:13px;color:var(--ink);margin-top:11px;line-height:1.7}.recognition:empty{display:none}.recognition b{color:var(--accent-dark)}.mic{white-space:nowrap}.footer-note{font-size:11px;color:var(--sub);margin-top:15px;text-align:center}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#1d3b3c;color:white;padding:10px 17px;border-radius:12px;font-size:13px;box-shadow:0 12px 30px #1b30354d;opacity:0;pointer-events:none;transition:.2s;z-index:10;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+    /* 單字點讀：點到單字只唸單字，點卡片其他位置朗讀完整句子 */
+    .sentence{cursor:pointer}
+    .sentence:focus-visible{outline:3px solid rgba(20,125,120,.35);outline-offset:2px}
+    .sentence .content .word-token{appearance:none;-webkit-appearance:none;background:transparent;border:0;color:inherit;display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;padding:1px 2px;margin:-1px -2px;border-radius:5px;cursor:pointer;text-align:inherit;vertical-align:baseline}
+    .sentence .content .word-token{ text-decoration: underline dotted #73b6a8; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+    .sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#d3f1e9;color:#075e57;outline:2px solid #a4dbce;outline-offset:1px}
+    .sentence .content .word-token.selected{background:#b5e9df;color:#075e57;box-shadow:inset 0 -2px 0 #147d78}
+    .sentence .content .word-token.reading{background:#ffe2ad;color:#754713;box-shadow:0 0 0 2px #f3c377}
+    .sentence .speaker{appearance:none;background:transparent;border:0;border-radius:7px;cursor:pointer;padding:2px;color:var(--accent);font-size:16px}
+    .sentence .speaker:hover,.sentence .speaker:focus-visible{background:var(--mint);outline:2px solid #abdcd3}
+    .word-focus{border-top:1px dashed #d8e9e4;margin-top:16px;padding-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .word-focus .word-label{font-size:11px;color:var(--sub);font-weight:750;white-space:nowrap}
+    .word-focus .word-value{font-family:Georgia,"Times New Roman",serif;font-size:20px;font-weight:700;flex:1;min-width:95px;overflow-wrap:anywhere;color:var(--accent-dark)}
+    .word-focus .word-buttons{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+    .word-focus .word-buttons button{padding:7px 10px;border:1px solid #bdded6;border-radius:9px;background:#ebf8f4;color:#0d6660;font-size:12px;font-weight:750}
+    .word-focus .word-buttons button:hover:not(:disabled){background:#d1f0e7}
+    .word-focus .word-buttons button:disabled{opacity:.4;cursor:not-allowed}
+    @media (max-width:900px){.shell{padding:0 18px 34px}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;align-items:start}.sidebar .privacy{grid-column:1/-1}.intro-ornament{display:none}.sentences{max-height:480px}}
+    @media (max-width:580px){header{height:68px}.tagline,.top-badge{display:none}.intro{padding:22px 0}.intro h1{font-size:30px}.sidebar{display:flex;padding:18px;gap:14px}.workhead{padding:19px 17px 14px}.workhead h2{font-size:19px}.progress-wrap{padding:0 17px 15px}.help-strip{margin:0 17px 12px}.sentences{padding:0 10px 13px;max-height:460px}.sentence{padding:12px 9px;grid-template-columns:27px minmax(0,1fr) 24px;gap:7px}.sentence .content{font-size:16px}.player{padding:17px}.practice{grid-template-columns:1fr}.mic{justify-self:start}}
+  
+/* EchoRead Atelier UI 3.0 — premium editorial reading workspace */
+:root{--ink:#23313b;--sub:#7a8790;--accent:#177d78;--accent-dark:#0f625f;--mint:#e5f3f0;--paper:#f5f5f2;--white:#fff;--line:#e3e9e7;--peach:#f5eee2;--shadow:0 18px 55px rgba(27,45,54,.055);--r:24px;--night:#172d34;--gold:#bfa57e}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#f5f6f3;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55;min-height:100vh}
+button,input,textarea,select{font:inherit}
+button{transition:background .2s ease,color .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+button:active{transform:scale(.97)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(23,125,120,.27);outline-offset:3px}
+.shell{max-width:1500px;margin:auto;padding:0 44px 66px}
+header{height:87px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e5e9e6}
+.brand{font-family:Inter,-apple-system,"Noto Sans TC",sans-serif;font-weight:800;font-size:24px;letter-spacing:-1.3px;gap:12px;display:flex;align-items:center}
+.brand-mark{height:40px;width:40px;border-radius:13px;background:#163b3d;color:#fff;box-shadow:none;font-size:19px;display:grid;place-items:center}
+.tagline{color:#8c9698;font-size:12px;font-weight:600;letter-spacing:0;align-self:center;margin-left:7px;border-left:1px solid #d3dbd7;padding-left:16px}
+.top-badge{font-size:11px;font-weight:750;letter-spacing:.6px;text-transform:uppercase;border:1px solid #d8e4dd;background:#eff5f1;border-radius:50px;padding:9px 15px;color:#3d7569}
+.intro{margin:29px 0 25px;padding:37px 43px;min-height:220px;background:linear-gradient(106deg,#162b31 2%,#213f45 62%,#234b4c 100%);border:1px solid #233d42;border-radius:27px;box-shadow:0 21px 45px rgba(30,54,55,.12);display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;overflow:hidden}
+.intro:after{content:"";position:absolute;height:320px;width:320px;border:1px solid rgba(255,255,255,.075);border-radius:50%;right:120px;top:-170px;box-shadow:0 0 0 78px rgba(255,255,255,.016),0 0 0 156px rgba(255,255,255,.017);pointer-events:none}
+.intro>div{position:relative;z-index:1}
+.eyebrow{font-size:10px;color:#c5d9d4;font-weight:750;letter-spacing:2.8px}
+.intro h1{font-size:clamp(28px,3.25vw,43px);color:#fff;font-weight:750;letter-spacing:-1.9px;margin:13px 0 11px;line-height:1.3}
+.intro p{color:#c8d6d4;font-size:14px;line-height:1.85;margin:0}
+.intro-ornament{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.16);border-radius:20px;backdrop-filter:blur(12px);box-shadow:none;color:#fff;padding:22px 25px;min-width:216px;gap:18px}
+.intro-ornament b{font-size:13px;letter-spacing:.2px}.intro-ornament small{color:#c4d6d3;font-size:11px;line-height:1.5}
+.wave{height:42px;display:flex;align-items:center;gap:4px}.wave i{display:block;width:4px;border-radius:10px;background:linear-gradient(#f2ddb5,#b5dcd2);height:12px}.wave i:nth-child(2),.wave i:nth-child(6){height:23px}.wave i:nth-child(3),.wave i:nth-child(5){height:34px}.wave i:nth-child(4){height:42px}
+.feature-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:23px;padding:0 3px}
+.feature-set{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.feature-chip{font-size:12px;font-weight:650;color:#5c7472;display:inline-flex;gap:8px;align-items:center;padding:8px 13px;background:#fff;border:1px solid #e1e8e5;border-radius:99px}
+.feature-chip strong{color:#227a71;font-size:13px}.feature-note{font-size:11px;color:#91a09a;letter-spacing:.2px}
+.layout{grid-template-columns:340px minmax(0,1fr);gap:22px;align-items:start}
+.panel{background:#fff;border:1px solid #e5ebe9;border-radius:var(--r);box-shadow:var(--shadow)}
+.sidebar{padding:26px;gap:25px}
+.panel-title{font-size:17px;font-weight:780;color:#243b42;letter-spacing:-.55px;margin:0 0 8px}
+.muted{color:#88969a;font-size:12px;line-height:1.65}
+.section-label{color:#6a817e;font-size:10.5px;font-weight:750;text-transform:uppercase;letter-spacing:1.2px;margin:0 0 12px}
+.dropzone{padding:25px 12px;border:1.5px dashed #b4d6cd;background:linear-gradient(180deg,#f9fcfb,#f1f8f5);border-radius:16px}
+.dropzone .emoji{font-size:30px;display:block;margin-bottom:7px}
+.dropzone b{font-size:13px;font-weight:780;color:#295351;margin-top:2px}.dropzone small{font-size:10.5px;color:#849994;line-height:1.7;max-width:245px;margin:7px auto 0}
+.dropzone:hover{background:#eaf6f1;border-color:#55a795;transform:translateY(-1px)}
+.or{font-size:11px;color:#a1ada9;margin:17px 0 12px}
+.text-input{min-height:153px;background:#fbfcfb;border-radius:14px;color:#365058;border:1px solid #e2e9e6;font-family:Inter,-apple-system,"Noto Sans TC",sans-serif;font-size:12.5px;line-height:1.8;padding:14px;resize:vertical}
+.text-input::placeholder{color:#abb8b8}
+.button{font-size:12.5px;font-weight:780;border-radius:12px;min-height:46px;background:#157c75;box-shadow:0 5px 15px rgba(18,125,117,.13);letter-spacing:.1px}
+.button:hover{background:#0c625c;box-shadow:0 7px 17px rgba(18,125,117,.2)}
+.button.secondary{background:#eaf5f1;color:#20746b;box-shadow:none}.button.secondary:hover{background:#dcefe9}
+.button.wide{margin-top:9px}.button.ghost{box-shadow:none}
+.control-block{border-top:1px solid #e9eeec;padding-top:22px}
+.form-select{border:1px solid #e0e8e5;border-radius:12px;background:#fafcfb;padding:13px 11px;font-size:12px;color:#45615e}
+.rate-row{margin-top:19px;gap:8px}.rate-row input{accent-color:#1b827a}.rate-number{background:#ecf5f2;color:#21766e;padding:6px 9px;font-size:11px;font-weight:750;border-radius:9px}
+.field-label{color:#54706c;font-size:11px}.toggle{font-size:12.2px;color:#5e7474;gap:10px;margin-top:15px}.toggle input{accent-color:#157c75}
+.privacy{margin-top:0;background:#f5f7f4;border:1px solid #e8eeea;border-radius:13px;color:#90a09c;font-size:10.5px;padding:13px;line-height:1.8}
+.workspace{overflow:hidden;border-radius:24px}
+.workhead{padding:29px 32px 20px}.workhead .minor{font-size:10px;letter-spacing:2px;color:#26857a;font-weight:780}.workhead h2{color:#243943;font-size:24px;letter-spacing:-.85px;margin:9px 0 7px;line-height:1.3}.workhead .muted{font-size:12px}
+.count-pill{padding:8px 15px;border-radius:99px;background:#eef7f4;border:1px solid #dcece7;color:#1c8278;font-size:12px;font-weight:780}
+.progress-wrap{padding:0 32px 23px}.progress-label{font-size:11px;color:#8c9a9a;margin-bottom:9px}.progress-track{background:#eaf0ed;height:5px}.progress-fill{background:linear-gradient(90deg,#b9d8c5,#278878);border-radius:12px}
+.help-strip{margin:0 25px 17px;background:#f6f5ee;border:1px solid #ede9df;color:#7f8278;border-radius:12px;padding:11px 16px;font-size:11.5px;line-height:1.75;display:block}
+.help-strip strong{color:#336560}
+.sentences{padding:0 25px 22px;gap:11px;max-height:545px;scrollbar-color:#c8d6d3 transparent}
+.sentence{border:1px solid #e6ecea;border-radius:16px;grid-template-columns:41px minmax(0,1fr) 39px;align-items:start;gap:14px;padding:20px 18px;background:#fff;position:relative;box-shadow:0 2px 2px rgba(25,41,44,.009);transition:background .2s,border-color .2s,box-shadow .2s}
+.sentence:hover{background:#fbfdfc;border-color:#b9d9d1;box-shadow:0 7px 23px rgba(28,66,63,.045)}
+.sentence.active{background:#f0f9f5;border-color:#a2cdc0;box-shadow:inset 0 0 0 1px #dceee7,0 5px 18px rgba(16,114,97,.035)}
+.sentence.active:before{content:"";position:absolute;left:0;top:21px;bottom:21px;width:3px;background:#1c8578;border-radius:0 5px 5px 0}
+.sentence .num{margin-top:3px;min-height:32px;min-width:34px;font-size:10px;line-height:24px;padding:4px;text-align:center;background:#f3f6f4;color:#96aaa5;border-radius:10px;letter-spacing:.3px}
+.sentence.active .num{background:#1c7b71;color:#fff}
+.sentence .content{font-family:Georgia,"Times New Roman",serif;font-size:21px;line-height:1.75;color:#293d42;letter-spacing:-.15px}
+.sentence .speaker{height:34px;width:34px;border:1px solid #dfebe5;border-radius:50%;color:#207d73;background:#f5faf7;display:grid;place-items:center;font-size:12px;margin:3px 0 0;text-align:center;line-height:1}
+.sentence .speaker:hover{background:#dceee7;transform:scale(1.08)}
+.sentence.done .num:after{font-size:9px;color:inherit}
+.sentence .content .word-token{border:0;appearance:none;-webkit-appearance:none;display:inline;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;line-height:inherit;padding:1px 2px;margin:-1px -2px;cursor:pointer;border-radius:4px;vertical-align:baseline;text-decoration:underline dotted #9dbbb4;text-underline-offset:5px;text-decoration-thickness:1px}
+.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#daeee7;color:#076c61;outline:2px solid #b3dace;outline-offset:2px;text-decoration-color:#148273}
+.sentence .content .word-token.selected{background:#c6e8dd;color:#07665d;box-shadow:inset 0 -2px 0 #207e73;text-decoration:none}
+.sentence .content .word-token.reading{background:#ffe5ae;color:#805c27;box-shadow:0 0 0 2px #f3d59e}
+.empty{padding:70px 25px}.empty .big{font-size:48px}.empty strong{font-size:18px;color:#30444b}
+.player{position:relative;padding:22px 32px 27px;background:linear-gradient(180deg,#fbfcfa,#f7faf8);border-top:1px solid #e4ebe8}
+.player-head{font-size:10px;letter-spacing:1.25px;color:#849695;font-weight:760}.now-playing{letter-spacing:0;color:#257970;font-size:11px}
+.player-text{font-family:Georgia,"Times New Roman",serif;font-size:19px;line-height:1.6;color:#294249;margin:11px 0 18px;min-height:30px}
+.actions{gap:11px}
+.circle-btn{height:42px;width:42px;font-size:15px;color:#50756d;border-color:#dce8e2;box-shadow:0 2px 6px rgba(34,70,60,.035)}.circle-btn:hover{background:#e9f4ee}
+.circle-btn.main{width:58px;height:58px;border:0;background:#177c73;box-shadow:0 7px 19px rgba(13,107,97,.23);font-size:19px;color:#fff}.circle-btn.main:hover{background:#0d6660;transform:translateY(-2px)}
+.repeat-btn{padding:9px 14px;font-size:10px;background:#fff;border-color:#e0e9e4;color:#6c827c}.repeat-btn.on{background:#e7f3ee;color:#187f72;border-color:#c4e0d3}
+.status{font-size:11px;color:#839995;min-height:20px;margin-top:11px}
+.word-focus{margin-top:24px;padding:18px 21px;gap:14px;background:linear-gradient(120deg,#1d3439,#284744);border:1px solid #315653;border-radius:15px;display:flex;align-items:center;box-shadow:0 10px 26px rgba(24,64,61,.1)}
+.word-focus .word-label{color:#a8c6be;font-size:10px;letter-spacing:1px;font-weight:800}
+.word-focus .word-value{font-family:Georgia,"Times New Roman",serif;font-size:26px;font-weight:700;color:#fff;min-width:125px}
+.word-focus .word-buttons{gap:7px}.word-focus .word-buttons button{border:1px solid rgba(204,238,225,.27);border-radius:10px;padding:10px 13px;background:rgba(255,255,255,.12);color:#f2f8f5;font-size:11px;font-weight:750;white-space:nowrap}
+.word-focus .word-buttons button:hover:not(:disabled){background:rgba(255,255,255,.22)}.word-focus .word-buttons button:disabled{opacity:.45}
+.practice{margin-top:21px;padding:24px 27px;border-radius:21px;align-items:center;background:#fff}.practice h3{font-size:17px;color:#283e44;letter-spacing:-.3px;margin-bottom:8px}.practice p{line-height:1.8;font-size:12px;max-width:530px}.recognition{font-size:12px}
+.footer-note{font-size:10.5px;margin:20px 0;color:#98a5a3}
+.toast{background:#182f34;border-radius:13px;box-shadow:0 16px 30px rgba(16,45,45,.25);font-size:12px}
+@media(max-width:1050px){.shell{padding:0 25px 45px}.layout{grid-template-columns:300px minmax(0,1fr);gap:16px}.sidebar{padding:21px}.workhead{padding:23px 24px 17px}.progress-wrap{padding:0 24px 19px}.sentences{padding:0 17px 19px}.sentence .content{font-size:19px}.help-strip{margin:0 17px 16px}.player{padding:21px 24px}.word-focus{flex-wrap:wrap}}
+@media(max-width:900px){.shell{padding:0 20px 44px}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1.1fr .9fr;gap:25px}.sidebar .control-block{border-top:0;padding-top:0}.sidebar .privacy{grid-column:1/-1}.intro{padding:33px}.intro-ornament{display:none}.feature-note{display:none}.sentences{max-height:480px}}
+@media(max-width:580px){.shell{padding:0 12px 34px}header{height:68px;padding:0 8px}.brand{font-size:20px}.brand-mark{width:34px;height:34px}.tagline{display:none}.top-badge{display:block;font-size:9px;padding:7px 8px;letter-spacing:0}.intro{margin:14px 0 15px;min-height:0;padding:26px 24px;border-radius:22px}.intro h1{font-size:27px;line-height:1.35;margin:10px 0}.intro p{font-size:12px}.eyebrow{font-size:9px;letter-spacing:1.7px}.feature-bar{margin-bottom:14px}.feature-set{gap:6px}.feature-chip{font-size:10px;padding:7px 9px}.feature-chip strong{font-size:11px}.sidebar{display:flex;padding:21px;gap:20px}.sidebar .control-block{border-top:1px solid #e9eeec;padding-top:20px}.workhead{padding:22px 18px 16px}.workhead h2{font-size:20px}.progress-wrap{padding:0 18px 18px}.help-strip{margin:0 12px 14px;font-size:10px;padding:10px 12px}.sentences{padding:0 10px 13px;max-height:450px}.sentence{grid-template-columns:27px minmax(0,1fr) 29px;gap:9px;padding:15px 10px;border-radius:13px}.sentence .num{min-width:24px;min-height:27px;padding:2px 3px;line-height:23px;font-size:9px}.sentence .content{font-size:17px;line-height:1.65}.sentence .speaker{height:28px;width:28px;font-size:11px}.player{padding:18px 17px 22px}.player-text{font-size:16px}.word-focus{padding:16px;gap:8px}.word-focus .word-label{width:100%}.word-focus .word-value{font-size:22px}.word-focus .word-buttons{width:100%}.word-focus .word-buttons button{flex:1;font-size:10.5px}.practice{grid-template-columns:1fr;padding:20px}.mic{justify-self:stretch}.footer-note{line-height:1.6}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span> EchoRead <span class="tagline">/ 英文逐句＋單字點讀</span></div><div class="top-badge">✦ ATELIER EDITION · V3.0</div></header>
+    <div class="intro"><div><div class="eyebrow">ECHO / ENGLISH READING STUDIO</div><h1>讓每一句英文，<br>都讀得更有自信。</h1><p>在自己的節奏裡練習。點一句聽整句，點一個字練發音。</p></div><div class="intro-ornament"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span><b>Listen. Repeat. Grow.</b><br><small>慢慢讀，會越來越好。</small></span></div></div>
+    <div class="feature-bar"><div class="feature-set"><span class="feature-chip"><strong>01</strong> 匯入文章</span><span class="feature-chip"><strong>02</strong> 點字發音</span><span class="feature-chip"><strong>03</strong> 自己跟讀</span></div><div class="feature-note">YOUR SPACE TO PRACTICE</div></div>
+    <div class="layout">
+      <aside class="panel sidebar">
+        <section>
+          <h2 class="panel-title">匯入文章</h2><div class="muted" style="margin-bottom:12px">支援貼上文字，或上傳 TXT、DOCX、PDF。</div>
+          <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">📄</span><b>選擇檔案，或拖曳到這裡</b><small>TXT / MD 可離線；Word / PDF 需網路載入解析工具</small></label>
+          <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+          <div id="fileInfo" class="file-info" role="status"></div>
+          <div class="or">── 或直接貼上英文文章 ──</div>
+          <textarea class="text-input" id="articleInput" spellcheck="false" placeholder="例如：\nHello, everyone! My name is Amy. Today, I want to talk about my school."></textarea>
+          <button class="button wide" id="parseBtn">✦ 產生逐句練習</button>
+          <button class="button secondary wide" id="sampleBtn">試用範例文章</button>
+        </section>
+        <section class="control-block">
+          <h2 class="panel-title">朗讀設定</h2><div class="section-label">英文語音 / 腔調</div>
+          <select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得系統語音…</option></select>
+          <div class="rate-row"><span class="field-label">速度</span><span class="muted">慢</span><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span class="muted">快</span><span id="rateLabel" class="rate-number">0.85×</span></div>
+          <label class="toggle"><input type="checkbox" id="autoNext"> 播完一句，自動播放下一句</label>
+          <label class="toggle"><input type="checkbox" id="repeatToggle"> 重複朗讀目前句子</label>
+          <div class="muted" style="margin-top:9px">重複朗讀優先於自動下一句。</div>
+        </section>
+        <div class="privacy">🔒 <span>文章留在此瀏覽器內處理，沒有上傳到我們的伺服器。語音由瀏覽器／裝置提供；麥克風辨識可能使用瀏覽器服務。</span></div>
+      </aside>
+      <main>
+        <section class="panel workspace" aria-label="英文逐句練習">
+          <div class="workhead"><div><div class="minor">PERSONAL READING DESK</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點空白處聽整句；點任何英文單字，只朗讀該單字。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
+          <div class="progress-wrap"><div class="progress-label"><span>已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+          <div class="help-strip">✦ <strong>小提示：</strong> 點擊有虛線底線的英文單字，只聽那個字；點卡片空白處或右側 ▶，就能朗讀完整句子。</div>
+          <div id="sentences" class="sentences"><div class="empty"><span class="big">🎧</span><strong>從一篇你想讀的英文開始</strong><span>在左側上傳文章或貼上文字，這裡就會出現每一句英文。</span></div></div>
+          <div class="player"><div class="player-head"><span>NOW PLAYING</span><span class="now-playing" id="nowPlaying">尚未選擇句子</span></div><div class="player-text" id="playerText">選擇一句英文開始練習</div>
+            <div class="actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">⏮</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="朗讀或暫停" aria-label="朗讀或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">⏭</button><button class="repeat-btn" id="repeatBtn">↻ 單句循環：關</button></div>
+            <div class="status" id="playStatus" role="status">可用鍵盤 ↑ ↓ 切換句子，空白鍵播放／暫停</div>
+            <div class="word-focus" aria-live="polite"><span class="word-label">🔤 單字練習</span><span class="word-value" id="selectedWord">點文章中的單字</span><div class="word-buttons"><button id="replayWordBtn" type="button" disabled>🔊 重聽單字</button><button id="slowWordBtn" type="button" disabled>🐢 慢速發音</button></div></div>
+          </div>
+        </section>
+        <section class="panel practice"><div><h3>🎙️ 換你跟讀</h3><p>先點選想練的句子，再按「開始跟讀」念出來。會顯示語音辨識結果；不是正式發音評分。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div></div><button class="button secondary mic" id="micBtn">🎤 開始跟讀</button></section>
+        <div class="footer-note">建議使用最新版 Chrome / Edge。朗讀需要裝置有英文語音；語音辨識功能視瀏覽器支援與權限而定。</div>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.10.0/mammoth.browser.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script>
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const els = Object.fromEntries(['dropZone','fileInput','fileInfo','articleInput','parseBtn','sampleBtn','voiceSelect','rate','rateLabel','autoNext','repeatToggle','documentTitle','documentSubtitle','sentenceCount','progressText','progressFill','sentences','nowPlaying','playerText','prevBtn','stopBtn','playBtn','nextBtn','repeatBtn','playStatus','selectedWord','replayWordBtn','slowWordBtn','micBtn','recognitionOutput','toast'].map(id => [id,$(id)]));
+    const sample = `Good morning, everyone! My name is Amy. Today, I would like to share my learning experience.\nAt first, speaking English was difficult for me. I was afraid of making mistakes. But I learned that practice makes progress.\nNow, I listen to one sentence, repeat it, and try again. Every small step helps me become more confident. Thank you for listening!`;
+    let sentences = [], active = -1, listened = new Set(), voices = [], session = 0, isSpeaking = false, isPaused = false, speakingUtterance = null, recognition = null, recognizing = false, toastTimer = null, selectedWord = null, playbackKind = null;
+    function notify(message) { els.toast.textContent = message; els.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=>els.toast.classList.remove('show'),3500); }
+    function setStatus(message) { els.playStatus.textContent = message; }
+    function splitSentences(raw) {
+      const normalized = String(raw||'').replace(/\r\n?/g,'\n').replace(/[\t\u00a0]+/g,' ').replace(/ +/g,' ').trim();
+      if (!normalized) return [];
+      const output = [];
+      const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('en',{granularity:'sentence'}) : null;
+      for (const row of normalized.split(/\n+/)) {
+        const clean = row.trim().replace(/^[•*\-]\s*/, '');
+        if (!clean) continue;
+        const parts = segmenter ? Array.from(segmenter.segment(clean),s=>s.segment) : (clean.match(/[^.!?。！？]+(?:[.!?。！？]+["'”’)]*)?|[^.!?。！？]+$/g)||[clean]);
+        for (const p of parts) { const phrase = p.trim(); if (phrase) output.push(phrase); }
+      }
+      return output;
+    }
+    function stopSpeech() { session++; if ('speechSynthesis' in window) window.speechSynthesis.cancel(); isSpeaking = false; isPaused = false; speakingUtterance = null; playbackKind = null; els.sentences.querySelectorAll('.word-token.reading').forEach(w=>w.classList.remove('reading')); els.playBtn.textContent='▶'; els.playBtn.setAttribute('aria-label','開始朗讀'); }
+    function renderProgress() { const total=sentences.length; els.progressText.textContent=`${listened.size} / ${total}`; els.progressFill.style.width= total? `${100*listened.size/total}%` : '0%'; }
+    // 文字以 DOM text nodes + word buttons 呈現，避免使用 innerHTML 插入文章內容。
+    function appendClickableWords(content,sentence) {
+      const pattern=/[A-Za-z]+(?:['’\-][A-Za-z]+)*|\d+(?:[.,]\d+)*/g;
+      let cursor=0,wordIndex=0;
+      for(const match of sentence.matchAll(pattern)) {
+        content.appendChild(document.createTextNode(sentence.slice(cursor,match.index)));
+        const word=document.createElement('button'); word.type='button';word.className='word-token';word.textContent=match[0];
+        word.dataset.word=match[0];word.dataset.wordIndex=String(wordIndex++);
+        word.setAttribute('aria-label',`朗讀單字 ${match[0]}`);word.title=`點一下聽「${match[0]}」的發音`;
+        content.appendChild(word);cursor=match.index+match[0].length;
+      }
+      content.appendChild(document.createTextNode(sentence.slice(cursor)));
+    }
+    function renderCards() {
+      els.sentences.replaceChildren();
+      if (!sentences.length) {const empty = document.createElement('div');empty.className='empty';empty.innerHTML='<span class="big">🎧</span><strong>從一篇你想讀的英文開始</strong><span>在左側上傳文章或貼上文字，這裡就會出現每一句英文。</span>';els.sentences.appendChild(empty);return;}
+      const fragment=document.createDocumentFragment();
+      sentences.forEach((sentence,i)=>{
+        const card=document.createElement('div');card.className='sentence'+(i===active?' active':'')+(listened.has(i)?' done':'');card.dataset.index=String(i);card.setAttribute('role','group');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`第 ${i+1} 句，按 Enter 聽整句；也可以點單字聽單字：${sentence}`);
+        const num=document.createElement('span');num.className='num';num.textContent=String(i+1).padStart(2,'0');
+        const content=document.createElement('span');content.className='content';appendClickableWords(content,sentence);
+        const speaker=document.createElement('button');speaker.type='button';speaker.className='speaker';speaker.textContent='▶';speaker.setAttribute('aria-label',`朗讀完整第 ${i+1} 句`);
+        card.append(num,content,speaker);fragment.appendChild(card);
+      }); els.sentences.appendChild(fragment);
+    }
+    function updateWordHighlight() {
+      els.sentences.querySelectorAll('.word-token.selected').forEach(w=>w.classList.remove('selected'));
+      const chosen=selectedWord&&els.sentences.querySelector(`.sentence[data-index="${selectedWord.index}"] .word-token[data-word-index="${selectedWord.wordIndex}"]`);
+      if(chosen) chosen.classList.add('selected');
+      els.selectedWord.textContent=selectedWord?selectedWord.text:'點文章中的單字';
+      els.replayWordBtn.disabled=!selectedWord; els.slowWordBtn.disabled=!selectedWord;
+    }
+    function updateSelection(scroll=true) {
+      for (const node of els.sentences.querySelectorAll('.sentence')) { const idx=Number(node.dataset.index);node.classList.toggle('active',idx===active);node.classList.toggle('done',listened.has(idx));const num=node.querySelector('.num');if(num)num.textContent=String(idx+1).padStart(2,'0'); }
+      if(active>=0) { els.nowPlaying.textContent=`第 ${active+1} / ${sentences.length} 句`;els.playerText.textContent=sentences[active]; if(scroll) els.sentences.querySelector(`.sentence[data-index="${active}"]`)?.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+      else {els.nowPlaying.textContent='尚未選擇句子';els.playerText.textContent='選擇一句英文開始練習';}
+      renderProgress();updateWordHighlight();
+    }
+    function loadArticle(text,title='我的英文跟讀練習') {
+      const chunks=splitSentences(text);if(!chunks.length){notify('請先輸入英文內容。');return;}
+      stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點有虛線底線的單字聽發音；按 ▶ 朗讀整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);notify(`已成功分成 ${chunks.length} 句英文！`);
+    }
+    function getVoice(){const uri=els.voiceSelect.value;return voices.find(v=>v.voiceURI===uri)||voices.find(v=>/^en[-_]/i.test(v.lang))||null;}
+    function fillVoices(){if(!('speechSynthesis' in window)){els.voiceSelect.innerHTML='<option>此瀏覽器不支援語音朗讀</option>';return;}
+      const all=window.speechSynthesis.getVoices();const english=all.filter(v=>/^en([-_]|$)/i.test(v.lang));const filtered=english.length?english:all;const last=els.voiceSelect.value;voices=filtered;
+      els.voiceSelect.replaceChildren(); if(!voices.length){els.voiceSelect.add(new Option('使用系統預設語音',''));return;}
+      const preferred=voices.find(v=>/en-US/i.test(v.lang)&&(/natural|google|microsoft|samantha|aria/i.test(v.name)))||voices.find(v=>/en-US/i.test(v.lang))||voices[0];
+      voices.forEach(v=>els.voiceSelect.add(new Option(`${v.name}（${v.lang}）`,v.voiceURI)));
+      els.voiceSelect.value=voices.some(v=>v.voiceURI===last)?last:preferred.voiceURI;
+    }
+    function speak(index) {
+      if (!sentences.length) {notify('請先上傳或貼上英文文章。');return;}
+      if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能，請改用 Chrome 或 Edge。');return;}
+      if(index<0||index>=sentences.length)return;
+      stopRecognition();stopSpeech();active=index;selectedWord=null;playbackKind='sentence';updateSelection();
+      const mySession=session;const utterance=new SpeechSynthesisUtterance(sentences[index]);speakingUtterance=utterance;const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';utterance.rate=Number(els.rate.value);utterance.pitch=1;
+      utterance.onstart=()=>{if(mySession!==session)return;isSpeaking=true;isPaused=false;els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');setStatus(`正在朗讀第 ${index+1} 句 · ${utterance.rate.toFixed(2)}×`);};
+      utterance.onend=()=>{if(mySession!==session)return;isSpeaking=false;isPaused=false;listened.add(index);els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','重新朗讀');updateSelection(false);setStatus(`第 ${index+1} 句播放完成`);
+        if(els.repeatToggle.checked||els.autoNext.checked){const next=els.repeatToggle.checked?index:index+1;if(next<sentences.length)setTimeout(()=>{if(mySession===session)speak(next);},420);else setStatus('全部句子已朗讀完成！');}
+      };
+      utterance.onerror=(event)=>{if(mySession!==session)return;isSpeaking=false;isPaused=false;els.playBtn.textContent='▶';if(event.error!=='canceled'&&event.error!=='interrupted')setStatus(`語音朗讀失敗（${event.error||'未知原因'}）。請嘗試更換語音。`);};
+      try{isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus('準備朗讀…');window.speechSynthesis.speak(utterance);}catch(error){setStatus('無法啟動語音，請嘗試 Chrome 或 Edge。');notify(error.message||'語音功能啟動失敗');}
+    }
+    function speakWord(index, text, wordIndex, slow=false) {
+      if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能，請改用 Chrome 或 Edge。');return;}
+      if(index<0||index>=sentences.length||!text)return;
+      stopRecognition();stopSpeech();active=index;selectedWord={index,text,wordIndex};playbackKind='word';updateSelection(false);
+      const mySession=session;const utterance=new SpeechSynthesisUtterance(text);speakingUtterance=utterance;
+      const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';
+      utterance.rate=slow?Math.min(0.65,Number(els.rate.value)):Number(els.rate.value);utterance.pitch=1;
+      const wordButton=els.sentences.querySelector(`.sentence[data-index="${index}"] .word-token[data-word-index="${wordIndex}"]`);
+      utterance.onstart=()=>{if(mySession!==session)return;isSpeaking=true;isPaused=false;wordButton?.classList.add('reading');els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');setStatus(`正在${slow?'慢速':''}朗讀單字「${text}」· ${utterance.rate.toFixed(2)}×`);};
+      utterance.onend=()=>{if(mySession!==session)return;isSpeaking=false;isPaused=false;wordButton?.classList.remove('reading');els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','朗讀完整句子');setStatus(`單字「${text}」播放完成，可直接再點一次重聽`);};
+      utterance.onerror=e=>{if(mySession!==session)return;isSpeaking=false;isPaused=false;wordButton?.classList.remove('reading');els.playBtn.textContent='▶';if(e.error!=='canceled'&&e.error!=='interrupted')setStatus(`單字播放失敗（${e.error||'未知原因'}）`);};
+      try{isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus(`準備朗讀單字「${text}」…`);window.speechSynthesis.speak(utterance);}catch(e){setStatus('無法播放單字語音，請試用 Chrome 或 Edge。');notify(e.message||'單字播放失敗');}
+    }
+    function togglePlay(){if(!sentences.length){notify('請先匯入文章');return;}if(isPaused){window.speechSynthesis.resume();isPaused=false;isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus('繼續朗讀中…');return;}if(isSpeaking&&window.speechSynthesis.speaking){window.speechSynthesis.pause();isPaused=true;isSpeaking=false;els.playBtn.textContent='▶';setStatus('已暫停');return;}speak(Math.max(0,active));}
+    function stopRecognition(){if(recognition){try{recognition.abort();}catch(e){}recognition=null;}recognizing=false;els.micBtn.textContent='🎤 開始跟讀';els.micBtn.classList.add('secondary');}
+    const normalizeWords = t => t.toLowerCase().replace(/[^a-z0-9'\s-]/g,' ').replace(/[-]+/g,' ').split(/\s+/).filter(Boolean);
+    function editDistance(a,b){let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const cur=[i];for(let j=1;j<=b.length;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[b.length];}
+    function renderRecognition(text){els.recognitionOutput.replaceChildren();const line=document.createElement('div');const title=document.createElement('b');title.textContent='辨識到：';line.append(title,document.createTextNode(text));els.recognitionOutput.appendChild(line);
+      if(active>=0){const reference=normalizeWords(sentences[active]);const heard=normalizeWords(text);const dist=editDistance(reference,heard);const similarity=Math.max(0,Math.round(100*(1-dist/Math.max(1,reference.length,heard.length))));const indicator=document.createElement('div');indicator.className='muted';indicator.textContent=`文字相似度約 ${similarity}%（僅比較辨識文字，不能代表口音或發音準確度）`;els.recognitionOutput.appendChild(indicator);}
+    }
+    function toggleMic(){if(recognizing){stopRecognition();setStatus('已停止語音辨識');return;}if(!sentences.length){notify('請先匯入文章並選擇練習句子');return;}
+      const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+      if(!Recognition){els.recognitionOutput.textContent='此瀏覽器沒有語音辨識功能。建議改用最新版 Chrome 或 Edge，仍可正常使用句子朗讀。';return;}
+      stopSpeech();els.recognitionOutput.textContent='正在準備麥克風，請允許瀏覽器使用麥克風。';
+      const r=new Recognition();recognition=r;r.lang=getVoice()?.lang||'en-US';r.interimResults=false;r.continuous=false;r.maxAlternatives=1;
+      r.onstart=()=>{if(recognition!==r)return;recognizing=true;els.micBtn.textContent='⏹ 停止跟讀';els.micBtn.classList.remove('secondary');els.recognitionOutput.textContent='正在聽你說英文…';setStatus(`請念出第 ${active+1} 句`);};
+      r.onresult=event=>{if(recognition!==r)return;const text=event.results[0][0].transcript;renderRecognition(text);setStatus('辨識完成，你可以重新朗讀或換下一句。');};
+      r.onerror=event=>{if(recognition!==r)return;const detail=event.error==='not-allowed'?'麥克風權限遭拒絕，請檢查瀏覽器權限。':event.error==='network'?'語音辨識服務無法連線。':'語音辨識未成功：'+event.error;els.recognitionOutput.textContent=detail;setStatus(detail);};
+      r.onend=()=>{if(recognition!==r)return;recognizing=false;recognition=null;els.micBtn.textContent='🎤 開始跟讀';els.micBtn.classList.add('secondary');};
+      try{r.start();}catch(e){stopRecognition();els.recognitionOutput.textContent='無法啟動麥克風：'+e.message;}
+    }
+    async function loadFile(file){if(!file)return;const extension=file.name.toLowerCase().split('.').pop();els.fileInfo.style.display='block';els.fileInfo.textContent=`正在讀取：${file.name}`;els.parseBtn.disabled=true;try{
+      let content='';
+      if(['txt','md','text'].includes(extension)||file.type.startsWith('text/'))content=await file.text();
+      else if(extension==='docx'){if(typeof window.mammoth==='undefined')throw Error('Word 解析工具未載入。請連上網路重試，或將檔案另存為 TXT。');const result=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});content=result.value;}
+      else if(extension==='pdf'){if(typeof window.pdfjsLib==='undefined')throw Error('PDF 解析工具未載入。請連上網路重試，或複製 PDF 文字貼入左側。');window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await window.pdfjsLib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;const pages=[];for(let pageNumber=1;pageNumber<=pdf.numPages;pageNumber++){const page=await pdf.getPage(pageNumber);const items=(await page.getTextContent()).items;pages.push(items.map(it=>it.str+(it.hasEOL?'\n':' ')).join(''));}content=pages.join('\n');}
+      else throw Error('不支援這種檔案，請使用 TXT、MD、DOCX 或文字型 PDF。');
+      if(!content.trim())throw Error('沒有擷取到文字。若是掃描型 PDF（圖片），請先轉成可選取文字的檔案。');
+      els.articleInput.value=content;loadArticle(content,file.name.replace(/\.[^.]+$/,''));els.fileInfo.textContent=`✓ 已載入 ${file.name}`;
+    }catch(err){els.fileInfo.textContent='⚠ '+err.message;notify(err.message);}finally{els.parseBtn.disabled=false;els.fileInput.value='';}}
+    els.sentences.addEventListener('click',e=>{
+      const word=e.target.closest('.word-token');
+      if(word){const card=word.closest('.sentence');speakWord(Number(card.dataset.index),word.dataset.word,Number(word.dataset.wordIndex));return;}
+      const card=e.target.closest('.sentence');if(card)speak(Number(card.dataset.index));
+    });
+    els.sentences.addEventListener('keydown',e=>{
+      if(e.target.matches('.sentence')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.stopPropagation();speak(Number(e.target.dataset.index));}
+    });
+    els.replayWordBtn.addEventListener('click',()=>{if(selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);});
+    els.slowWordBtn.addEventListener('click',()=>{if(selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex,true);});
+    els.parseBtn.addEventListener('click',()=>loadArticle(els.articleInput.value,'我的英文跟讀練習'));
+    els.sampleBtn.addEventListener('click',()=>{els.articleInput.value=sample;loadArticle(sample,'英文自我介紹｜示範練習');});
+    els.fileInput.addEventListener('change',e=>loadFile(e.target.files?.[0]));
+    ['dragenter','dragover'].forEach(eventName=>els.dropZone.addEventListener(eventName,e=>{e.preventDefault();els.dropZone.classList.add('drag');}));
+    ['dragleave','drop'].forEach(eventName=>els.dropZone.addEventListener(eventName,e=>{e.preventDefault();els.dropZone.classList.remove('drag');if(eventName==='drop'&&e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);}));
+    els.rate.addEventListener('input',()=>{els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;});
+    els.rate.addEventListener('change',()=>{if(isSpeaking||isPaused){if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);else speak(Math.max(0,active));}});
+    els.voiceSelect.addEventListener('change',()=>{if(isSpeaking||isPaused){if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);else speak(Math.max(0,active));}});
+    els.prevBtn.addEventListener('click',()=>speak(Math.max(0,active-1)));
+    els.nextBtn.addEventListener('click',()=>speak(Math.min(sentences.length-1,active+1)));
+    els.playBtn.addEventListener('click',togglePlay);
+    els.stopBtn.addEventListener('click',()=>{stopSpeech();setStatus('已停止播放');});
+    function syncRepeat(){const on=els.repeatToggle.checked;els.repeatBtn.textContent=`↻ 單句循環：${on?'開':'關'}`;els.repeatBtn.classList.toggle('on',on);}
+    els.repeatBtn.addEventListener('click',()=>{els.repeatToggle.checked=!els.repeatToggle.checked;syncRepeat();});els.repeatToggle.addEventListener('change',syncRepeat);
+    els.micBtn.addEventListener('click',toggleMic);
+    document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const tag=document.activeElement?.tagName;if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(tag))return;if(e.code==='Space'){e.preventDefault();togglePlay();}else if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();speak(Math.min(sentences.length-1,active+1));}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();speak(Math.max(0,active-1));}else if(e.key==='Escape'){stopSpeech();stopRecognition();setStatus('已停止');}});
+    if('speechSynthesis' in window){fillVoices();window.speechSynthesis.addEventListener?.('voiceschanged',fillVoices);setTimeout(fillVoices,550);}else fillVoices();
+    els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;
+  })();
+  </script>
+</body>
+</html>
