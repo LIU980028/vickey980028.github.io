@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f6f9">
-<title>EchoRead V10 · Quiet Glass｜英文逐句・逐字跟讀</title>
+<title>EchoRead V11 · Study Platform｜英文逐句・逐字跟讀</title>
 <meta name="description" content="EchoRead Quiet Glass：低飽和珍珠白與煙紫色的簡約英語學習工作台，支援上傳文章、逐句朗讀、點字發音及跟讀。">
 <style>
 :root{--ink:#1b2333;--secondary:#677389;--muted:#9ba5b5;--line:#e7eaf1;--blue:#4a70de;--violet:#7f6be2;--paper:#fff;--page:#f8f9fc;--glass-edge:rgba(255,255,255,.96);--shadow:0 22px 70px rgba(48,66,101,.07);--radius:27px}
@@ -115,35 +115,161 @@ body.quiet-mode .liquid-dock::after{background:rgba(255,255,255,.96)}body.quiet-
 }
 @media(prefers-reduced-motion:reduce){body:after,.sentence.active{animation:none!important}}
 
+
+/* EchoRead 11 | professional study platform visual language */
+:root{--ink:#10213b;--secondary:#63728a;--muted:#8a98ad;--line:#e3eaf3;--blue:#3368ec;--violet:#4e72ad;--paper:#fff;--page:#f5f7fb;--shadow:0 12px 34px rgba(22,52,98,.055);--radius:22px}
+html{background:#f5f7fb;color-scheme:light;scroll-padding-top:22px}
+body{background:#f5f7fb;color:#14243d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
+body::before,body::after{display:none}
+.shell{max-width:1420px;padding:0 42px 166px}
+header{height:80px;border-bottom:1px solid #e4eaf3}
+.brand{font-size:24px;letter-spacing:-.85px;color:#10213b}
+.brand-mark{background:#2153ce;color:#fff;border-radius:11px;box-shadow:0 7px 16px rgba(33,83,206,.13);font-weight:800}
+.tagline{color:#7988a1;font-size:11px;border-left:1px solid #d5deeb;letter-spacing:1.8px}
+.top-badge{color:#677d9b;letter-spacing:1.7px;font-size:10px;font-weight:800}
+.glass-toggle{background:#fff;border:1px solid #dfe6f0;color:#2b55a7;box-shadow:none;border-radius:99px;padding:9px 17px}
+.glass-toggle:hover{background:#ecf2ff;transform:none}
+.hero{position:relative;overflow:hidden;margin:22px 0 0;padding:54px 58px 58px;min-height:342px;display:flex;align-items:center;justify-content:space-between;gap:28px;border-radius:24px;background:radial-gradient(circle at 78% 36%,rgba(105,154,255,.24),transparent 30%),linear-gradient(112deg,#0b1e3c,#102c61 58%,#1a4a8e);box-shadow:0 22px 50px rgba(18,48,97,.11)}
+.hero::before{content:"";position:absolute;right:-110px;top:-180px;width:540px;height:540px;border:1px solid rgba(255,255,255,.17);border-radius:50%;box-shadow:0 0 0 74px rgba(255,255,255,.022),0 0 0 148px rgba(255,255,255,.017);pointer-events:none}
+.hero::after{content:"";position:absolute;right:21%;bottom:-98px;height:210px;width:210px;border-radius:50%;background:radial-gradient(circle,rgba(113,158,255,.20),transparent 75%);pointer-events:none}
+.hero>div{position:relative;z-index:1}
+.eyebrow{font-size:11px;color:#a9c6ff;letter-spacing:2.8px;font-weight:780}
+.hero h1{font-size:clamp(36px,4.05vw,57px);color:#fff;margin:16px 0 18px;letter-spacing:-1.8px;font-weight:800;line-height:1.22}
+.hero h1 em{font-style:normal;color:#add0ff!important;-webkit-text-fill-color:#add0ff!important;background:none!important;filter:none!important}
+.hero p{color:#d5e3f9;font-size:15px;line-height:1.9;margin-bottom:22px}
+.hero-cta{display:inline-flex;align-items:center;gap:16px;text-decoration:none;background:#fff;color:#16345d;font-size:13px;font-weight:800;padding:12px 17px 12px 20px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform .18s,background .18s}
+.hero-cta:hover{background:#edf5ff;transform:translateY(-2px)}
+.hero-cta span{font-size:17px}
+.hero-aside{margin-right:5%;width:240px;height:227px;border:1px solid rgba(255,255,255,.18);border-radius:22px;background:linear-gradient(130deg,rgba(255,255,255,.085),rgba(255,255,255,.018));display:flex;align-items:flex-start;flex-direction:column;justify-content:space-between;padding:19px 21px;box-shadow:inset 0 1px rgba(255,255,255,.1);color:#eff6ff;letter-spacing:1px;font-size:11px;backdrop-filter:blur(9px)}
+.hero-aside .hero-index{font-size:11px;color:#b4cff7;font-weight:800;letter-spacing:2px}
+.hero-graphic{display:flex;align-items:center;justify-content:center;gap:12px;height:77px;width:100%}
+.hero-graphic i{display:block;width:7px;border-radius:15px;background:linear-gradient(180deg,#a8d0ff,#569cf8);height:26px;box-shadow:0 0 18px rgba(119,181,255,.2)}
+.hero-graphic i:nth-child(2),.hero-graphic i:nth-child(4){height:53px}.hero-graphic i:nth-child(3){height:75px}
+.hero-side-title{font-weight:850;color:white;font-size:12px;letter-spacing:1.7px}
+.hero-side-caption{color:#a9bedb;font-size:10px;letter-spacing:1.1px}
+.learning-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:24px 0 48px;background:#fff;border-radius:18px;border:1px solid #e9eef6;box-shadow:0 6px 20px rgba(20,51,94,.025)}
+.learning-steps>div{padding:23px 29px;display:flex;flex-direction:column;gap:3px;position:relative}
+.learning-steps>div+div{border-left:1px solid #e8edf5}
+.learning-steps span{color:#4979cf;font-size:10px;letter-spacing:1.65px;font-weight:850;margin-bottom:6px}
+.learning-steps strong{font-size:16px;color:#132b4a;letter-spacing:-.3px}
+.learning-steps small{font-size:11px;color:#8b9aad}
+.desk-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 19px}
+.desk-eyebrow{font-size:10px;letter-spacing:2px;font-weight:850;color:#3769c9}
+.desk-heading h2{font-size:25px;letter-spacing:-.5px;color:#172e4d;margin:6px 0 0}
+.desk-heading h2 span{font-size:14px;color:#93a3b7;font-weight:500}
+.desk-note{color:#95a4b8;letter-spacing:1.3px;font-size:10px;font-weight:750}
+.layout{grid-template-columns:318px minmax(0,1fr);gap:20px;align-items:start}
+.sidebar{gap:14px}
+.panel{background:#fff;border:1px solid #e4ebf5;border-radius:18px;box-shadow:var(--shadow);backdrop-filter:none;-webkit-backdrop-filter:none}
+.panel:before,.panel::after{display:none!important}
+.sidebar .panel{padding:25px}
+.panel-title{color:#1b3353;font-size:16px;margin-bottom:10px;font-weight:820;letter-spacing:-.2px}
+.section-number{display:inline-grid;place-items:center;width:29px;height:29px;background:#eaf1ff;color:#346ad5;border-radius:9px;font-size:11px;font-weight:850;margin-right:5px}
+.muted{color:#7c8ca2;font-size:12px}
+.dropzone{border:1px dashed #afc4e9;background:#f8fbff;border-radius:13px;padding:23px 14px;margin-top:16px}
+.dropzone:hover,.dropzone.drag{background:#edf4ff;border-color:#4e84e4}
+.dropzone .emoji{color:#326ad7;font-weight:800;font-size:28px}
+.dropzone b{color:#244268;font-size:13px}
+.dropzone small{color:#8ea1ba}
+.or{color:#9aa7b7}
+.text-input{background:#fff;color:#21364e;border:1px solid #dfe7f3;border-radius:11px;min-height:140px;box-shadow:none;font-size:13px}
+.text-input:focus{border-color:#81a5e8;outline:2px solid rgba(71,120,221,.13)}
+.button{background:#285bd7;color:#fff;border:1px solid #285bd7;box-shadow:0 7px 15px rgba(46,97,202,.11);border-radius:10px;padding:12px 15px}
+.button:hover:not(:disabled){background:#194ecb;box-shadow:0 9px 18px rgba(46,97,202,.14);transform:translateY(-1px)}
+.button.secondary,.button.ghost{background:#eef4ff;color:#2d5dbc;border:1px solid #dfeaff;box-shadow:none}
+.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#e4edff}
+.form-select,.rate-number{background:#f7faff;border:1px solid #e0e9f5;color:#334f79}
+.rate-row input,.toggle input{accent-color:#326bd9}
+.toggle{color:#53637c}.privacy{color:#8390a2}
+.workhead{padding:26px 27px 17px}
+.workhead .minor{color:#4072c8;letter-spacing:1.7px;font-size:11px;font-weight:850}
+.workhead h2{font-size:24px;color:#152c4a}
+.count-pill{background:#eaf1ff;color:#3069d4;border:1px solid #dce8ff;border-radius:9px}
+.progress-wrap{padding:0 27px 20px}
+.progress-track{background:#eff4fc;height:7px}
+.progress-fill{background:#2d69da;box-shadow:none}
+.help-strip{margin:0 24px 16px;background:#f5f8fe;border:1px solid #e6edf9;color:#61748e;border-radius:11px;padding:11px 14px;font-size:11px}
+.sentences{padding:0 18px 18px;max-height:540px}
+.sentence{background:#fff;border:1px solid #e7edf6;border-radius:12px;box-shadow:none;margin-bottom:9px;padding:18px 16px}
+.sentence:hover{background:#f7faff;border-color:#dbe7fa;box-shadow:none;transform:none}
+.sentence.active{background:#f4f8ff;border:1px solid #a7c1ed;box-shadow:inset 3px 0 #2d69da;animation:none}
+.sentence .num{background:#eef3fa;color:#7890ae;border-radius:7px}
+.sentence.active .num{background:#2c64d2;color:#fff}
+.sentence .content{font:400 18px/1.75 Georgia,"Times New Roman",serif;color:#20344e}
+.sentence .speaker{background:#eef4ff;border:1px solid #deebff;color:#2d65cb}
+.sentence .speaker:hover{background:#dce9ff}
+.sentence .content .word-token{text-decoration-color:rgba(52,103,209,.48)}
+.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e9f0ff;color:#234ca0;outline:none}
+.sentence .content .word-token.selected{background:#dce9ff;color:#1a54ba;box-shadow:inset 0 -2px #6997e1}
+.sentence .content .word-token.reading{background:#cee1ff;color:#1c4fa1;box-shadow:none}
+.empty{color:#8795a9}.empty strong{color:#233951}
+.liquid-dock{filter:drop-shadow(0 13px 23px rgba(24,52,102,.14));bottom:18px;width:min(820px,calc(100% - 28px))}
+.liquid-dock::before{background:#102a56;box-shadow:0 12px 25px rgba(15,37,78,.12),0 0 0 1px rgba(31,65,128,.13)}
+.liquid-dock::after{background:linear-gradient(130deg,#14325e,#1d3d73 56%,#112e5e);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px rgba(255,255,255,.19)}
+.dock-kicker{color:#9dbbec}.dock-current{color:#fff}.dock-info,.dock-under #playStatus,.dock-under .tiny{color:#b3c5e5}
+.circle-btn{background:#2b4d81;color:#fff;border:1px solid rgba(255,255,255,.16);box-shadow:none}
+.circle-btn:hover{background:#40649b;box-shadow:none}
+.circle-btn.main{background:#fff;color:#1c53bd;border:1px solid #fff;box-shadow:0 6px 14px rgba(1,13,35,.16)}
+.circle-btn.main:hover{background:#eaf2ff;color:#1958c7;box-shadow:0 6px 14px rgba(1,13,35,.12)}
+.repeat-btn{background:#254674;color:#d6e6ff;border:1px solid #4b6796}
+.repeat-btn.on{background:#e9f1ff;color:#2259c0;border-color:#e9f1ff}
+.word-popover{background:#fff;border:1px solid #dce7f8;border-radius:16px;box-shadow:0 20px 45px rgba(18,47,92,.16);backdrop-filter:none;-webkit-backdrop-filter:none}
+.word-popover:before{display:none}
+.word-head{color:#6c86aa}.word-value{color:#153a77;font-size:25px}.word-close{background:#eff4fc;color:#45658a}
+.word-buttons button{background:#eef4ff;color:#285fbd;border:1px solid #dfe9fc;box-shadow:none}
+.word-buttons button:first-child{background:#2c60d0;border:1px solid #2c60d0;color:#fff}
+.practice{padding:24px 27px;min-height:165px}.practice h3{color:#1b3658;font-size:16px}.practice p{color:#718198}
+.practice .recognition{color:#415673}.practice .recognition b{color:#2158bc}
+.voice-status{color:#8294ad}.voice-dot,.voice-meter i{background:#5f8cdb}.practice.is-listening .voice-dot{background:#3977e7;box-shadow:0 0 10px rgba(50,110,216,.23)}
+.voice-orb{border:1px solid #dce7fa;background:radial-gradient(circle at 29% 24%,#fff,#ecf3ff 25%,#aacaff 67%,#729ee5);box-shadow:0 10px 24px rgba(48,97,180,.1),inset 0 2px 6px #fff}
+.voice-orb:before{background:conic-gradient(from 25deg,#fff,#d1e2ff,#7ba5ed,#fff)}
+.voice-orb:after{border-color:#d9e7ff}.voice-orb .stem{stroke:#2d62c0}
+.footer-note{color:#8d9db0}.toast{background:#163a74;color:#fff;border:1px solid #7595c7;box-shadow:0 12px 27px rgba(17,46,89,.17)}
+body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-popover{background:#fff}
+@media(max-width:1050px){.shell{padding:0 22px 164px}.hero{padding:44px}.layout{grid-template-columns:290px minmax(0,1fr)}.hero-aside{margin-right:0;width:208px}}
+@media(max-width:790px){.layout{display:flex;flex-direction:column}.sidebar{display:grid;grid-template-columns:1fr 1fr;width:100%}.reading-area{width:100%}.hero{padding:37px 32px;min-height:320px}.hero-aside{width:185px}.learning-steps>div{padding:19px 17px}.desk-note{display:none}}
+@media(max-width:580px){
+ .shell{padding:0 12px 168px}header{height:67px}.brand{font-size:21px}.tagline,.top-badge{display:none}.glass-toggle{font-size:10px;padding:8px 11px}
+ .hero{margin:12px 0 0;padding:33px 25px 35px;min-height:0;border-radius:17px;display:block}.hero h1{font-size:35px;letter-spacing:-1.2px;line-height:1.29;margin:13px 0}.hero p{font-size:12px;margin:9px 0 18px}.eyebrow{font-size:9px;letter-spacing:1.8px}
+ .hero-aside{display:none}.hero-cta{font-size:12px;padding:10px 15px}
+ .learning-steps{display:flex;margin:13px 0 28px;gap:0;border-radius:13px;overflow-x:auto;scroll-snap-type:x mandatory}
+ .learning-steps>div{flex:0 0 52%;scroll-snap-align:start;padding:14px 16px}.learning-steps strong{font-size:13px}.learning-steps small{font-size:10px}
+ .desk-heading{margin-bottom:13px}.desk-heading h2{font-size:19px}.desk-heading h2 span{display:block;font-size:11px;margin-top:2px}
+ .sidebar{display:flex;gap:12px}.sidebar .panel{padding:19px}.panel{border-radius:13px}.panel-title{font-size:15px}.section-number{width:26px;height:26px}.workhead{padding:20px 18px 15px}.workhead h2{font-size:20px}.progress-wrap{padding:0 18px 16px}.help-strip{margin:0 12px 13px;padding:10px 11px}
+ .sentences{padding:0 9px 14px;max-height:500px}.sentence{margin-bottom:7px;padding:14px 10px}.sentence .content{font-size:17px}.practice{padding:18px;min-height:0}
+ .liquid-dock{bottom:11px}.dock-current{font-size:12px}.dock-actions{gap:5px}.dock-label{min-width:0}.dock-inside{padding:13px 14px 11px}.circle-btn{height:36px;width:36px}.circle-btn.main{height:42px;width:42px}.repeat-btn{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.hero-cta,.circle-btn,.sentence{transition:none!important}}
+
 </style>
 </head>
 <body>
 <!-- SVG optical displacement creates a gently curved refractive lens. Subtle filter, with CSS blur fallback. -->
 <svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><filter id="liquid-refraction" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <div class="shell">
-<header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span>EchoRead <span class="tagline">QUIET GLASS</span></div><div class="glass-controls"><span class="top-badge">EDITION 10 / QUIET</span><button id="glassToggle" class="glass-toggle" type="button" aria-pressed="true" title="關閉柔光以提高閱讀專注度">◌ 柔光模式</button></div></header>
-<section class="hero"><div><div class="eyebrow">ECHO / YOUR ENGLISH SPACE</div><h1>讓每一句英文，<br><em>讀得更自在。</em></h1><p>把注意力留給每一個字。<br>點句子聽朗讀，點單字練發音。</p></div><div class="hero-aside"><span class="rule"></span>READ · LISTEN · REPEAT</div></section>
-<div class="layout">
+<header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span>EchoRead <span class="tagline">STUDY PLATFORM</span></div><div class="glass-controls"><span class="top-badge">ECHO / LEARNING SYSTEM 11</span><button id="glassToggle" class="glass-toggle" type="button" aria-pressed="true" title="切換清晰專注模式">◌ 專注模式</button></div></header>
+<section class="hero"><div><div class="eyebrow">ECHOREAD · ENGLISH LEARNING PLATFORM</div><h1>讀得清楚，<br><em>說得更有自信。</em></h1><p>從每一句、每一個單字開始。<br>把自己的英文文章變成專屬口說練習。</p><a class="hero-cta" href="#practiceWorkspace">開始練習 <span aria-hidden="true">↗</span></a></div><div class="hero-aside"><span class="hero-index">01 / 03</span><span class="hero-graphic" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="hero-side-title">READ / LISTEN / SPEAK</span><span class="hero-side-caption">YOUR PRACTICE, YOUR PACE.</span></div></section>
+<div class="learning-steps" aria-label="英文跟讀流程"><div><span>01 / INPUT</span><strong>匯入文章</strong><small>上傳文字或貼上內容</small></div><div><span>02 / LISTEN</span><strong>逐句・逐字聽讀</strong><small>點選任一句、任何單字</small></div><div><span>03 / SPEAK</span><strong>自己開口跟讀</strong><small>重聽、慢速、反覆練習</small></div></div><div class="desk-heading"><div><span class="desk-eyebrow">YOUR LEARNING DESK</span><h2>開始你的英文練習 <span>／ Practice Studio</span></h2></div><span class="desk-note">STEP BY STEP, BETTER EVERY DAY</span></div><div class="layout" id="practiceWorkspace">
 <aside class="sidebar">
-<section class="panel"><h2 class="panel-title">建立練習</h2><div class="muted">帶入想練習的英文文章，讓內容成為自己的專屬教材。</div>
+<section class="panel"><h2 class="panel-title"><span class="section-number">01</span> 建立練習</h2><div class="muted">帶入想練習的英文文章，讓內容成為自己的專屬教材。</div>
 <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>拖曳檔案或點擊上傳</b><small>TXT、DOCX、文字型 PDF</small></label>
 <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
 <div id="fileInfo" class="file-info" role="status"></div><div class="or">或是直接貼上文章</div>
 <textarea class="text-input" id="articleInput" spellcheck="false" placeholder="Paste your English text here…"></textarea><button class="button wide" id="parseBtn">✧ 開始我的練習</button><button class="button ghost wide" id="sampleBtn">試用示範文章</button>
-<div class="control-block"><h2 class="panel-title">聲音偏好</h2><div class="section-label">VOICE / ACCENT</div><select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得英文語音…</option></select>
+<div class="control-block"><h2 class="panel-title"><span class="section-number">02</span> 聲音偏好</h2><div class="section-label">VOICE / ACCENT</div><select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得英文語音…</option></select>
 <div class="rate-row"><span class="field-label">語速</span><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
 <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複朗讀目前句子</label>
 </div></section>
 <div class="privacy">🔒 文章在本機瀏覽器處理，不會送往 EchoRead 伺服器。Word / PDF 解析需要網路工具；麥克風辨識可能使用瀏覽器線上服務。</div>
 </aside>
 <main class="reading-area">
-<section class="panel workspace" aria-label="英文逐句練習"><div class="workhead"><div><div class="minor">QUIET · READING STUDIO</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點單字只聽該字；點卡片空白處播放整句。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
+<section class="panel workspace" aria-label="英文逐句練習"><div class="workhead"><div><div class="minor">PRACTICE / SENTENCE BY SENTENCE</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點單字只聽該字；點卡片空白處播放整句。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
 <div class="progress-wrap"><div class="progress-label"><span>READING PROGRESS · 已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
 <div class="help-strip">✧ <strong>輕點有虛線底線的單字</strong>，會浮出發音工具；點整句空白或右側播放圖示，朗讀整句。</div>
 <div class="sentences" id="sentences"><div class="empty"><span class="big">✧</span><strong>今天想讀什麼英文？</strong><span>上傳文章或貼上文字，就能開始一字一句練習。</span></div></div>
 <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
 </section>
-<section class="panel practice" id="practiceCard"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div><div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div><div><h3>Voice Studio <span style="font-weight:450;color:#a7b1c1">/ 跟讀練習</span></h3><p>選擇一句英文，跟著自己的節奏唸出來。聲音會帶動玻璃球的柔和光暈。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div><button class="button secondary mic" id="micBtn">🎤 開始跟讀</button></section>
+<section class="panel practice" id="practiceCard"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div><div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div><div><h3>03 / Voice Studio <span style="font-weight:450;color:#7a899c">/ 跟讀練習</span></h3><p>選擇一句英文，跟著自己的節奏唸出來。聲音會帶動玻璃球的柔和光暈。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div><button class="button secondary mic" id="micBtn">🎤 開始跟讀</button></section>
 <div class="footer-note">建議使用 Chrome / Edge。系統語音品質取決於裝置；文字相似度不代表專業口音或發音評分。</div>
 </main>
 </div>
