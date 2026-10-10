@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f3f5f7">
-<title>EchoRead V13｜美式學習工作台</title>
+<title>EchoRead V14｜美式學習工作台・慢速跟讀</title>
 <meta name="description" content="EchoRead 英文逐句朗讀及單字點讀練習。">
 <style>
 :root{--bg:#f3f5f7;--paper:#fff;--ink:#1e2934;--muted:#7e8995;--line:#e8ebef;--accent:#252b34;--violet:#a28cef;--lav:#eae5ff;--mint:#c9f5d4;--cyan:#cdf0f6;--shadow:0 6px 20px rgba(37,50,65,.045)}
@@ -37,6 +37,17 @@
 @media(max-width:640px){.app-shell{padding:8px}.side-nav{border-radius:14px;display:block;padding:11px}.logo{float:left;margin-top:4px}.logo small{display:none}.nav-links{display:flex;justify-content:flex-end;gap:0}.nav-link{font-size:0;padding:10px 11px;gap:0}.nav-icon{font-size:18px;width:auto}.nav-link.active{border-radius:9px}.main-page{padding:0 0 180px}.page-top h1{font-size:23px}.page-top p{font-size:11px}.workspace-tag{display:none}.overview{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}.overview-card{padding:14px;min-height:120px;border-radius:14px}.overview-card h2{font-size:16px;margin-top:17px}.overview-card p{font-size:10.5px}.overview-card.white{display:none}.area-grid{gap:12px}.workhead{padding:18px}.workhead h2{font-size:17px}.progress-wrap{padding:13px 18px 9px}.help-strip{margin:7px 18px 9px}.sentences{padding:2px 12px 16px;max-height:60vh}.sentence{grid-template-columns:27px minmax(0,1fr) 29px;gap:7px;padding:12px 8px}.sentence .num{font-size:10px}.sentence .content{font-size:16px}.sentence .speaker{width:28px;height:28px}.empty{min-height:270px}.practice{padding:15px;grid-template-columns:42px minmax(0,1fr);gap:10px}.voice-orb{width:42px;height:42px;border-radius:13px}.practice>div:nth-child(3){min-width:0}.practice .mic{grid-column:2;justify-self:start}.right-tools{grid-template-columns:1fr}.rail{padding:19px}.control-block{margin-top:0;padding-top:0;border:0}.liquid-dock{bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 16px);border-radius:14px;padding:10px}.dock-inside{flex-wrap:wrap;gap:4px}.dock-label{flex-basis:100%;padding-left:5px}.dock-kicker,.dock-info{display:none}.dock-current{font-size:12px}.dock-actions{width:100%;justify-content:center;gap:7px}.circle-btn{height:31px;width:31px}.circle-btn.main{height:39px;width:39px}.repeat-btn{font-size:9px;padding:8px}.dock-under .tiny{display:none}.dock-under{padding:2px 5px 0}.word-popover{width:min(260px,calc(100vw - 20px))}}
 @media(max-width:640px){.area-grid{display:flex;flex-direction:column}.right-tools{display:contents}.right-tools #importArticle{order:1;width:100%}.left-work{order:2;width:100%}.right-tools #voiceSettings{order:3;width:100%}.right-tools .privacy{order:4;width:100%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* V14 · Slow-reading controls: accessible, low-distraction and mobile-friendly */
+.speed-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px}
+.speed-preset{min-width:0;border-radius:10px;border:1px solid #e8e9f0;background:#fbfbfd;padding:9px 4px;color:#566274;font-size:11px;font-weight:750;line-height:1.35;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;transition:background .15s,border-color .15s,color .15s;cursor:pointer}
+.speed-preset small{font-size:10px;font-weight:650;color:#8690a1;font-variant-numeric:tabular-nums}
+.speed-preset:hover{background:#f0effa;border-color:#d8d3ee}
+.speed-preset.active{background:#ebe7fc;border-color:#a99adf;color:#5a478f;box-shadow:inset 0 0 0 1px rgba(124,94,208,.08)}
+.speed-preset.active small{color:#6d5c9b}
+.speed-preset:focus-visible{outline:2px solid #846cc2;outline-offset:2px}
+.rate-hint{margin:9px 0 0;color:#87909f;font-size:10.5px;line-height:1.6}
+
 </style>
 </head>
 <body>
@@ -90,7 +101,13 @@
         <section class="rail" id="voiceSettings" aria-label="英文語音設定">
           <div class="rail-heading"><h2>語音設定</h2><small>VOICE</small></div>
           <label class="section-label" for="voiceSelect">英文語音 / 腔調</label><select class="form-select" id="voiceSelect" aria-label="英文語音"><option value="">正在取得系統語音…</option></select>
-          <div class="rate-row"><label class="field-label" for="rate">播放語速</label><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
+          <div class="rate-row"><label class="field-label" for="rate">播放語速</label><input type="range" id="rate" min="0.4" max="1.2" step="0.05" value="0.65" aria-label="朗讀語速"><span id="rateLabel" class="rate-number" aria-live="polite">0.65×</span></div>
+          <div class="speed-presets" role="group" aria-label="常用語速選擇">
+            <button type="button" class="speed-preset" data-speed="0.50" aria-pressed="false">慢慢聽 <small>0.50×</small></button>
+            <button type="button" class="speed-preset active" data-speed="0.65" aria-pressed="true">跟讀 <small>0.65×</small></button>
+            <button type="button" class="speed-preset" data-speed="0.90" aria-pressed="false">自然 <small>0.90×</small></button>
+          </div>
+          <p class="rate-hint">先從「慢慢聽」開始，不夠慢可再向左拉。不同語音的實際語速可能不同。</p>
           <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複目前句子</label>
         </section>
         <p class="privacy">文章在瀏覽器內解析；Word / PDF 解析需要網路載入工具。語音辨識可能使用瀏覽器的雲端服務。</p>
@@ -99,7 +116,7 @@
   </div>
 </div>
 <div class="liquid-dock" id="liquidDock" aria-label="播放控制"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">NOW PLAYING</span><span class="dock-current" id="playerText">尚未選擇句子</span></div><span id="nowPlaying" class="dock-info">尚未開始練習</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="播放或暫停" aria-label="播放或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">匯入文章後即可開始練習</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
-<div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD / 單字</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽</button><button type="button" id="slowWordBtn" disabled>慢速發音</button></div></div>
+<div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD / 單字</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽</button><button type="button" id="slowWordBtn" disabled>超慢速發音</button></div></div>
 <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.10.0/mammoth.browser.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
@@ -220,7 +237,7 @@
       const mySession=session;const utterance=new SpeechSynthesisUtterance(sentences[index]);speakingUtterance=utterance;const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';utterance.rate=Number(els.rate.value);utterance.pitch=1;
       utterance.onstart=()=>{if(mySession!==session)return;setSpeechGlow(true);isSpeaking=true;isPaused=false;els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');setStatus(`正在朗讀第 ${index+1} 句 · ${utterance.rate.toFixed(2)}×`);};
       utterance.onend=()=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;listened.add(index);els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','重新朗讀');updateSelection(false);setStatus(`第 ${index+1} 句播放完成`);
-        if(els.repeatToggle.checked||els.autoNext.checked){const next=els.repeatToggle.checked?index:index+1;if(next<sentences.length)setTimeout(()=>{if(mySession===session)speak(next);},420);else setStatus('全部句子已朗讀完成！');}
+        if(els.repeatToggle.checked||els.autoNext.checked){const next=els.repeatToggle.checked?index:index+1;if(next<sentences.length)setTimeout(()=>{if(mySession===session)speak(next);},1350);else setStatus('全部句子已朗讀完成！');}
       };
       utterance.onerror=(event)=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;els.playBtn.textContent='▶';if(event.error!=='canceled'&&event.error!=='interrupted')setStatus(`語音朗讀失敗（${event.error||'未知原因'}）。請嘗試更換語音。`);};
       try{isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus('準備朗讀…');window.speechSynthesis.speak(utterance);}catch(error){setStatus('無法啟動語音，請嘗試 Chrome 或 Edge。');notify(error.message||'語音功能啟動失敗');}
@@ -231,7 +248,7 @@
       stopRecognition();stopSpeech();active=index;selectedWord={index,text,wordIndex};playbackKind='word';updateSelection(false);
       const mySession=session;const utterance=new SpeechSynthesisUtterance(text);speakingUtterance=utterance;
       const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';
-      utterance.rate=slow?Math.min(0.65,Number(els.rate.value)):Number(els.rate.value);utterance.pitch=1;
+      utterance.rate=slow?Math.min(0.45,Number(els.rate.value)):Number(els.rate.value);utterance.pitch=1;
       const wordButton=els.sentences.querySelector(`.sentence[data-index="${index}"] .word-token[data-word-index="${wordIndex}"]`);
       utterance.onstart=()=>{if(mySession!==session)return;setSpeechGlow(true);isSpeaking=true;isPaused=false;wordButton?.classList.add('reading');els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');setStatus(`正在${slow?'慢速':''}朗讀單字「${text}」· ${utterance.rate.toFixed(2)}×`);};
       utterance.onend=()=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;wordButton?.classList.remove('reading');els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','朗讀完整句子');setStatus(`單字「${text}」播放完成，可直接再點一次重聽`);};
@@ -280,8 +297,29 @@
     els.fileInput.addEventListener('change',e=>loadFile(e.target.files?.[0]));
     ['dragenter','dragover'].forEach(eventName=>els.dropZone.addEventListener(eventName,e=>{e.preventDefault();els.dropZone.classList.add('drag');}));
     ['dragleave','drop'].forEach(eventName=>els.dropZone.addEventListener(eventName,e=>{e.preventDefault();els.dropZone.classList.remove('drag');if(eventName==='drop'&&e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);}));
-    els.rate.addEventListener('input',()=>{els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;});
-    els.rate.addEventListener('change',()=>{if(isSpeaking||isPaused){if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);else speak(Math.max(0,active));}});
+    const speedPresets=Array.from(document.querySelectorAll('.speed-preset'));
+    function refreshSpeedUI(){
+      const rate=Number(els.rate.value);
+      els.rateLabel.textContent=`${rate.toFixed(2)}×`;
+      speedPresets.forEach(btn=>{
+        const current=Math.abs(Number(btn.dataset.speed)-rate)<0.001;
+        btn.classList.toggle('active',current);
+        btn.setAttribute('aria-pressed',String(current));
+      });
+    }
+    function replayAfterSpeedChange(){
+      if(isSpeaking||isPaused){
+        if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);
+        else speak(Math.max(0,active));
+      }
+    }
+    els.rate.addEventListener('input',refreshSpeedUI);
+    els.rate.addEventListener('change',replayAfterSpeedChange);
+    speedPresets.forEach(btn=>btn.addEventListener('click',()=>{
+      els.rate.value=btn.dataset.speed;
+      refreshSpeedUI();
+      replayAfterSpeedChange();
+    }));
     els.voiceSelect.addEventListener('change',()=>{if(isSpeaking||isPaused){if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);else speak(Math.max(0,active));}});
     els.prevBtn.addEventListener('click',()=>speak(Math.max(0,active-1)));
     els.nextBtn.addEventListener('click',()=>speak(Math.min(sentences.length-1,active+1)));
