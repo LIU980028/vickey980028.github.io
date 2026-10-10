@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <title>EchoRead｜英文逐句跟讀練習</title>
+  <title>EchoRead V2.1｜英文逐句・逐字點讀練習</title>
   <style>
     :root { --ink:#1b3035;--sub:#64777a;--accent:#147d78;--accent-dark:#0e6662;--mint:#e7f6f3;--paper:#f6f8f7;--white:#fff;--line:#dfe9e6;--peach:#fff4e9;--shadow:0 20px 65px rgba(23,54,56,.085);--r:21px; }
     *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(ellipse at 13% 0%,#e9f6f2 0%,transparent 29%),radial-gradient(ellipse at 92% 2%,#fcf1e8 0%,transparent 32%),var(--paper);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.55} button,input,select,textarea{font:inherit} button{cursor:pointer} button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(20,125,120,.26);outline-offset:2px} a{color:inherit}
@@ -21,6 +21,7 @@
     .sentence{cursor:pointer}
     .sentence:focus-visible{outline:3px solid rgba(20,125,120,.35);outline-offset:2px}
     .sentence .content .word-token{appearance:none;-webkit-appearance:none;background:transparent;border:0;color:inherit;display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;padding:1px 2px;margin:-1px -2px;border-radius:5px;cursor:pointer;text-align:inherit;vertical-align:baseline}
+    .sentence .content .word-token{ text-decoration: underline dotted #73b6a8; text-underline-offset: 4px; text-decoration-thickness: 1px; }
     .sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#d3f1e9;color:#075e57;outline:2px solid #a4dbce;outline-offset:1px}
     .sentence .content .word-token.selected{background:#b5e9df;color:#075e57;box-shadow:inset 0 -2px 0 #147d78}
     .sentence .content .word-token.reading{background:#ffe2ad;color:#754713;box-shadow:0 0 0 2px #f3c377}
@@ -39,7 +40,7 @@
 </head>
 <body>
   <div class="shell">
-    <header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span> EchoRead <span class="tagline">/ 英文逐句跟讀</span></div><div class="top-badge">✦ 聽一句・跟一句・反覆練</div></header>
+    <header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span> EchoRead <span class="tagline">/ 英文逐句＋單字點讀</span></div><div class="top-badge">✅ V2.1 單字點讀已啟用</div></header>
     <div class="intro"><div><div class="eyebrow">YOUR ENGLISH READING COMPANION</div><h1>英文，一句一句練就好。</h1><p>匯入文章、點一句念一句；遇到不會的單字，直接點那個字就能聽發音。</p></div><div class="intro-ornament"><span aria-hidden="true">🔊</span><span><b>Click to listen</b><br><small>每一句，都是進步的開始</small></span></div></div>
     <div class="layout">
       <aside class="panel sidebar">
@@ -65,9 +66,9 @@
       </aside>
       <main>
         <section class="panel workspace" aria-label="英文逐句練習">
-          <div class="workhead"><div><div class="minor">READING PRACTICE</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點空白處聽整句；點任何英文單字，只朗讀該單字。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
+          <div class="workhead"><div><div class="minor">WORD BY WORD · V2.1</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點空白處聽整句；點任何英文單字，只朗讀該單字。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
           <div class="progress-wrap"><div class="progress-label"><span>已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
-          <div class="help-strip">💡 點單字＝只唸這個字；點句子空白處或右側 ▶＝朗讀整句。單字可重播、慢速重播。</div>
+          <div class="help-strip">🖱️ <strong>新版 V2.1：</strong> 每個有虛線底線的英文單字都能點！點 <b>research</b> 只唸 research；按右邊的 ▶ 才唸整句。</div>
           <div id="sentences" class="sentences"><div class="empty"><span class="big">🎧</span><strong>從一篇你想讀的英文開始</strong><span>在左側上傳文章或貼上文字，這裡就會出現每一句英文。</span></div></div>
           <div class="player"><div class="player-head"><span>NOW PLAYING</span><span class="now-playing" id="nowPlaying">尚未選擇句子</span></div><div class="player-text" id="playerText">選擇一句英文開始練習</div>
             <div class="actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">⏮</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="朗讀或暫停" aria-label="朗讀或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">⏭</button><button class="repeat-btn" id="repeatBtn">↻ 單句循環：關</button></div>
@@ -147,7 +148,7 @@
     }
     function loadArticle(text,title='我的英文跟讀練習') {
       const chunks=splitSentences(text);if(!chunks.length){notify('請先輸入英文內容。');return;}
-      stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點擊任一句英文，即可單句播放。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);notify(`已成功分成 ${chunks.length} 句英文！`);
+      stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='✅ 單字有虛線底線：點單字只朗讀該字；按右側 ▶ 聽整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);notify(`已成功分成 ${chunks.length} 句英文！`);
     }
     function getVoice(){const uri=els.voiceSelect.value;return voices.find(v=>v.voiceURI===uri)||voices.find(v=>/^en[-_]/i.test(v.lang))||null;}
     function fillVoices(){if(!('speechSynthesis' in window)){els.voiceSelect.innerHTML='<option>此瀏覽器不支援語音朗讀</option>';return;}
