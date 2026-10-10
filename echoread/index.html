@@ -2,179 +2,103 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f4f1ea">
-<title>EchoRead V12｜閱讀桌</title>
-<meta name="description" content="EchoRead 英文逐句跟讀，點單字發音，上傳自己的文章練習。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f3f5f7">
+<title>EchoRead V13｜美式學習工作台</title>
+<meta name="description" content="EchoRead 英文逐句朗讀及單字點讀練習。">
 <style>
-:root{--bg:#f4f1ea;--paper:#fffefa;--rail:#ede9e0;--ink:#282e2c;--sub:#727973;--faint:#9ba49e;--rule:#deddd5;--accent:#315f54;--accent-soft:#edf4f0;--clay:#b97a62;--shadow:0 16px 36px rgba(40,46,44,.045)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:18px}
-body{margin:0;color:var(--ink);font:400 15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:var(--bg);-webkit-font-smoothing:antialiased}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.sentence:focus-visible{outline:2px solid #579d89;outline-offset:3px}
-button:disabled{opacity:.42;cursor:not-allowed}
-a{color:inherit;text-decoration:none}
-svg{overflow:visible}
-.shell{max-width:1450px;margin:0 auto;padding:0 32px 172px}
-.masthead{height:84px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dcdad2;gap:20px}
-.brand{display:flex;align-items:baseline;gap:11px;font-family:Georgia,"Times New Roman",serif;font-size:27px;font-weight:700;letter-spacing:-1.1px;color:#26352f}
-.brand i{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10px;letter-spacing:2.3px;font-style:normal;font-weight:700;text-transform:uppercase;color:#9c8c7a}
-.head-meta{color:#7d837c;font-size:12px;letter-spacing:.08em;display:flex;gap:21px;align-items:center}
-.head-meta span+span{border-left:1px solid #cdcfc8;padding-left:20px}
-.intro-line{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;padding:34px 0 26px}
-.intro-line h1{font:500 clamp(27px,2.8vw,37px)/1.24 Georgia,"Noto Serif TC",serif;letter-spacing:-.8px;margin:0;color:#293b34}
-.intro-line p{color:#717970;margin:0;font-size:12.5px;max-width:360px;line-height:1.65;text-align:right}
-.layout{display:grid;grid-template-columns:320px minmax(0,1fr);align-items:start;gap:28px}
-.sidebar{position:sticky;top:16px;min-width:0}
-.rail{background:var(--rail);border:1px solid #e2ded3;border-radius:8px;padding:24px 22px 20px}
-.rail-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px;gap:12px;border-bottom:1px solid #d7d4ca;padding-bottom:16px}
-.rail-heading h2{font:600 17px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0}
-.rail-heading small{font-family:Georgia,serif;color:#9c8b78;font-style:italic;font-size:12px}
-.section-label{display:block;color:#6f746c;font-size:11px;letter-spacing:.12em;font-weight:700;margin-bottom:9px}
-.dropzone{border:1px dashed #b6b6a8;border-radius:5px;padding:23px 16px;display:block;text-align:center;background:rgba(255,255,255,.33);cursor:pointer;transition:background .18s,border-color .18s}
-.dropzone:hover,.dropzone.drag{border-color:#4d7566;background:#fffdf7}
-.dropzone .emoji{font-family:Georgia,serif;font-size:25px;color:#566d62;line-height:1.2;display:block}
-.dropzone b{display:block;font-size:13px;font-weight:600;margin:5px 0 3px}
-.dropzone small{display:block;font-size:11px;color:#858980}
-.file-info{margin:8px 0 0;font-size:11px;display:none;color:#466b60;word-break:break-word}
-.or{font-size:11px;color:#909389;text-align:center;margin:15px 0 10px}
-.text-input{display:block;width:100%;min-height:149px;max-height:310px;resize:vertical;border:1px solid #d4d2c7;border-radius:5px;padding:12px;background:#fffefa;color:#2a332e;font-size:13px;line-height:1.72}
-.text-input::placeholder{color:#acaea6}
-.button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:10px 15px;border:1px solid var(--accent);border-radius:5px;background:var(--accent);color:#fff;font-weight:600;font-size:12.5px;transition:background .18s,border-color .18s}
-.button:hover:not(:disabled){background:#224d42;border-color:#224d42}
-.button.secondary,.button.ghost{background:transparent;color:#31594e;border-color:#c8cac0}
-.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#fffefa;border-color:#aebbad}
-.button.wide{width:100%;margin-top:10px}
-.control-block{margin-top:25px;padding-top:22px;border-top:1px solid #d5d2c8}
-.form-select{display:block;width:100%;background:#fffefa;border:1px solid #d3d3c8;padding:11px;color:#354039;border-radius:5px;font-size:12px}
-.rate-row{display:flex;align-items:center;gap:10px;margin:13px 0}.field-label{font-size:12px;color:#697169;flex-shrink:0}.rate-row input{flex:1;min-width:40px;accent-color:#3d6e61}.rate-number{font-size:11px;color:#335e53;font-weight:700;min-width:40px;text-align:right}
-.toggle{display:flex;align-items:center;gap:10px;color:#5f6861;font-size:12px;margin-top:11px;cursor:pointer}.toggle input{width:15px;height:15px;accent-color:#386b5e;margin:0}
-.privacy{font-size:11px;color:#838780;margin-top:14px;padding:0 5px;line-height:1.75}
-.reading-area{min-width:0}
-.workspace{background:var(--paper);border:1px solid #e5e0d5;box-shadow:var(--shadow);border-radius:7px;overflow:hidden;min-height:630px}
-.workhead{padding:31px 42px 21px;display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
-.workhead .minor{font-size:10px;letter-spacing:.2em;color:#a39583;font-weight:700;text-transform:uppercase}
-.workhead h2{font:500 30px/1.27 Georgia,"Noto Serif TC",serif;letter-spacing:-.65px;color:#29342e;margin:10px 0 7px;word-break:break-word}
-.muted{color:#899088;font-size:12.5px;line-height:1.55}
-.count-pill{font-size:12px;white-space:nowrap;color:#738378;font-family:Georgia,serif;border-bottom:1px solid #c5cdc5;padding:6px 0}
-.progress-wrap{padding:0 42px 25px}.progress-label{font-size:11px;color:#8b9289;display:flex;justify-content:space-between;gap:10px;margin-bottom:9px}.progress-track{background:#eaece7;width:100%;height:3px}.progress-fill{height:100%;width:0;background:#5a8074;transition:width .2s}
-.help-strip{margin:0 42px 5px;padding:12px 0 15px;font-size:11.5px;color:#78817b;border-top:1px solid #ecebe5}
-.help-strip strong{font-weight:600;color:#536a5d}
-.sentences{padding:0 42px 45px;max-height:min(570px,70vh);overflow-y:auto;scrollbar-color:#d6d8d0 transparent}
-.sentence{display:grid;grid-template-columns:39px minmax(0,1fr) 31px;gap:14px;align-items:start;border-bottom:1px solid #ecebe5;padding:22px 5px 22px 0;margin:0;background:transparent;cursor:pointer;transition:background .18s;scroll-margin:22px}
-.sentence:first-child{border-top:1px solid #ecebe5}.sentence:hover{background:#f8f8f4}
-.sentence.active{background:#f1f5ef;box-shadow:inset 3px 0 #4b7868;padding-left:12px}
-.sentence .num{font:400 13px/2.2 Georgia,serif;color:#a5aa9f}
-.sentence.active .num{color:#356b58}
-.sentence.done .num::after{content:"·";color:#4f7768;margin-left:2px}
-.sentence .content{font:400 clamp(18px,1.9vw,21px)/1.82 Georgia,"Times New Roman",serif;color:#2a3531;letter-spacing:.005em;overflow-wrap:anywhere}
-.sentence .speaker{border:1px solid transparent;border-radius:100%;background:transparent;color:#637d6c;width:31px;height:31px;font-size:13px;display:grid;place-items:center;padding:0}
-.sentence .speaker:hover,.sentence .speaker:focus-visible{background:#e4ede5;color:#2f6251}
-.sentence .content .word-token{appearance:none;border:0;padding:1px 2px;margin:-1px -2px;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;line-height:inherit;display:inline;text-align:inherit;vertical-align:baseline;border-radius:3px;cursor:pointer;text-decoration:underline dotted rgba(70,107,89,.33);text-decoration-thickness:1px;text-underline-offset:5px}
-.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e4efe7;color:#235544;outline:0}
-.sentence .content .word-token.selected{background:#dcebe1;color:#255b47;box-shadow:inset 0 -1px #4f7768}
-.sentence .content .word-token.reading{background:#c6e3cc;color:#214b37}
-.empty{min-height:365px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#8b928c;gap:8px;padding:40px 20px}
-.empty .big{font-family:Georgia,serif;font-size:34px;color:#bbc9be;line-height:1.3;display:block}
-.empty strong{font:500 22px/1.4 Georgia,"Noto Serif TC",serif;color:#42564b;display:block}
-.empty span:last-child{font-size:12px}
-.player{display:none}
-.practice{display:flex;align-items:center;gap:22px;margin-top:18px;padding:22px 27px;border:1px solid #e5e0d5;border-radius:7px;background:#fffefa;position:relative;overflow:hidden;min-height:146px}
-.practice h3{font-size:16px;margin:0 0 6px;letter-spacing:-.2px;color:#314539;font-weight:600}
-.practice p{font-size:12px;margin:0;color:#89928b;line-height:1.68}
-.practice>div:nth-child(3){flex:1;min-width:0}
-.practice .mic{white-space:nowrap;position:relative;z-index:3}
-.voice-orb{width:67px;height:67px;flex:0 0 67px;border-radius:50%;display:grid;place-items:center;background:#e8efe9;border:1px solid #d2ddd3;position:relative;z-index:3;box-shadow:inset 0 2px 5px #f8fffa}
-.voice-orb svg{width:26px;height:33px}.voice-orb .core{fill:#3e7160}.voice-orb .stem{stroke:#3e7160;fill:none;stroke-width:2}
-.voice-glow,.voice-beam{display:none}
-.practice.is-listening .voice-orb{background:#d5e5d9;box-shadow:0 0 0 5px #e4efe7}
-.recognition{font-size:12px;color:#52685a;margin-top:9px;line-height:1.7}.recognition:empty{display:none}.recognition b{color:#2c7056}
-.voice-status{display:flex;align-items:center;gap:8px;margin-top:9px;color:#9a9f93;font-size:10px;letter-spacing:.05em}
-.voice-dot{height:6px;width:6px;border-radius:50%;background:#aab9ad}
-.practice.is-listening .voice-dot{background:#57927a}
-.voice-meter{display:flex;align-items:center;gap:3px;height:15px}.voice-meter i{height:6px;width:2px;background:#9ebda9;border-radius:2px;transition:height .12s}
-.footer-note{font-size:11px;margin:16px 0;color:#999d93}
-/* Quiet inline player: aligned with reading width and easy to reach */
-.liquid-dock{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:min(820px,calc(100% - 40px));z-index:90;border:1px solid #d7dbd3;border-radius:7px;background:#fffefa;box-shadow:0 13px 40px rgba(30,46,35,.13)}
-.liquid-dock::before,.liquid-dock::after{display:none}
-.dock-inside{display:flex;align-items:center;gap:15px;padding:14px 20px}
-.dock-label{flex:1;min-width:0}.dock-kicker{font-size:9px;font-weight:700;letter-spacing:.14em;color:#869187;display:block}.dock-current{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:400 14px/1.6 Georgia,serif;color:#425048}
-.dock-info{color:#899087;font-size:10px;white-space:nowrap}
-.dock-actions{display:flex;gap:7px;align-items:center}
-.circle-btn{border:1px solid #dfe5db;color:#425e50;background:#fffefa;width:36px;height:36px;border-radius:50%;font-size:17px;display:grid;place-items:center;line-height:1;padding:0}
-.circle-btn:hover{background:#edf5ed}.circle-btn.main{background:#315f54;color:#fff;border-color:#315f54;width:46px;height:46px;font-size:19px}
-.circle-btn.main:hover{background:#234f44}
-.repeat-btn{border:1px solid #dbe3d9;border-radius:5px;background:#fffefa;color:#6b786c;font-size:11px;padding:9px 11px;white-space:nowrap}.repeat-btn.on{background:#e9f3ec;color:#34664f}
-.dock-under{display:flex;justify-content:space-between;gap:8px;padding:0 20px 10px;font-size:10px;color:#9a9f96}
-.dock-under .tiny{white-space:nowrap;color:#b7bcb2}
-/* Word popover is a quiet typographic card */
-.word-popover{position:fixed;width:270px;z-index:110;border:1px solid #d9dfd5;border-radius:7px;background:#fffefa;box-shadow:0 14px 38px rgba(39,59,48,.16);padding:17px 17px 16px;opacity:0;pointer-events:none;transform:translateY(7px);transition:opacity .15s,transform .15s}
-.word-popover.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
-.word-head{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.16em;color:#91a092;font-weight:700}
-.word-close{border:0;background:transparent;color:#7a837c;padding:2px 5px;font-size:20px;line-height:1}
-.word-value{font:500 28px/1.5 Georgia,serif;color:#2c4c3d;margin:5px 0 12px;word-break:break-word}
-.word-buttons{display:flex;gap:7px}.word-buttons button{flex:1;border:1px solid #d7e2d9;background:#f5f7f2;border-radius:4px;color:#40644f;font-weight:600;font-size:11px;padding:9px 4px}
-.word-buttons button:first-child{background:#315f54;color:#fff;border-color:#315f54}
-.word-buttons button:hover:not(:disabled){filter:brightness(.96)}
-.toast{position:fixed;bottom:120px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;padding:10px 16px;background:#294638;color:white;border-radius:6px;box-shadow:0 10px 20px rgba(0,0,0,.13);font-size:12px;z-index:160;transition:opacity .2s,transform .2s;max-width:90vw;text-align:center}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:1110px){.shell{padding:0 23px 162px}.layout{grid-template-columns:290px minmax(0,1fr);gap:19px}.workhead{padding:27px 28px 20px}.progress-wrap{padding:0 28px 24px}.help-strip{margin-left:28px;margin-right:28px}.sentences{padding-left:28px;padding-right:28px}}
-@media(max-width:770px){.layout{grid-template-columns:minmax(0,1fr)}.sidebar{position:static}.rail{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;padding:19px}.rail-heading{grid-column:1/-1;margin:0 0 2px}.rail .dropzone{min-height:115px}.rail .control-block{margin:0;padding:0 0 0 17px;border-top:0;border-left:1px solid #d5d2c8;grid-column:2;grid-row:2/8;align-self:stretch}.rail .section-label,.rail .or,.rail .text-input,.rail .button{grid-column:1}.rail .rate-row,.rail .toggle{font-size:11px}.privacy{margin-top:9px}.sentences{max-height:580px}.intro-line{padding-top:29px}}
-@media(max-width:565px){.shell{padding:0 12px 154px}.masthead{height:63px}.brand{font-size:23px}.brand i,.head-meta span:last-child{display:none}.head-meta{font-size:10px}.intro-line{padding:26px 3px 19px;display:block}.intro-line h1{font-size:26px}.intro-line p{text-align:left;margin-top:9px;font-size:11px}.rail{display:block;padding:18px}.rail-heading{margin:0 0 17px}.rail .control-block{margin-top:23px;padding-top:20px;padding-left:0;border-left:0;border-top:1px solid #d5d2c8}.workspace{min-height:550px}.workhead{padding:23px 20px 18px}.workhead h2{font-size:25px}.progress-wrap{padding:0 20px 17px}.help-strip{margin:0 20px 2px;padding:11px 0;font-size:11px}.sentences{padding:0 20px 28px;max-height:560px}.sentence{grid-template-columns:27px minmax(0,1fr) 28px;gap:9px;padding:17px 3px 17px 0}.sentence.active{padding-left:8px}.sentence .content{font-size:17px}.sentence .speaker{width:28px;height:28px;font-size:12px}.empty{min-height:320px}.practice{padding:17px 16px;gap:12px;flex-wrap:wrap}.voice-orb{width:46px;height:46px;flex-basis:46px}.voice-orb svg{width:18px;height:22px}.practice>div:nth-child(3){flex-basis:calc(100% - 66px)}.practice h3{font-size:14px}.practice .mic{margin-left:58px}.liquid-dock{bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 16px)}.dock-inside{gap:7px;padding:10px 10px 4px;flex-wrap:wrap}.dock-label{flex-basis:100%;padding:0 5px}.dock-kicker{display:none}.dock-current{font-size:11px}.dock-info{display:none}.dock-actions{width:100%;justify-content:center;gap:8px}.circle-btn{width:32px;height:32px;font-size:14px}.circle-btn.main{width:41px;height:41px;font-size:17px}.repeat-btn{font-size:9px;padding:7px 7px}.dock-under{padding:0 12px 8px}.dock-under .tiny{display:none}.word-popover{width:min(270px,calc(100vw - 24px))}}
+:root{--bg:#f3f5f7;--paper:#fff;--ink:#1e2934;--muted:#7e8995;--line:#e8ebef;--accent:#252b34;--violet:#a28cef;--lav:#eae5ff;--mint:#c9f5d4;--cyan:#cdf0f6;--shadow:0 6px 20px rgba(37,50,65,.045)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:22px}body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.sentence:focus-visible,a:focus-visible{outline:3px solid #a9b8f7;outline-offset:3px}a{text-decoration:none;color:inherit}svg{overflow:visible}#liquid-refraction{display:none}
+.app-shell{max-width:1530px;margin:0 auto;min-height:100vh;padding:16px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px}
+.side-nav{background:#fff;border:1px solid #e9edf1;border-radius:22px;padding:22px 14px;display:flex;flex-direction:column;gap:16px;min-width:0;position:sticky;top:16px;height:calc(100vh - 32px);min-height:610px;box-shadow:var(--shadow)}
+.logo{display:flex;align-items:center;gap:10px;padding:0 10px 25px;border-bottom:1px solid var(--line);font-size:19px;font-weight:800;letter-spacing:-.6px}
+.logo-icon{display:grid;place-items:center;width:36px;height:36px;color:#fff;background:#30333b;border-radius:11px;font-size:19px;box-shadow:3px 4px 0 #e4dafe}
+.logo small{display:block;font-size:9px;font-weight:650;color:#99a3af;letter-spacing:1.4px;margin-top:-3px}
+.nav-title{font-size:10px;color:#9ca7b2;padding:0 12px;margin:8px 0 2px;font-weight:800;letter-spacing:1px}
+.nav-links{display:grid;gap:6px}.nav-link{display:flex;align-items:center;gap:13px;padding:12px 13px;font-size:13px;font-weight:660;color:#6f7b88;border-radius:12px;transition:background .15s,color .15s}.nav-link:hover{background:#f5f6f8;color:#303944}.nav-link.active{background:#252b34;color:#fff;box-shadow:0 8px 13px #242b3316}.nav-icon{font-size:17px;width:20px;text-align:center;line-height:1}.nav-link.active .nav-icon{color:#c7baff}.nav-spacer{flex:1}
+.sidebar-note{background:#f4f2ff;border:1px solid #ece8ff;border-radius:15px;padding:15px;color:#4f4964}.sidebar-note b{font-size:12px;display:block;margin-bottom:5px}.sidebar-note p{font-size:11px;color:#817995;margin:0;line-height:1.65}.nav-footer{font-size:10px;color:#a2adba;padding:6px 12px}
+.main-page{min-width:0;padding:8px 10px 160px}.page-top{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 5px 29px}.page-top h1{font-size:27px;letter-spacing:-1.1px;margin:0 0 5px;font-weight:770}.page-top p{color:#929ca6;margin:0;font-size:12px}.top-tools{display:flex;align-items:center;gap:12px}.workspace-tag{border:1px solid #e4e8ee;color:#697685;background:white;border-radius:50px;padding:9px 13px;font-size:11px;font-weight:700}.avatar{background:#ddcef9;color:#554783;border:3px solid white;box-shadow:0 1px 6px #141c2b10;border-radius:50%;width:39px;height:39px;display:grid;place-items:center;font-weight:800;font-size:12px}
+.overview{display:grid;grid-template-columns:1.28fr 1fr 1fr;gap:14px;margin-bottom:15px}.overview-card{background:#fff;border:1px solid #ebedf0;border-radius:18px;min-height:135px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.overview-card small{color:#9aa5b0;font-size:11px;letter-spacing:.35px;font-weight:750}.overview-card h2{font-size:19px;letter-spacing:-.7px;font-weight:760;margin:11px 0 5px}.overview-card p{color:#8995a0;font-size:12px;margin:0;max-width:260px}.overview-card .ov-symbol{position:absolute;right:17px;top:16px;font-size:21px;color:#6f687d}.overview-card.mint{background:#ccf2d6;border:1px solid #c2ebcc}.overview-card.mint small,.overview-card.mint p{color:#4f8667}.overview-card.mint h2{color:#24523a}.overview-card.lav{background:#b7a6f5;border-color:#b3a0f6}.overview-card.lav small,.overview-card.lav p{color:#554680}.overview-card.lav h2{color:#33295a}.overview-card.white{background:#fff}
+.area-grid{display:grid;grid-template-columns:minmax(0,1.52fr) minmax(300px,.86fr);gap:16px;align-items:start}.left-work{min-width:0}.right-tools{display:grid;gap:16px;min-width:0}
+.workspace,.practice,.rail{background:#fff;border:1px solid #e8ebf0;border-radius:20px;box-shadow:var(--shadow)}.workspace{overflow:hidden;min-height:520px}.workhead{padding:23px 25px 16px;display:flex;align-items:start;justify-content:space-between;gap:18px;border-bottom:1px solid #eff0f3}.workhead .minor{font-size:10px;color:#aaa5c3;letter-spacing:1.3px;font-weight:800}.workhead h2{font-size:19px;font-weight:760;letter-spacing:-.55px;margin:6px 0 4px;overflow-wrap:anywhere}.muted{font-size:12px;color:#939eaa;line-height:1.65}.count-pill{font-size:11px;color:#686388;padding:7px 10px;border-radius:999px;background:#f2f0fc;white-space:nowrap;font-weight:750}
+.progress-wrap{padding:15px 25px 10px}.progress-label{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#97a0ac;margin-bottom:8px}.progress-track{height:6px;border-radius:99px;background:#eef0f3;overflow:hidden}.progress-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#b1a0f4,#8d78df);transition:width .2s}
+.help-strip{font-size:11px;color:#7b8995;margin:7px 25px 10px;line-height:1.6}.help-strip strong{color:#685e9d;font-weight:700}
+.sentences{padding:2px 20px 23px;max-height:550px;min-height:300px;overflow-y:auto;scrollbar-color:#e6e7ed transparent}.sentence{display:grid;grid-template-columns:34px minmax(0,1fr) 36px;align-items:start;gap:10px;border:1px solid #eceef1;border-radius:13px;margin:10px 0;padding:15px 13px;background:white;cursor:pointer;transition:border .15s,box-shadow .15s,background .15s}.sentence:hover{background:#fcfbff;border-color:#e0dafa}.sentence.active{background:#f5f2ff;border-color:#c8bbf7;box-shadow:inset 3px 0 #a592eb}.sentence .num{font-size:11px;font-weight:770;color:#9da8b2;background:#f4f5f7;border-radius:8px;padding:5px 0;text-align:center}.sentence.active .num{color:#6654b0;background:#e7dfff}.sentence.done .num::after{content:' ✓';font-size:10px;color:#4c9c70}.sentence .content{font:400 17px/1.85 Georgia,"Times New Roman",serif;color:#313744;overflow-wrap:anywhere}.sentence .speaker{height:30px;width:30px;border:1px solid #edeaf7;background:#fff;color:#72659e;border-radius:10px;display:grid;place-items:center;font-size:12px;cursor:pointer}.sentence .speaker:hover{background:#ebe5ff}
+.sentence .content .word-token{appearance:none;border:0;background:none;color:inherit;display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;padding:1px 2px;margin:-1px -2px;cursor:pointer;border-radius:5px;text-decoration:underline dotted #d2c8e5;text-underline-offset:5px}.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e8e0ff;color:#514299;outline:0}.sentence .content .word-token.selected{background:#e3dbfc;color:#5d47a3;box-shadow:inset 0 -2px #aa98df}.sentence .content .word-token.reading{background:#d4f0dc;color:#27683b}
+.empty{min-height:315px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;color:#9ba5b1;padding:20px}.empty .big{font-size:35px;color:#b4a1e9;display:block;line-height:1}.empty strong{font-size:15px;color:#4a5360;font-weight:730}.empty span:last-child{font-size:12px}.player{display:none}
+.practice{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:15px;align-items:center;padding:20px;margin-top:16px;position:relative;overflow:hidden}.voice-orb{width:50px;height:50px;border-radius:16px;background:#e7e3ff;display:grid;place-items:center;position:relative;z-index:2}.voice-orb svg{width:21px;height:26px}.voice-orb .core{fill:#7865b6}.voice-orb .stem{stroke:#7865b6;stroke-width:2;fill:none}.practice h3{font-size:15px;margin:0 0 3px}.practice p{font-size:11px;color:#9aa4b0;margin:0;line-height:1.6}.practice>div:nth-child(3){min-width:0}.voice-glow,.voice-beam{display:none}.practice.is-listening .voice-orb{box-shadow:0 0 0 5px #e9e4ff}.recognition{font-size:12px;color:#3d5164;margin-top:10px}.recognition:empty{display:none}.recognition b{color:#6b57ab}.voice-status{font-size:9px;color:#9da6b3;display:flex;align-items:center;gap:7px;margin-top:8px;letter-spacing:.4px}.voice-dot{display:inline-block;width:6px;height:6px;border-radius:100%;background:#b7bcc8}.practice.is-listening .voice-dot{background:#7bc897}.voice-meter{display:flex;gap:2px;align-items:center;height:12px}.voice-meter i{width:2px;height:6px;background:#ad9cd8;border-radius:3px;transition:height .12s}.footer-note{color:#a1aab4;font-size:10px;text-align:center;padding:15px 0}
+.rail{padding:22px}.rail-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:17px}.rail-heading h2{margin:0;font-size:15px;letter-spacing:-.2px}.rail-heading small{font-size:10px;color:#aaa6bd;font-weight:750}.section-label{display:block;font-size:11px;color:#778491;font-weight:750;margin-bottom:8px}.dropzone{display:block;border:1px dashed #cdd6df;background:#f9fafc;border-radius:14px;padding:18px 8px;text-align:center;cursor:pointer;transition:background .2s,border-color .2s}.dropzone:hover,.dropzone.drag{background:#f2f0ff;border-color:#ac9ee7}.dropzone .emoji{display:block;color:#7964b7;font-size:22px;line-height:1.2}.dropzone b{display:block;font-size:12px;margin:6px 0 4px;font-weight:700}.dropzone small{font-size:10px;color:#a0abb5}.file-info{display:none;color:#6d58a6;font-size:11px;margin:8px 0;word-break:break-all}.or{text-align:center;font-size:11px;color:#a7b1bb;margin:13px 0 8px}.text-input{display:block;width:100%;min-height:104px;max-height:380px;resize:vertical;border:1px solid #e5e7ec;border-radius:12px;padding:12px 13px;font-size:12px;color:#303b47;line-height:1.65;background:#fff}.text-input::placeholder{color:#aeb8c3}
+.button{border:0;border-radius:11px;min-height:39px;padding:10px 14px;background:#282d35;color:#fff;font-size:12px;font-weight:740;display:inline-flex;align-items:center;justify-content:center;transition:background .18s,transform .18s}.button:hover:not(:disabled){background:#4c455f;transform:translateY(-1px)}.button.secondary,.button.ghost{background:#f3f0fc;color:#6a5a9c}.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#e8e2fb}.button.wide{width:100%;margin-top:9px}.control-block{border-top:1px solid #edf0f2;margin-top:18px;padding-top:19px}.form-select{width:100%;font-size:11px;color:#4d5c6e;padding:10px;background:#fff;border:1px solid #e5e9ec;border-radius:10px}.rate-row{display:flex;align-items:center;gap:8px;margin-top:15px}.rate-row input{min-width:0;flex:1;accent-color:#a08be9}.field-label{font-size:11px;color:#6b7a87}.rate-number{font-size:11px;color:#6b599d;white-space:nowrap}.toggle{display:flex;gap:9px;align-items:center;font-size:11px;color:#6e7b89;margin-top:13px;cursor:pointer}.toggle input{width:15px;height:15px;margin:0;accent-color:#8972dc}.privacy{font-size:10px;color:#a4adb7;line-height:1.75;margin:0;padding:0 4px}
+.liquid-dock{position:fixed;z-index:80;left:50%;bottom:18px;transform:translateX(-50%);width:min(710px,calc(100% - 38px));padding:10px 16px;background:rgba(255,255,255,.97);border:1px solid #e1e5ec;border-radius:18px;box-shadow:0 14px 45px rgba(31,42,61,.14);backdrop-filter:blur(14px)}.liquid-dock::before,.liquid-dock::after{display:none}.dock-inside{display:flex;gap:14px;align-items:center}.dock-label{flex:1;min-width:0}.dock-kicker{font-size:9px;color:#a8a0c1;letter-spacing:1px;display:block;font-weight:800}.dock-current{display:block;max-width:100%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font:400 13px/1.55 Georgia,serif;color:#354054}.dock-info{font-size:10px;color:#9ea4ad;white-space:nowrap}.dock-actions{display:flex;align-items:center;gap:6px}.circle-btn{height:35px;width:35px;border:1px solid #eae7f3;background:#f8f7fc;color:#716487;border-radius:11px;display:grid;place-items:center;font-size:16px}.circle-btn:hover{background:#e9e3fa}.circle-btn.main{height:43px;width:43px;background:#8f7cda;color:white;border-color:#8f7cda;font-size:17px;box-shadow:0 4px 12px #9d8de72a}.circle-btn.main:hover{background:#7b67c7}.repeat-btn{font-size:10px;padding:9px 10px;border-radius:9px;border:1px solid #eae7f3;background:#fff;color:#746e83;white-space:nowrap}.repeat-btn.on{background:#f0ebff;color:#7459b6}.dock-under{display:flex;align-items:center;justify-content:space-between;padding-top:4px;gap:8px}.status{font-size:10px;color:#a2a4ac}.dock-under .tiny{font-size:9px;color:#b7bdc4;white-space:nowrap}
+.word-popover{position:fixed;width:min(266px,calc(100vw - 28px));z-index:110;border:1px solid #e7e1f3;border-radius:16px;background:white;box-shadow:0 16px 44px #3f376d2e;padding:17px;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .17s,transform .17s}.word-popover.visible{opacity:1;pointer-events:auto;transform:translateY(0)}.word-head{display:flex;align-items:center;justify-content:space-between;color:#a69abc;font-size:10px;letter-spacing:1px;font-weight:750}.word-close{border:0;background:transparent;font-size:22px;color:#9d9aab}.word-value{font:500 28px/1.5 Georgia,serif;color:#342d4a;margin:6px 0 12px;overflow-wrap:anywhere}.word-buttons{display:flex;gap:8px}.word-buttons button{flex:1;background:#f1edfc;color:#6a559a;border:1px solid #e7dff7;border-radius:10px;font-size:11px;font-weight:700;padding:10px 7px}.word-buttons button:first-child{color:#fff;background:#8a78cf;border-color:#8a78cf}.word-buttons button:hover:not(:disabled){filter:brightness(.96)}
+.toast{position:fixed;z-index:160;left:50%;bottom:117px;transform:translate(-50%,12px);background:#2b303a;color:white;padding:10px 15px;border-radius:12px;box-shadow:0 12px 25px #0002;font-size:11px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;text-align:center;max-width:90vw}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1180px){.app-shell{grid-template-columns:190px minmax(0,1fr)}.overview{grid-template-columns:1fr 1fr}.overview-card.white{display:none}.area-grid{grid-template-columns:minmax(0,1fr) 290px}}
+@media(max-width:900px){.app-shell{grid-template-columns:1fr;padding:12px;gap:8px}.side-nav{height:auto;min-height:0;position:static;display:flex;align-items:center;flex-direction:row;padding:12px 15px;gap:16px;border-radius:16px}.logo{padding:0;border:0;white-space:nowrap;font-size:16px}.logo-icon{width:32px;height:32px}.nav-title,.nav-spacer,.sidebar-note,.nav-footer{display:none}.nav-links{display:flex;gap:2px;margin-left:auto}.nav-link{font-size:11px;padding:9px 10px;gap:5px}.nav-icon{font-size:14px;width:16px}.main-page{padding:4px 2px 160px}.page-top{padding:15px 8px 20px}.area-grid{grid-template-columns:1fr}.right-tools{grid-template-columns:1fr 1fr;gap:12px}.right-tools .privacy{grid-column:1/-1}.control-block{margin:0;border-top:0;padding-top:0}.rail{padding:17px}}
+@media(max-width:640px){.app-shell{padding:8px}.side-nav{border-radius:14px;display:block;padding:11px}.logo{float:left;margin-top:4px}.logo small{display:none}.nav-links{display:flex;justify-content:flex-end;gap:0}.nav-link{font-size:0;padding:10px 11px;gap:0}.nav-icon{font-size:18px;width:auto}.nav-link.active{border-radius:9px}.main-page{padding:0 0 180px}.page-top h1{font-size:23px}.page-top p{font-size:11px}.workspace-tag{display:none}.overview{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}.overview-card{padding:14px;min-height:120px;border-radius:14px}.overview-card h2{font-size:16px;margin-top:17px}.overview-card p{font-size:10.5px}.overview-card.white{display:none}.area-grid{gap:12px}.workhead{padding:18px}.workhead h2{font-size:17px}.progress-wrap{padding:13px 18px 9px}.help-strip{margin:7px 18px 9px}.sentences{padding:2px 12px 16px;max-height:60vh}.sentence{grid-template-columns:27px minmax(0,1fr) 29px;gap:7px;padding:12px 8px}.sentence .num{font-size:10px}.sentence .content{font-size:16px}.sentence .speaker{width:28px;height:28px}.empty{min-height:270px}.practice{padding:15px;grid-template-columns:42px minmax(0,1fr);gap:10px}.voice-orb{width:42px;height:42px;border-radius:13px}.practice>div:nth-child(3){min-width:0}.practice .mic{grid-column:2;justify-self:start}.right-tools{grid-template-columns:1fr}.rail{padding:19px}.control-block{margin-top:0;padding-top:0;border:0}.liquid-dock{bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 16px);border-radius:14px;padding:10px}.dock-inside{flex-wrap:wrap;gap:4px}.dock-label{flex-basis:100%;padding-left:5px}.dock-kicker,.dock-info{display:none}.dock-current{font-size:12px}.dock-actions{width:100%;justify-content:center;gap:7px}.circle-btn{height:31px;width:31px}.circle-btn.main{height:39px;width:39px}.repeat-btn{font-size:9px;padding:8px}.dock-under .tiny{display:none}.dock-under{padding:2px 5px 0}.word-popover{width:min(260px,calc(100vw - 20px))}}
+@media(max-width:640px){.area-grid{display:flex;flex-direction:column}.right-tools{display:contents}.right-tools #importArticle{order:1;width:100%}.left-work{order:2;width:100%}.right-tools #voiceSettings{order:3;width:100%}.right-tools .privacy{order:4;width:100%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><filter id="liquid-refraction" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
-<div class="shell">
-  <header class="masthead">
-    <div class="brand">EchoRead <i>reading companion</i></div>
-    <div class="head-meta"><span>英文跟讀工作室</span><span>READ / LISTEN / REPEAT</span></div>
-  </header>
-  <div class="intro-line"><h1>你的英文閱讀桌</h1><p>放進想練習的文章，按自己的步調，一句一句讀。</p></div>
-  <div class="layout" id="practiceWorkspace">
-    <aside class="sidebar">
-      <section class="rail" aria-label="文章與朗讀設定">
-        <div class="rail-heading"><h2>文章與設定</h2><small>My desk</small></div>
-        <label class="section-label" for="fileInput">匯入文章</label>
-        <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>選擇檔案或拖曳至此</b><small>TXT · DOCX · PDF · MD</small></label>
-        <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
-        <div id="fileInfo" class="file-info" role="status"></div>
-        <div class="or">或貼上英文文章</div>
-        <textarea class="text-input" id="articleInput" spellcheck="false" autocomplete="off" placeholder="將想讀的英文文字貼在這裡…"></textarea>
-        <button class="button wide" id="parseBtn">產生練習句子 →</button>
-        <button class="button ghost wide" id="sampleBtn">查看示範文章</button>
-        <div class="control-block">
-          <div class="rail-heading"><h2>朗讀偏好</h2><small>Voice</small></div>
-          <label class="section-label" for="voiceSelect">英文語音 / 腔調</label>
-          <select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得系統語音…</option></select>
-          <div class="rate-row"><label class="field-label" for="rate">語速</label><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
-          <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label>
-          <label class="toggle"><input type="checkbox" id="repeatToggle"> 重複目前句子</label>
-        </div>
-      </section>
-      <p class="privacy">文章在本機瀏覽器解析；Word / PDF 解析需網路。語音辨識可能使用瀏覽器提供的服務。</p>
-    </aside>
-    <main class="reading-area" id="readingDesk">
-      <section class="workspace" aria-label="英文逐句練習">
-        <div class="workhead"><div><div class="minor">READING NOTES / 01</div><h2 id="documentTitle">尚未匯入文章</h2><div class="muted" id="documentSubtitle">貼上或上傳文章，即可建立自己的練習內容。</div></div><span class="count-pill" id="sentenceCount">0 句</span></div>
-        <div class="progress-wrap"><div class="progress-label"><span>已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div></div>
-        <div class="help-strip">點單字，聽單字發音；點整句或右側 <strong>▶</strong>，聽完整句子。</div>
-        <div id="sentences" class="sentences"><div class="empty"><span class="big">⌁</span><strong>等你放進第一篇文章</strong><span>左側匯入文章後，這裡會按句子呈現。</span></div></div>
-        <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
-      </section>
-      <section class="practice" id="practiceCard" aria-label="跟讀練習"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div>
-        <div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div>
-        <div><h3>換你開口讀</h3><p>選擇一句英文後開始跟讀，查看辨識結果並反覆練習。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
-        <button class="button secondary mic" id="micBtn">開始跟讀</button>
-      </section>
-      <p class="footer-note">建議使用 Chrome 或 Edge。語音辨識僅供跟讀參考，並非專業發音評分。</p>
-    </main>
+
+<div class="app-shell">
+  <aside class="side-nav" aria-label="學習導覽">
+    <a class="logo" href="#dashboard"><span class="logo-icon" aria-hidden="true">✦</span><span>EchoRead<small>ENGLISH STUDIO</small></span></a>
+    <div class="nav-title">MY WORKSPACE</div>
+    <nav class="nav-links" aria-label="頁面導覽">
+      <a class="nav-link active" href="#dashboard"><span class="nav-icon" aria-hidden="true">▦</span>工作區</a>
+      <a class="nav-link" href="#readingDesk"><span class="nav-icon" aria-hidden="true">▤</span>閱讀練習</a>
+      <a class="nav-link" href="#importArticle"><span class="nav-icon" aria-hidden="true">↥</span>匯入文章</a>
+      <a class="nav-link" href="#practiceCard"><span class="nav-icon" aria-hidden="true">◉</span>跟讀練習</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="sidebar-note"><b>✳ Study tip</b><p>先聽整句，再點不熟悉的單字，最後自己跟讀。</p></div>
+    <div class="nav-footer">EchoRead · Your study space</div>
+  </aside>
+  <div class="main-page" id="dashboard">
+    <header class="page-top"><div><h1>我的學習空間</h1><p>把想讀的英文放進來，照自己的節奏慢慢練習。</p></div><div class="top-tools"><span class="workspace-tag">◎ My workspace</span><span class="avatar" aria-label="EchoRead">ER</span></div></header>
+    <div class="overview" aria-label="學習提示">
+      <div class="overview-card white"><small>READING STUDIO</small><span class="ov-symbol" aria-hidden="true">◌</span><h2>今天，讀一點英文。</h2><p>匯入自己的文章，點句子或單字即可開始。</p></div>
+      <div class="overview-card mint"><small>LISTEN & LEARN</small><span class="ov-symbol" aria-hidden="true">↗</span><h2>逐字點讀</h2><p>不會的字，輕點一下就能重聽。</p></div>
+      <div class="overview-card lav"><small>SPEAKING PRACTICE</small><span class="ov-symbol" aria-hidden="true">◡</span><h2>跟讀練習</h2><p>聽完一句，再自己試著說一次。</p></div>
+    </div>
+    <div class="area-grid" id="practiceWorkspace">
+      <main class="left-work reading-area" id="readingDesk">
+        <section class="workspace" aria-label="英文逐句練習">
+          <div class="workhead"><div><div class="minor">MY READING</div><h2 id="documentTitle">尚未匯入文章</h2><div class="muted" id="documentSubtitle">上傳文章或貼上文字後，在這裡逐句練習。</div></div><span class="count-pill" id="sentenceCount">0 句</span></div>
+          <div class="progress-wrap"><div class="progress-label"><span>朗讀進度</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+          <div class="help-strip">小提示：點英文<strong>單字</strong>聽單字；點句子空白處或 ▶ 聽<strong>整句</strong>。</div>
+          <div id="sentences" class="sentences"><div class="empty"><span class="big">▤</span><strong>還沒有閱讀內容</strong><span>請從右側匯入文章開始練習。</span></div></div>
+          <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
+        </section>
+        <section class="practice" id="practiceCard" aria-label="跟讀練習"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div>
+          <div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div>
+          <div><h3>Speaking practice</h3><p>選一句英文，按「開始跟讀」，聽聽自己的朗讀。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+          <button class="button secondary mic" id="micBtn">開始跟讀</button>
+        </section>
+        <p class="footer-note">建議使用 Chrome 或 Edge。跟讀辨識結果僅供練習，並非正式發音評分。</p>
+      </main>
+      <aside class="right-tools">
+        <section class="rail" id="importArticle" aria-label="匯入文章">
+          <div class="rail-heading"><h2>匯入文章</h2><small>MY FILES</small></div>
+          <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>上傳文件</b><small>TXT · DOCX · PDF · MD</small></label>
+          <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+          <div id="fileInfo" class="file-info" role="status"></div><div class="or">或直接貼上文字</div>
+          <textarea class="text-input" id="articleInput" spellcheck="false" autocomplete="off" placeholder="在這裡貼上想讀的英文文章…"></textarea>
+          <button class="button wide" id="parseBtn">開始閱讀 →</button><button class="button ghost wide" id="sampleBtn">試用範例文章</button>
+        </section>
+        <section class="rail" id="voiceSettings" aria-label="英文語音設定">
+          <div class="rail-heading"><h2>語音設定</h2><small>VOICE</small></div>
+          <label class="section-label" for="voiceSelect">英文語音 / 腔調</label><select class="form-select" id="voiceSelect" aria-label="英文語音"><option value="">正在取得系統語音…</option></select>
+          <div class="rate-row"><label class="field-label" for="rate">播放語速</label><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
+          <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複目前句子</label>
+        </section>
+        <p class="privacy">文章在瀏覽器內解析；Word / PDF 解析需要網路載入工具。語音辨識可能使用瀏覽器的雲端服務。</p>
+      </aside>
+    </div>
   </div>
 </div>
-<div class="liquid-dock" id="liquidDock" aria-label="播放控制"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">PLAYBACK</span><span class="dock-current" id="playerText">尚未選擇句子</span></div><span id="nowPlaying" class="dock-info">尚未開始練習</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="播放或暫停" aria-label="播放或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">加入文章後即可開始朗讀</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
+<div class="liquid-dock" id="liquidDock" aria-label="播放控制"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">NOW PLAYING</span><span class="dock-current" id="playerText">尚未選擇句子</span></div><span id="nowPlaying" class="dock-info">尚未開始練習</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="播放或暫停" aria-label="播放或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">匯入文章後即可開始練習</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
 <div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD / 單字</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽</button><button type="button" id="slowWordBtn" disabled>慢速發音</button></div></div>
 <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.10.0/mammoth.browser.min.js" defer></script>
@@ -253,7 +177,7 @@ svg{overflow:visible}
     }
     function renderCards() {
       els.sentences.replaceChildren();
-      if (!sentences.length) {const empty = document.createElement('div');empty.className='empty';empty.innerHTML='<span class="big">⌁</span><strong>等你放進第一篇文章</strong><span>左側匯入文章後，這裡會按句子呈現。</span>';els.sentences.appendChild(empty);return;}
+      if (!sentences.length) {const empty = document.createElement('div');empty.className='empty';empty.innerHTML='<span class="big">⌁</span><strong>還沒有閱讀內容</strong><span>請從右側匯入文章開始練習。</span>';els.sentences.appendChild(empty);return;}
       const fragment=document.createDocumentFragment();
       sentences.forEach((sentence,i)=>{
         const card=document.createElement('div');card.className='sentence'+(i===active?' active':'')+(listened.has(i)?' done':'');card.dataset.index=String(i);card.setAttribute('role','group');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`第 ${i+1} 句，按 Enter 聽整句；也可以點單字聽單字：${sentence}`);
