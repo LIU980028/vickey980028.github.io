@@ -2,282 +2,180 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f7f6f9">
-<title>EchoRead V11 · Study Platform｜英文逐句・逐字跟讀</title>
-<meta name="description" content="EchoRead Quiet Glass：低飽和珍珠白與煙紫色的簡約英語學習工作台，支援上傳文章、逐句朗讀、點字發音及跟讀。">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f1ea">
+<title>EchoRead V12｜閱讀桌</title>
+<meta name="description" content="EchoRead 英文逐句跟讀，點單字發音，上傳自己的文章練習。">
 <style>
-:root{--ink:#1b2333;--secondary:#677389;--muted:#9ba5b5;--line:#e7eaf1;--blue:#4a70de;--violet:#7f6be2;--paper:#fff;--page:#f8f9fc;--glass-edge:rgba(255,255,255,.96);--shadow:0 22px 70px rgba(48,66,101,.07);--radius:27px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--page);color:var(--ink);font:400 15px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI","Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 28% 24% at 88% 16%,rgba(193,189,247,.22),transparent 72%),radial-gradient(ellipse 30% 28% at 3% 73%,rgba(174,207,248,.20),transparent 74%);z-index:-1}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible,.sentence:focus-visible{outline:3px solid rgba(87,118,224,.4);outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.45}a{color:inherit;text-decoration:none}
-.shell{max-width:1480px;margin:0 auto;padding:0 42px 185px}header{height:91px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(212,217,230,.52)}.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:22px;letter-spacing:-.8px}.brand-mark{height:39px;width:39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(160deg,#7fa5ff,#6e5ed9);box-shadow:0 10px 20px rgba(90,103,215,.22);color:white;font-size:21px}.brand strong{font-size:22px}.tagline{color:#a0aabd;font-size:12px;font-weight:700;letter-spacing:.25px;padding-left:8px;border-left:1px solid #d6dbe6}.glass-controls{display:flex;align-items:center;gap:12px}.top-badge{font-size:10px;letter-spacing:2.4px;font-weight:850;color:#8b92a7}.glass-toggle{border:1px solid rgba(255,255,255,.95);border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(236,241,251,.56));color:#506588;font-size:12px;font-weight:750;padding:9px 16px;box-shadow:0 9px 21px rgba(88,103,145,.08),inset 0 1px 0 white;position:relative;overflow:hidden;transition:transform .23s}.glass-toggle:hover{transform:translateY(-2px)}
-.hero{padding:53px 0 42px;display:flex;align-items:end;justify-content:space-between;gap:25px}.eyebrow{font-size:11px;font-weight:850;color:#7d89a4;letter-spacing:3.6px}.hero h1{font-size:clamp(36px,4.3vw,61px);letter-spacing:-2.6px;line-height:1.18;font-weight:780;margin:15px 0 15px}.hero h1 em{font-style:normal;background:linear-gradient(90deg,#5475cb,#8c72d3,#5b9ab5);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:#748198;margin:0;line-height:1.95;font-size:14px}.hero-aside{display:flex;align-items:center;gap:13px;color:#98a3b7;letter-spacing:.8px;font-size:11px;font-weight:700;white-space:nowrap;margin-bottom:7px}.hero-aside .rule{width:50px;height:1px;background:#cbd4e5}
-.layout{display:grid;grid-template-columns:304px minmax(0,1fr);gap:24px;align-items:start}.sidebar{display:flex;flex-direction:column;gap:18px}.panel{border:1px solid #e9edf4;border-radius:var(--radius);background:rgba(255,255,255,.93);box-shadow:var(--shadow)}.sidebar .panel{padding:24px}.panel-title{font-size:16px;margin:0 0 8px;letter-spacing:-.3px;font-weight:800}.muted{color:var(--secondary);font-size:12px;line-height:1.8}.section-label{font-size:11px;letter-spacing:.8px;font-weight:750;color:#7f8ca4;margin:0 0 8px}.dropzone{margin-top:14px;border:1px dashed #c8d1e5;border-radius:17px;padding:20px 12px;background:#fafbfe;display:block;cursor:pointer;text-align:center;transition:background .2s,border-color .2s}.dropzone:hover,.dropzone.drag{background:#f2f6ff;border-color:#94b0ee}.dropzone .emoji{font-size:25px;display:block;line-height:1.1}.dropzone b{display:block;font-size:13px;margin-top:8px}.dropzone small{display:block;color:#9ca7bb;font-size:10px;line-height:1.65;margin-top:4px}.file-info{margin-top:10px;font-size:11px;color:#4d6fa6;display:none;word-break:break-word}.or{text-align:center;color:#a4afbe;font-size:11px;margin:14px 0 10px}.text-input{width:100%;min-height:118px;max-height:350px;resize:vertical;border:1px solid #e4e9f1;border-radius:15px;background:#fcfdff;padding:13px;color:#2d3d53;font-size:12px;line-height:1.7}.text-input::placeholder{color:#abb7c7}.button{border:0;border-radius:14px;padding:11px 15px;font-size:12px;font-weight:780;background:linear-gradient(135deg,#607ff0,#8474dc);color:white;box-shadow:0 12px 24px rgba(100,109,213,.19);transition:transform .18s,filter .18s}.button:not(:disabled):hover{transform:translateY(-2px);filter:brightness(1.04)}.button.secondary{background:#f0f3fb;color:#4e6296;box-shadow:none}.button.ghost{border:1px solid #e5e9f2;background:white;color:#65758b;box-shadow:none}.button.wide{width:100%;margin-top:9px}.control-block{border-top:1px solid #eef0f5;padding-top:18px;margin-top:20px}.form-select{background:#fafbfe;color:#3a4960;border:1px solid #e7ebf1;border-radius:13px;padding:10px;width:100%;font-size:11px;min-width:0}.rate-row{display:flex;align-items:center;gap:9px;margin-top:16px}.rate-row input{min-width:45px;flex:1;accent-color:#617bea}.field-label{font-size:11px;color:#6f7a90;font-weight:700}.rate-number{font-size:11px;color:#5c6fc0;background:#f1f3fb;border-radius:9px;padding:5px 7px;white-space:nowrap}.toggle{display:flex;gap:9px;align-items:center;margin-top:12px;font-size:12px;color:#657187;cursor:pointer}.toggle input{accent-color:#6e77db;width:16px;height:16px;margin:0}.privacy{padding:12px 14px;border:1px solid #e8ecf4;border-radius:15px;font-size:11px;line-height:1.7;color:#99a3b3;background:#fafbfe}
-.reading-area{min-width:0}.workspace{min-height:660px;overflow:hidden}.workhead{padding:30px 32px 23px;display:flex;gap:16px;align-items:start;justify-content:space-between}.workhead .minor{color:#929db2;letter-spacing:2.8px;font-size:10px;font-weight:850}.workhead h2{font-size:23px;font-weight:800;line-height:1.4;letter-spacing:-.7px;margin:8px 0 6px;word-break:break-word}.count-pill{border:1px solid #e8ebf1;border-radius:999px;padding:8px 12px;font-size:11px;color:#62708b;white-space:nowrap;font-weight:800}.progress-wrap{padding:0 32px 19px}.progress-label{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#9ca6b7;margin-bottom:8px;font-weight:720}.progress-track{height:4px;background:#edf0f7;border-radius:15px;overflow:hidden}.progress-fill{height:100%;width:0%;border-radius:15px;background:linear-gradient(90deg,#77a9ec,#8c7de7);transition:width .3s}.help-strip{margin:0 32px 19px;padding:12px 15px;border-radius:13px;background:#f5f7fc;color:#75819b;font-size:11px}.help-strip strong{color:#4e6188}.sentences{margin:0 15px 16px;padding:0 14px 20px;max-height:645px;overflow-y:auto;scrollbar-color:#e0e4ef transparent;scrollbar-width:thin}.sentence{display:grid;grid-template-columns:38px minmax(0,1fr) 40px;gap:13px;align-items:start;padding:20px 17px;background:white;border:1px solid transparent;border-bottom:1px solid #f0f2f7;border-radius:17px;cursor:pointer;text-align:left;transition:border-color .16s,background .16s,box-shadow .18s,transform .18s}.sentence:hover{background:#fafbff;border-color:#edf0f8;box-shadow:0 8px 25px rgba(65,82,136,.04);transform:translateY(-1px)}.sentence.active{background:#f7f9ff;border:1px solid #dce5fb;box-shadow:0 10px 26px rgba(91,125,204,.06)}.sentence .num{display:grid;place-items:center;height:27px;width:30px;color:#a6adbd;font-size:11px;font-weight:800}.sentence.active .num{border-radius:9px;background:#e9eeff;color:#6075c6}.sentence .content{font:400 20px/1.9 Georgia,"Times New Roman",serif;letter-spacing:.08px;overflow-wrap:anywhere;color:#243144}.sentence .speaker{appearance:none;display:grid;place-items:center;height:34px;width:34px;border:1px solid #edf0f7;background:#fff;color:#687fbe;font-size:13px;border-radius:12px}.sentence .speaker:hover{background:#edf2ff}.sentence.done .num:after{content:" ✓";font-size:9px;color:#6d97cf}.sentence.active.done .num:after{color:#657ed5}.sentence .content .word-token{appearance:none;background:transparent;color:inherit;border:0;font:inherit;letter-spacing:inherit;line-height:inherit;display:inline;text-align:inherit;vertical-align:baseline;border-radius:5px;padding:1px 2px;margin:-1px -2px;cursor:pointer;text-decoration:underline dotted rgba(127,145,204,.57);text-underline-offset:5px;text-decoration-thickness:1px}.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e9eeff;color:#405fba;outline:0}.sentence .content .word-token.selected{background:#e4ebff;color:#4d63bb;box-shadow:inset 0 -2px #8ea9f7}.sentence .content .word-token.reading{background:#eae3ff;color:#6a50ba}.empty{padding:77px 18px 86px;text-align:center;font-size:12px;color:#9ba6b7}.empty .big{display:block;font-size:48px;margin-bottom:17px}.empty strong{display:block;font-size:16px;color:#3e4a62;margin-bottom:7px}
-/* The primary reading plane stays opaque. The optical treatment is reserved for controls. */
-.player{background:transparent!important;border:0!important;padding:0!important}.player-head,.player-text,.player .actions,.player .status,.player .word-focus{display:none!important}
-.liquid-dock{--light-x:20%;--light-y:0%;position:fixed;bottom:23px;left:50%;transform:translateX(-50%);width:min(824px,calc(100% - 36px));padding:0;border-radius:32px;z-index:90;isolation:isolate;filter:drop-shadow(0 23px 34px rgba(60,70,121,.18));animation:dock-enter .65s both cubic-bezier(.2,.8,.2,1)}
-.liquid-dock::before{content:"";position:absolute;inset:-1px;z-index:-2;border-radius:inherit;background:linear-gradient(105deg,rgba(255,255,255,.98),rgba(193,222,255,.85) 26%,rgba(252,255,255,.93) 53%,rgba(207,195,255,.84) 79%,rgba(255,255,255,.96));box-shadow:0 0 0 1px rgba(255,255,255,.68),0 19px 35px rgba(67,89,145,.12)}
-.liquid-dock::after{content:"";position:absolute;inset:1.5px;border-radius:30px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 180px 94px at var(--light-x) var(--light-y),rgba(255,255,255,.87),transparent 70%),linear-gradient(140deg,rgba(255,255,255,.76),rgba(247,249,255,.38) 50%,rgba(237,241,255,.52));backdrop-filter:blur(22px) saturate(185%) url(#liquid-refraction);-webkit-backdrop-filter:blur(22px) saturate(185%) url(#liquid-refraction);box-shadow:inset 0 1.5px 1px rgba(255,255,255,1),inset 0 -2px 5px rgba(101,124,200,.10)}
-.dock-inside{display:flex;align-items:center;gap:16px;padding:16px 20px}.dock-label{flex:1;min-width:0}.dock-kicker{display:block;color:#9aa6bf;letter-spacing:1.2px;font-size:9px;font-weight:830}.dock-current{display:block;font:500 14px/1.5 Georgia,"Times New Roman",serif;color:#344059;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dock-info{font-size:10px;color:#8c98ad;font-weight:700;white-space:nowrap}.dock-actions{display:flex;gap:9px;align-items:center}.circle-btn{border:1px solid rgba(255,255,255,.96);background:linear-gradient(160deg,rgba(255,255,255,.96),rgba(225,233,251,.60));box-shadow:0 8px 18px rgba(96,117,180,.12),inset 0 1px 0 white;color:#536792;border-radius:50%;width:41px;height:41px;font-size:17px;display:grid;place-items:center;transition:transform .2s,box-shadow .2s}.circle-btn:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(101,120,188,.15),inset 0 1px 0 white}.circle-btn.main{width:56px;height:56px;font-size:23px;color:#fff;background:linear-gradient(135deg,#6888f1,#927de5);box-shadow:0 12px 24px rgba(102,115,218,.23),inset 0 1px 1px rgba(255,255,255,.45)}.circle-btn.main:hover{box-shadow:0 16px 28px rgba(102,115,218,.27)}.repeat-btn{padding:9px 11px;font-size:11px;color:#7685a0;border:1px solid rgba(255,255,255,.96);border-radius:100px;background:rgba(255,255,255,.62);font-weight:750;white-space:nowrap}.repeat-btn.on{color:#5a6db5;background:#e5eafd}.dock-under{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 20px 10px;margin-top:-2px}.dock-under #playStatus{color:#8f9bb3;font-size:10px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.dock-under .tiny{color:#a2abc0;font-size:10px;white-space:nowrap}
-/* Click a word: optical popover lens with SVG displacement and specular sheen. */
-.word-popover{--light-x:20%;--light-y:0%;position:fixed;z-index:110;width:290px;padding:16px 17px 15px;border:1px solid rgba(255,255,255,.92);border-radius:23px;background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(235,243,255,.69) 55%,rgba(246,239,255,.75));box-shadow:0 18px 43px rgba(61,86,157,.18),0 4px 12px rgba(59,76,114,.08),inset 0 1px 0 #fff;backdrop-filter:blur(22px) saturate(175%) url(#liquid-refraction);-webkit-backdrop-filter:blur(22px) saturate(175%) url(#liquid-refraction);opacity:0;pointer-events:none;transform:translateY(8px) scale(.96);transform-origin:center top;transition:transform .2s,opacity .2s}.word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}.word-popover:before{content:"";position:absolute;inset:1px;border-radius:22px;pointer-events:none;background:radial-gradient(ellipse 170px 70px at var(--light-x) var(--light-y),rgba(255,255,255,.72),transparent 74%),linear-gradient(130deg,rgba(255,255,255,.58),transparent 45%,rgba(204,208,247,.15) 78%,rgba(255,255,255,.5));opacity:.65}.word-popover > *{position:relative}.word-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;color:#8a96ab;font-size:10px;letter-spacing:1.5px;font-weight:850}.word-close{border:0;background:rgba(225,233,249,.7);height:24px;width:24px;border-radius:50%;display:grid;place-items:center;color:#7885a1;font-size:14px}.word-value{font:600 28px/1.28 Georgia,"Times New Roman",serif;letter-spacing:-.7px;color:#2f3b58;overflow-wrap:anywhere;margin:4px 0 14px}.word-buttons{display:flex;gap:8px}.word-buttons button{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.78);color:#546a9c;font-size:11px;font-weight:770;padding:10px 11px;border-radius:12px;flex:1;box-shadow:0 4px 11px rgba(64,95,152,.09)}.word-buttons button:first-child{background:linear-gradient(135deg,#6788ee,#8c7cdd);color:white;box-shadow:0 8px 18px rgba(97,101,197,.17)}
-.practice{display:flex;align-items:center;gap:16px;margin-top:22px;padding:23px 25px;min-height:175px;overflow:hidden;position:relative}.practice>div:nth-child(3){flex:1;min-width:0}.practice h3{font-size:16px;letter-spacing:-.2px;margin:0 0 5px}.practice p{font-size:12px;line-height:1.8;margin:0;color:#8491a7}.practice .recognition{font-size:12px;margin-top:10px;color:#566784}.practice .recognition:empty{display:none}.practice .recognition b{color:#5676c4}.voice-status{display:flex;align-items:center;gap:8px;margin-top:10px;color:#8f9cb5;letter-spacing:1px;font-size:9px;font-weight:770}.voice-dot{width:6px;height:6px;border-radius:50%;background:#a0afcc}.voice-meter{height:12px;display:flex;align-items:center;gap:3px}.voice-meter i{background:#8ea9f2;width:3px;height:6px;border-radius:6px;transition:height .15s}.practice.is-listening .voice-dot{background:#6e8ff4;box-shadow:0 0 12px #859df7}.practice .mic{position:relative;z-index:4;white-space:nowrap}.voice-orb{--light-x:20%;--light-y:10%;position:relative;height:115px;width:115px;flex:0 0 115px;aspect-ratio:1/1;border-radius:50%;isolation:isolate;background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.92),rgba(219,231,255,.68) 20%,rgba(188,199,249,.54) 47%,rgba(125,163,232,.72) 76%,rgba(109,115,197,.65));border:1px solid rgba(255,255,255,.9);box-shadow:0 20px 36px rgba(100,119,204,.15),inset 0 2px 8px rgba(255,255,255,.94),inset -8px -12px 21px rgba(110,99,188,.20);display:grid;place-items:center;overflow:hidden}.voice-orb:before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 20deg,rgba(255,255,255,.1),rgba(255,255,255,.60),rgba(123,150,250,.4),rgba(236,178,235,.37),rgba(255,255,255,.48),rgba(255,255,255,.1));filter:blur(12px);animation:orb-flow 11s linear infinite}.voice-orb:after{content:"";position:absolute;inset:5px;border-radius:50%;border:1px solid rgba(255,255,255,.65);background:radial-gradient(circle at var(--light-x) var(--light-y),rgba(255,255,255,.74),transparent 32%);backdrop-filter:blur(9px) url(#liquid-refraction);-webkit-backdrop-filter:blur(9px) url(#liquid-refraction)}.voice-orb svg{position:relative;z-index:2;opacity:.9}.voice-orb .core{fill:#fff}.voice-orb .stem{stroke:#6074b4;stroke-width:1.5;stroke-linecap:round;fill:none}.practice.is-listening .voice-orb{box-shadow:0 0 var(--orb-blur,36px) rgba(125,149,243,.36),0 22px 40px rgba(90,106,208,.16),inset 0 1px 10px rgba(255,255,255,.85);transform:scale(var(--orb-scale,1.02))}.voice-glow,.player-glow{position:absolute;pointer-events:none;opacity:0}.practice.is-listening .voice-glow{opacity:1;position:absolute;inset:0;background:radial-gradient(ellipse 30% 70% at 12% 75%,rgba(154,159,247,.20),transparent 80%);transition:opacity .2s}.voice-beam{display:none}.footer-note{font-size:11px;color:#9ba5b5;line-height:1.7;text-align:center;margin:22px 0 0}.toast{position:fixed;bottom:143px;left:50%;transform:translate(-50%,10px);background:#2d3951;color:white;padding:10px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:120;max-width:90vw;font-size:12px;box-shadow:0 12px 30px rgba(30,48,87,.24)}.toast.show{opacity:1;transform:translate(-50%,0)}
-/* Optical layers remain subtle, with simple-blur fallback for other engines. */
-@supports not (backdrop-filter:url(#liquid-refraction)){.liquid-dock::after{backdrop-filter:blur(24px) saturate(180%)}.word-popover{backdrop-filter:blur(23px) saturate(160%)}.voice-orb:after{backdrop-filter:blur(10px)}}
-body.quiet-mode .word-popover,body.quiet-mode .liquid-dock::after,body.quiet-mode .voice-orb:after{backdrop-filter:blur(17px);-webkit-backdrop-filter:blur(17px)}body.quiet-mode .voice-orb:before{animation:none}body.quiet-mode .liquid-dock::after{background:rgba(248,249,255,.92)}
-@keyframes orb-flow{to{transform:rotate(360deg)}}@keyframes dock-enter{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
-@media (max-width:1050px){.shell{padding:0 21px 185px}.layout{grid-template-columns:270px minmax(0,1fr);gap:18px}.sidebar .panel{padding:20px}.hero{padding-top:34px}.hero h1{font-size:42px}}
-@media (max-width:790px){.layout{display:flex;flex-direction:column}.sidebar{width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:start}.reading-area{width:100%}.hero-aside{display:none}.workhead{padding:23px 22px 18px}.progress-wrap{padding:0 22px 18px}.help-strip{margin:0 22px 16px}.sentences{margin:0 10px 14px;padding:0 10px 15px}.practice{margin-top:17px}}
-@media (max-width:580px){.shell{padding:0 12px 182px}header{height:76px}.brand{font-size:20px}.brand-mark{width:36px;height:36px}.tagline,.top-badge{display:none}.glass-toggle{font-size:11px;padding:8px 11px}.hero{padding:30px 5px 29px}.hero h1{font-size:35px;letter-spacing:-1.5px;margin:12px 0}.hero p{font-size:12px;line-height:1.8}.sidebar{display:flex;gap:12px}.sidebar .panel{padding:19px}.workhead{padding:21px 18px 17px}.workhead h2{font-size:19px}.workhead .minor{font-size:9px}.progress-wrap{padding:0 18px 17px}.help-strip{margin:0 18px 13px;padding:10px 12px;font-size:10px}.sentences{margin:0 6px 10px;padding:0 8px 12px;max-height:480px}.sentence{grid-template-columns:27px minmax(0,1fr) 28px;gap:8px;padding:15px 9px}.sentence .num{font-size:9px;width:25px}.sentence .content{font-size:17px;line-height:1.8}.sentence .speaker{height:30px;width:28px}.practice{padding:15px;gap:13px;flex-wrap:wrap}.practice>div:nth-child(3){flex:1;min-width:190px}.practice .mic{margin-left:auto}.voice-orb{height:74px;width:74px;flex-basis:74px}.dock-inside{gap:8px;padding:12px 12px 6px}.liquid-dock{bottom:14px;width:calc(100% - 20px);border-radius:25px}.liquid-dock::after{border-radius:23px}.dock-label{max-width:105px}.dock-kicker{font-size:8px}.dock-current{font-size:12px}.dock-info{display:none}.dock-actions{gap:5px}.circle-btn{height:34px;width:34px;font-size:14px}.circle-btn.main{height:44px;width:44px;font-size:19px}.repeat-btn{font-size:9px;padding:7px 8px}.dock-under{padding:0 13px 10px}.dock-under .tiny{display:none}.word-popover{width:min(290px,calc(100vw - 24px))}.footer-note{font-size:10px}}
-@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-
-
-/* EchoRead V10 · Quiet Glass — premium restraint, legible English, one restrained accent */
-:root{
- --ink:#242737;--secondary:#717688;--muted:#9097a8;--line:#e8e6ee;
- --blue:#7768b5;--violet:#8270b8;--paper:#ffffff;--page:#f6f5f8;
- --glass-edge:rgba(255,255,255,.97);--shadow:0 15px 45px rgba(48,49,79,.055),0 2px 8px rgba(43,43,73,.025);--radius:25px
-}
-html{background:#f7f6f9;color-scheme:light}
-body{background:linear-gradient(165deg,#faf9fb 0%,#f6f5f8 55%,#f8f8fa 100%);color:var(--ink)}
-body::before{background:radial-gradient(ellipse 35% 32% at 85% 10%,rgba(183,170,216,.13),transparent 68%),radial-gradient(ellipse 30% 24% at 4% 70%,rgba(179,185,205,.08),transparent 70%);filter:none;opacity:1}
-body::after{display:none}
-.shell{max-width:1340px;padding:0 32px 174px}
-header{height:82px;border-bottom:1px solid #eae9ef}
-.brand{font-size:21px;letter-spacing:-.65px;color:#292a39}.brand-mark{height:38px;width:38px;border-radius:13px;background:linear-gradient(145deg,#9585c3,#72619f);box-shadow:0 8px 18px rgba(102,82,160,.14);color:white;font-size:20px}
-.tagline{font-size:11px;color:#a3a1b0;border-left-color:#dedce6}.top-badge{font-size:10px;color:#a29cac;letter-spacing:1.4px}
-.glass-toggle{color:#6d6686;background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(249,248,252,.80));border:1px solid #efedf5;box-shadow:0 5px 16px rgba(72,64,105,.035),inset 0 1px white;font-size:11px;padding:9px 14px}
-.glass-toggle:hover{transform:translateY(-1px);background:#fff}
-.hero{padding:30px 0 28px;align-items:center}.eyebrow{font-size:10px;letter-spacing:2.2px;color:#8d829e}
-.hero h1{font-size:clamp(32px,3.5vw,47px);letter-spacing:-1.6px;line-height:1.2;margin:12px 0 10px;font-weight:740;color:#292a39}
-.hero h1 em{background:none;color:#796c9c;-webkit-text-fill-color:#796c9c;filter:none}
-.hero p{color:#7b8190;font-size:13px;line-height:1.8}
-.hero-aside{font-size:10px;color:#aaa7b8;letter-spacing:.7px;border-color:#e6e3eb}
-.layout{grid-template-columns:309px minmax(0,1fr);gap:18px}.sidebar{gap:13px}
-.panel{background:rgba(255,255,255,.87);border:1px solid rgba(231,227,239,.85);border-radius:25px;box-shadow:var(--shadow);backdrop-filter:blur(16px) saturate(112%);-webkit-backdrop-filter:blur(16px) saturate(112%)}
-.panel:before{opacity:.18}.sidebar .panel{padding:22px}.panel-title{color:#2b2c3b;font-size:16px;font-weight:770}.muted{color:#828697;font-size:12px}
-.section-label{color:#9693a5;letter-spacing:.55px}
-.dropzone{border:1px dashed #d4cedf;border-radius:16px;background:#fbfafc;padding:19px 12px;color:#434458}
-.dropzone:hover,.dropzone.drag{background:#f4f1f8;border-color:#a89ac4;transform:none;box-shadow:none}
-.dropzone .emoji{color:#8b79ae}.dropzone small,.or{color:#a2a1ad}.file-info{color:#796c9c}
-.text-input{background:#fff;color:#323448;border:1px solid #e7e3ed;border-radius:14px;box-shadow:none;min-height:110px;font-size:12.5px}
-.text-input:focus{border-color:#a69abe;outline:2px solid rgba(156,139,198,.20)}
-.button{color:#fff;background:#8373af;border:1px solid #8373af;border-radius:13px;padding:11px 15px;box-shadow:0 9px 18px rgba(107,92,160,.12);font-size:12.5px}
-.button:hover:not(:disabled){transform:translateY(-1px);background:#7765a7;box-shadow:0 11px 20px rgba(107,92,160,.14);filter:none}
-.button.secondary,.button.ghost{color:#746593;background:#f5f3f8;border:1px solid #eae6f0;box-shadow:none}
-.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#ede9f5;transform:none}
-.form-select,.rate-number{background:#f9f8fb;color:#4e4e63;border-color:#e9e6ee}.rate-row input,.toggle input{accent-color:#8b7aac}.privacy{color:#888d9c}
-.workhead{padding:24px 26px 16px}.workhead .minor{color:#9b90b3;letter-spacing:1.6px}.workhead h2{font-size:22px;color:#2c2d3d}
-.count-pill{background:#f4f0f8;color:#766a94;border:1px solid #ece6f3}.progress-wrap{padding:0 26px 19px}
-.progress-track{background:#f0eef5}.progress-fill{background:linear-gradient(90deg,#b8acd2,#8d7db2);box-shadow:none}
-.help-strip{margin:0 22px 16px;background:#f8f7fa;border:1px solid #efedf4;color:#78778c;border-radius:13px;font-size:11px}
-.sentences{padding:0 16px 17px;max-height:535px}.sentence{border-radius:15px;border:1px solid #eeecf3;padding:17px 15px;margin-bottom:8px;background:#fff;box-shadow:none;transition:background .17s,border-color .17s,box-shadow .17s}
-.sentence:hover{background:#faf9fc;border-color:#e5e0ee;box-shadow:none;transform:none}
-.sentence.active{background:#f9f7fc;border:1px solid #d6cce7;box-shadow:inset 3px 0 0 #9385b9;animation:none}
-.sentence .num{background:#f5f3f7;color:#9994a4;border-radius:8px}
-.sentence.active .num{background:#e9e4f2;color:#71638e}.sentence .content{color:#343547;font:400 18px/1.75 Georgia,"Times New Roman",serif;letter-spacing:.05px}
-.sentence .speaker{background:#f6f4f9;border:1px solid #ece9f2;color:#8475a6;border-radius:11px}.sentence .speaker:hover{background:#ece7f3}
-.sentence .content .word-token{text-decoration-color:rgba(139,124,175,.45)}
-.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#eee9f5;color:#6f628d;outline:none}
-.sentence .content .word-token.selected{background:#e9e3f3;color:#65578c;box-shadow:inset 0 -2px #aa9ac6}
-.sentence .content .word-token.reading{background:#e9e2f3;color:#554780;box-shadow:none}
-.empty{color:#9996a5}.empty strong{color:#343544}
-/* Only the floating dock receives pronounced translucency */
-.liquid-dock{width:min(810px,calc(100% - 34px));bottom:20px;border-radius:27px;filter:drop-shadow(0 14px 25px rgba(67,58,91,.13));animation:dock-enter .55s both cubic-bezier(.2,.8,.2,1)}
-.liquid-dock::before{background:linear-gradient(130deg,#fff,#ece7f4 36%,#fff 65%,#e8e4f0);box-shadow:0 0 0 1px rgba(225,220,234,.75),0 13px 25px rgba(73,66,100,.07)}
-.liquid-dock::after{background:linear-gradient(135deg,rgba(255,255,255,.91),rgba(249,248,252,.78) 48%,rgba(245,242,251,.87));backdrop-filter:blur(24px) saturate(122%);-webkit-backdrop-filter:blur(24px) saturate(122%);box-shadow:inset 0 1px white,inset 0 -1px rgba(174,160,199,.1)}
-.dock-kicker{color:#9890a7}.dock-current{color:#373549}.dock-info,.dock-under #playStatus,.dock-under .tiny{color:#89869a}
-.circle-btn{background:rgba(255,255,255,.76);color:#726786;border:1px solid #e9e4f0;box-shadow:0 5px 13px rgba(70,65,102,.045)}
-.circle-btn:hover{background:#f3eef9;box-shadow:0 6px 15px rgba(70,65,102,.06)}
-.circle-btn.main{background:#8b7bb5;color:white;border-color:#8b7bb5;box-shadow:0 8px 16px rgba(100,83,148,.20)}
-.circle-btn.main:hover{background:#7f6cac;box-shadow:0 9px 20px rgba(100,83,148,.23)}
-.repeat-btn{background:#f8f7fa;color:#81788f;border:1px solid #e9e6ee}.repeat-btn.on{background:#e9e2f3;color:#655785}
-.word-popover{background:rgba(255,255,255,.96);border:1px solid #ddd6e9;border-radius:19px;box-shadow:0 16px 38px rgba(63,58,91,.14),inset 0 1px white;backdrop-filter:blur(17px);-webkit-backdrop-filter:blur(17px)}
-.word-popover:before{background:radial-gradient(ellipse 170px 70px at var(--light-x) var(--light-y),rgba(255,255,255,.78),transparent 76%);opacity:.45}
-.word-head{color:#8d899b}.word-close{color:#666477;background:#f2f0f6}.word-value{color:#363348;font-size:26px}
-.word-buttons button{color:#6c5f89;background:#f4f1f8;border:1px solid #e9e4f1;box-shadow:none}.word-buttons button:first-child{background:#8b7bb5;border-color:#8b7bb5;color:white;box-shadow:none}
-.practice{padding:22px 24px;gap:16px;min-height:155px}.practice h3{color:#2f3143;font-size:16px}.practice h3 span{color:#9e99ab!important}.practice p{color:#878c9b}.practice .recognition{color:#555268}.practice .recognition b{color:#74649f}.voice-status{color:#9993aa}.voice-dot{background:#a79abb}.voice-meter i{background:#a597c1}.practice.is-listening .voice-dot{background:#9c8ab6;box-shadow:0 0 9px rgba(145,122,179,.25)}
-.voice-orb{height:88px;width:88px;flex-basis:88px;border:1px solid rgba(255,255,255,.96);background:radial-gradient(circle at 31% 23%,rgba(255,255,255,.96),rgba(238,233,249,.82) 27%,rgba(196,183,221,.68) 67%,rgba(139,127,177,.72));box-shadow:0 10px 24px rgba(113,98,157,.11),inset 0 2px 5px white,inset -7px -11px 15px rgba(111,95,153,.10)}
-.voice-orb:before{background:conic-gradient(from 20deg,rgba(255,255,255,.20),rgba(255,255,255,.42),rgba(174,158,207,.30),rgba(255,255,255,.35),rgba(255,255,255,.20));animation:orb-flow 30s linear infinite}.voice-orb:after{border-color:#e8dff2}.voice-orb .stem{stroke:#7e6b9e}.practice.is-listening .voice-orb{box-shadow:0 0 24px rgba(154,131,198,.19),0 10px 22px rgba(113,98,157,.13)}
-.practice.is-listening .voice-glow{background:radial-gradient(ellipse 52% 66% at 10% 60%,rgba(167,148,201,.11),transparent 80%)}
-.footer-note{color:#aaa5b2}.toast{color:#fff;background:#615876;border:1px solid rgba(255,255,255,.36);box-shadow:0 10px 22px rgba(68,59,88,.16)}
-body.quiet-mode .liquid-dock::after{background:rgba(255,255,255,.96)}body.quiet-mode .word-popover{backdrop-filter:blur(10px)}
-@media(max-width:1050px){.shell{padding:0 20px 174px}.layout{grid-template-columns:285px minmax(0,1fr)}.hero{padding-top:28px}}
-@media(max-width:790px){.layout{display:flex;flex-direction:column}.sidebar{width:100%;display:grid;grid-template-columns:1fr 1fr}.reading-area{width:100%}.hero{padding:24px 0}.hero-aside{display:none}}
-@media(max-width:580px){
- .shell{padding:0 12px 165px}header{height:68px}.brand{font-size:20px}.brand-mark{height:38px;width:38px}.tagline,.top-badge{display:none}.glass-toggle{font-size:10px;padding:8px 12px}
- .hero{padding:18px 2px 21px}.eyebrow{font-size:9px;letter-spacing:1.5px}.hero h1{font-size:31px;line-height:1.25;letter-spacing:-1px;margin:9px 0}.hero p{font-size:12px;line-height:1.7}
- .sidebar{display:flex;gap:12px}.sidebar .panel{padding:18px}.panel{border-radius:20px}.panel-title{font-size:16px}
- .workhead{padding:20px 18px 15px}.workhead h2{font-size:20px}.help-strip{margin:0 12px 14px;font-size:10.5px}.progress-wrap{padding:0 18px 15px}
- .sentences{padding:0 8px 12px;max-height:520px}.sentence{grid-template-columns:27px minmax(0,1fr) 30px;gap:8px;padding:15px 10px;border-radius:14px;margin-bottom:8px}.sentence .content{font-size:17px;line-height:1.72}.sentence .num{width:27px}.sentence .speaker{width:30px;height:30px}
- .practice{padding:16px;gap:12px}.voice-orb{height:67px;width:67px;flex-basis:67px}.practice .mic{margin-left:auto}
- .liquid-dock{bottom:max(12px,env(safe-area-inset-bottom));width:calc(100% - 20px);border-radius:24px}.liquid-dock::after{border-radius:22px}.dock-inside{gap:6px;padding:12px 11px 6px}.dock-label{max-width:105px}.dock-current{font-size:11px}.dock-actions{gap:5px}.circle-btn{width:32px;height:32px;font-size:14px}.circle-btn.main{width:44px;height:44px;font-size:19px}.repeat-btn{padding:7px 8px;font-size:9px}.dock-under{padding:0 12px 9px}.word-popover{width:min(290px,calc(100vw - 24px))}
-}
-@media(prefers-reduced-motion:reduce){body:after,.sentence.active{animation:none!important}}
-
-
-/* EchoRead 11 | professional study platform visual language */
-:root{--ink:#10213b;--secondary:#63728a;--muted:#8a98ad;--line:#e3eaf3;--blue:#3368ec;--violet:#4e72ad;--paper:#fff;--page:#f5f7fb;--shadow:0 12px 34px rgba(22,52,98,.055);--radius:22px}
-html{background:#f5f7fb;color-scheme:light;scroll-padding-top:22px}
-body{background:#f5f7fb;color:#14243d;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif}
-body::before,body::after{display:none}
-.shell{max-width:1420px;padding:0 42px 166px}
-header{height:80px;border-bottom:1px solid #e4eaf3}
-.brand{font-size:24px;letter-spacing:-.85px;color:#10213b}
-.brand-mark{background:#2153ce;color:#fff;border-radius:11px;box-shadow:0 7px 16px rgba(33,83,206,.13);font-weight:800}
-.tagline{color:#7988a1;font-size:11px;border-left:1px solid #d5deeb;letter-spacing:1.8px}
-.top-badge{color:#677d9b;letter-spacing:1.7px;font-size:10px;font-weight:800}
-.glass-toggle{background:#fff;border:1px solid #dfe6f0;color:#2b55a7;box-shadow:none;border-radius:99px;padding:9px 17px}
-.glass-toggle:hover{background:#ecf2ff;transform:none}
-.hero{position:relative;overflow:hidden;margin:22px 0 0;padding:54px 58px 58px;min-height:342px;display:flex;align-items:center;justify-content:space-between;gap:28px;border-radius:24px;background:radial-gradient(circle at 78% 36%,rgba(105,154,255,.24),transparent 30%),linear-gradient(112deg,#0b1e3c,#102c61 58%,#1a4a8e);box-shadow:0 22px 50px rgba(18,48,97,.11)}
-.hero::before{content:"";position:absolute;right:-110px;top:-180px;width:540px;height:540px;border:1px solid rgba(255,255,255,.17);border-radius:50%;box-shadow:0 0 0 74px rgba(255,255,255,.022),0 0 0 148px rgba(255,255,255,.017);pointer-events:none}
-.hero::after{content:"";position:absolute;right:21%;bottom:-98px;height:210px;width:210px;border-radius:50%;background:radial-gradient(circle,rgba(113,158,255,.20),transparent 75%);pointer-events:none}
-.hero>div{position:relative;z-index:1}
-.eyebrow{font-size:11px;color:#a9c6ff;letter-spacing:2.8px;font-weight:780}
-.hero h1{font-size:clamp(36px,4.05vw,57px);color:#fff;margin:16px 0 18px;letter-spacing:-1.8px;font-weight:800;line-height:1.22}
-.hero h1 em{font-style:normal;color:#add0ff!important;-webkit-text-fill-color:#add0ff!important;background:none!important;filter:none!important}
-.hero p{color:#d5e3f9;font-size:15px;line-height:1.9;margin-bottom:22px}
-.hero-cta{display:inline-flex;align-items:center;gap:16px;text-decoration:none;background:#fff;color:#16345d;font-size:13px;font-weight:800;padding:12px 17px 12px 20px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform .18s,background .18s}
-.hero-cta:hover{background:#edf5ff;transform:translateY(-2px)}
-.hero-cta span{font-size:17px}
-.hero-aside{margin-right:5%;width:240px;height:227px;border:1px solid rgba(255,255,255,.18);border-radius:22px;background:linear-gradient(130deg,rgba(255,255,255,.085),rgba(255,255,255,.018));display:flex;align-items:flex-start;flex-direction:column;justify-content:space-between;padding:19px 21px;box-shadow:inset 0 1px rgba(255,255,255,.1);color:#eff6ff;letter-spacing:1px;font-size:11px;backdrop-filter:blur(9px)}
-.hero-aside .hero-index{font-size:11px;color:#b4cff7;font-weight:800;letter-spacing:2px}
-.hero-graphic{display:flex;align-items:center;justify-content:center;gap:12px;height:77px;width:100%}
-.hero-graphic i{display:block;width:7px;border-radius:15px;background:linear-gradient(180deg,#a8d0ff,#569cf8);height:26px;box-shadow:0 0 18px rgba(119,181,255,.2)}
-.hero-graphic i:nth-child(2),.hero-graphic i:nth-child(4){height:53px}.hero-graphic i:nth-child(3){height:75px}
-.hero-side-title{font-weight:850;color:white;font-size:12px;letter-spacing:1.7px}
-.hero-side-caption{color:#a9bedb;font-size:10px;letter-spacing:1.1px}
-.learning-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:24px 0 48px;background:#fff;border-radius:18px;border:1px solid #e9eef6;box-shadow:0 6px 20px rgba(20,51,94,.025)}
-.learning-steps>div{padding:23px 29px;display:flex;flex-direction:column;gap:3px;position:relative}
-.learning-steps>div+div{border-left:1px solid #e8edf5}
-.learning-steps span{color:#4979cf;font-size:10px;letter-spacing:1.65px;font-weight:850;margin-bottom:6px}
-.learning-steps strong{font-size:16px;color:#132b4a;letter-spacing:-.3px}
-.learning-steps small{font-size:11px;color:#8b9aad}
-.desk-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 19px}
-.desk-eyebrow{font-size:10px;letter-spacing:2px;font-weight:850;color:#3769c9}
-.desk-heading h2{font-size:25px;letter-spacing:-.5px;color:#172e4d;margin:6px 0 0}
-.desk-heading h2 span{font-size:14px;color:#93a3b7;font-weight:500}
-.desk-note{color:#95a4b8;letter-spacing:1.3px;font-size:10px;font-weight:750}
-.layout{grid-template-columns:318px minmax(0,1fr);gap:20px;align-items:start}
-.sidebar{gap:14px}
-.panel{background:#fff;border:1px solid #e4ebf5;border-radius:18px;box-shadow:var(--shadow);backdrop-filter:none;-webkit-backdrop-filter:none}
-.panel:before,.panel::after{display:none!important}
-.sidebar .panel{padding:25px}
-.panel-title{color:#1b3353;font-size:16px;margin-bottom:10px;font-weight:820;letter-spacing:-.2px}
-.section-number{display:inline-grid;place-items:center;width:29px;height:29px;background:#eaf1ff;color:#346ad5;border-radius:9px;font-size:11px;font-weight:850;margin-right:5px}
-.muted{color:#7c8ca2;font-size:12px}
-.dropzone{border:1px dashed #afc4e9;background:#f8fbff;border-radius:13px;padding:23px 14px;margin-top:16px}
-.dropzone:hover,.dropzone.drag{background:#edf4ff;border-color:#4e84e4}
-.dropzone .emoji{color:#326ad7;font-weight:800;font-size:28px}
-.dropzone b{color:#244268;font-size:13px}
-.dropzone small{color:#8ea1ba}
-.or{color:#9aa7b7}
-.text-input{background:#fff;color:#21364e;border:1px solid #dfe7f3;border-radius:11px;min-height:140px;box-shadow:none;font-size:13px}
-.text-input:focus{border-color:#81a5e8;outline:2px solid rgba(71,120,221,.13)}
-.button{background:#285bd7;color:#fff;border:1px solid #285bd7;box-shadow:0 7px 15px rgba(46,97,202,.11);border-radius:10px;padding:12px 15px}
-.button:hover:not(:disabled){background:#194ecb;box-shadow:0 9px 18px rgba(46,97,202,.14);transform:translateY(-1px)}
-.button.secondary,.button.ghost{background:#eef4ff;color:#2d5dbc;border:1px solid #dfeaff;box-shadow:none}
-.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#e4edff}
-.form-select,.rate-number{background:#f7faff;border:1px solid #e0e9f5;color:#334f79}
-.rate-row input,.toggle input{accent-color:#326bd9}
-.toggle{color:#53637c}.privacy{color:#8390a2}
-.workhead{padding:26px 27px 17px}
-.workhead .minor{color:#4072c8;letter-spacing:1.7px;font-size:11px;font-weight:850}
-.workhead h2{font-size:24px;color:#152c4a}
-.count-pill{background:#eaf1ff;color:#3069d4;border:1px solid #dce8ff;border-radius:9px}
-.progress-wrap{padding:0 27px 20px}
-.progress-track{background:#eff4fc;height:7px}
-.progress-fill{background:#2d69da;box-shadow:none}
-.help-strip{margin:0 24px 16px;background:#f5f8fe;border:1px solid #e6edf9;color:#61748e;border-radius:11px;padding:11px 14px;font-size:11px}
-.sentences{padding:0 18px 18px;max-height:540px}
-.sentence{background:#fff;border:1px solid #e7edf6;border-radius:12px;box-shadow:none;margin-bottom:9px;padding:18px 16px}
-.sentence:hover{background:#f7faff;border-color:#dbe7fa;box-shadow:none;transform:none}
-.sentence.active{background:#f4f8ff;border:1px solid #a7c1ed;box-shadow:inset 3px 0 #2d69da;animation:none}
-.sentence .num{background:#eef3fa;color:#7890ae;border-radius:7px}
-.sentence.active .num{background:#2c64d2;color:#fff}
-.sentence .content{font:400 18px/1.75 Georgia,"Times New Roman",serif;color:#20344e}
-.sentence .speaker{background:#eef4ff;border:1px solid #deebff;color:#2d65cb}
-.sentence .speaker:hover{background:#dce9ff}
-.sentence .content .word-token{text-decoration-color:rgba(52,103,209,.48)}
-.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e9f0ff;color:#234ca0;outline:none}
-.sentence .content .word-token.selected{background:#dce9ff;color:#1a54ba;box-shadow:inset 0 -2px #6997e1}
-.sentence .content .word-token.reading{background:#cee1ff;color:#1c4fa1;box-shadow:none}
-.empty{color:#8795a9}.empty strong{color:#233951}
-.liquid-dock{filter:drop-shadow(0 13px 23px rgba(24,52,102,.14));bottom:18px;width:min(820px,calc(100% - 28px))}
-.liquid-dock::before{background:#102a56;box-shadow:0 12px 25px rgba(15,37,78,.12),0 0 0 1px rgba(31,65,128,.13)}
-.liquid-dock::after{background:linear-gradient(130deg,#14325e,#1d3d73 56%,#112e5e);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px rgba(255,255,255,.19)}
-.dock-kicker{color:#9dbbec}.dock-current{color:#fff}.dock-info,.dock-under #playStatus,.dock-under .tiny{color:#b3c5e5}
-.circle-btn{background:#2b4d81;color:#fff;border:1px solid rgba(255,255,255,.16);box-shadow:none}
-.circle-btn:hover{background:#40649b;box-shadow:none}
-.circle-btn.main{background:#fff;color:#1c53bd;border:1px solid #fff;box-shadow:0 6px 14px rgba(1,13,35,.16)}
-.circle-btn.main:hover{background:#eaf2ff;color:#1958c7;box-shadow:0 6px 14px rgba(1,13,35,.12)}
-.repeat-btn{background:#254674;color:#d6e6ff;border:1px solid #4b6796}
-.repeat-btn.on{background:#e9f1ff;color:#2259c0;border-color:#e9f1ff}
-.word-popover{background:#fff;border:1px solid #dce7f8;border-radius:16px;box-shadow:0 20px 45px rgba(18,47,92,.16);backdrop-filter:none;-webkit-backdrop-filter:none}
-.word-popover:before{display:none}
-.word-head{color:#6c86aa}.word-value{color:#153a77;font-size:25px}.word-close{background:#eff4fc;color:#45658a}
-.word-buttons button{background:#eef4ff;color:#285fbd;border:1px solid #dfe9fc;box-shadow:none}
-.word-buttons button:first-child{background:#2c60d0;border:1px solid #2c60d0;color:#fff}
-.practice{padding:24px 27px;min-height:165px}.practice h3{color:#1b3658;font-size:16px}.practice p{color:#718198}
-.practice .recognition{color:#415673}.practice .recognition b{color:#2158bc}
-.voice-status{color:#8294ad}.voice-dot,.voice-meter i{background:#5f8cdb}.practice.is-listening .voice-dot{background:#3977e7;box-shadow:0 0 10px rgba(50,110,216,.23)}
-.voice-orb{border:1px solid #dce7fa;background:radial-gradient(circle at 29% 24%,#fff,#ecf3ff 25%,#aacaff 67%,#729ee5);box-shadow:0 10px 24px rgba(48,97,180,.1),inset 0 2px 6px #fff}
-.voice-orb:before{background:conic-gradient(from 25deg,#fff,#d1e2ff,#7ba5ed,#fff)}
-.voice-orb:after{border-color:#d9e7ff}.voice-orb .stem{stroke:#2d62c0}
-.footer-note{color:#8d9db0}.toast{background:#163a74;color:#fff;border:1px solid #7595c7;box-shadow:0 12px 27px rgba(17,46,89,.17)}
-body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-popover{background:#fff}
-@media(max-width:1050px){.shell{padding:0 22px 164px}.hero{padding:44px}.layout{grid-template-columns:290px minmax(0,1fr)}.hero-aside{margin-right:0;width:208px}}
-@media(max-width:790px){.layout{display:flex;flex-direction:column}.sidebar{display:grid;grid-template-columns:1fr 1fr;width:100%}.reading-area{width:100%}.hero{padding:37px 32px;min-height:320px}.hero-aside{width:185px}.learning-steps>div{padding:19px 17px}.desk-note{display:none}}
-@media(max-width:580px){
- .shell{padding:0 12px 168px}header{height:67px}.brand{font-size:21px}.tagline,.top-badge{display:none}.glass-toggle{font-size:10px;padding:8px 11px}
- .hero{margin:12px 0 0;padding:33px 25px 35px;min-height:0;border-radius:17px;display:block}.hero h1{font-size:35px;letter-spacing:-1.2px;line-height:1.29;margin:13px 0}.hero p{font-size:12px;margin:9px 0 18px}.eyebrow{font-size:9px;letter-spacing:1.8px}
- .hero-aside{display:none}.hero-cta{font-size:12px;padding:10px 15px}
- .learning-steps{display:flex;margin:13px 0 28px;gap:0;border-radius:13px;overflow-x:auto;scroll-snap-type:x mandatory}
- .learning-steps>div{flex:0 0 52%;scroll-snap-align:start;padding:14px 16px}.learning-steps strong{font-size:13px}.learning-steps small{font-size:10px}
- .desk-heading{margin-bottom:13px}.desk-heading h2{font-size:19px}.desk-heading h2 span{display:block;font-size:11px;margin-top:2px}
- .sidebar{display:flex;gap:12px}.sidebar .panel{padding:19px}.panel{border-radius:13px}.panel-title{font-size:15px}.section-number{width:26px;height:26px}.workhead{padding:20px 18px 15px}.workhead h2{font-size:20px}.progress-wrap{padding:0 18px 16px}.help-strip{margin:0 12px 13px;padding:10px 11px}
- .sentences{padding:0 9px 14px;max-height:500px}.sentence{margin-bottom:7px;padding:14px 10px}.sentence .content{font-size:17px}.practice{padding:18px;min-height:0}
- .liquid-dock{bottom:11px}.dock-current{font-size:12px}.dock-actions{gap:5px}.dock-label{min-width:0}.dock-inside{padding:13px 14px 11px}.circle-btn{height:36px;width:36px}.circle-btn.main{height:42px;width:42px}.repeat-btn{font-size:10px}
-}
-@media(prefers-reduced-motion:reduce){.hero-cta,.circle-btn,.sentence{transition:none!important}}
-
+:root{--bg:#f4f1ea;--paper:#fffefa;--rail:#ede9e0;--ink:#282e2c;--sub:#727973;--faint:#9ba49e;--rule:#deddd5;--accent:#315f54;--accent-soft:#edf4f0;--clay:#b97a62;--shadow:0 16px 36px rgba(40,46,44,.045)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:18px}
+body{margin:0;color:var(--ink);font:400 15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.sentence:focus-visible{outline:2px solid #579d89;outline-offset:3px}
+button:disabled{opacity:.42;cursor:not-allowed}
+a{color:inherit;text-decoration:none}
+svg{overflow:visible}
+.shell{max-width:1450px;margin:0 auto;padding:0 32px 172px}
+.masthead{height:84px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dcdad2;gap:20px}
+.brand{display:flex;align-items:baseline;gap:11px;font-family:Georgia,"Times New Roman",serif;font-size:27px;font-weight:700;letter-spacing:-1.1px;color:#26352f}
+.brand i{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10px;letter-spacing:2.3px;font-style:normal;font-weight:700;text-transform:uppercase;color:#9c8c7a}
+.head-meta{color:#7d837c;font-size:12px;letter-spacing:.08em;display:flex;gap:21px;align-items:center}
+.head-meta span+span{border-left:1px solid #cdcfc8;padding-left:20px}
+.intro-line{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;padding:34px 0 26px}
+.intro-line h1{font:500 clamp(27px,2.8vw,37px)/1.24 Georgia,"Noto Serif TC",serif;letter-spacing:-.8px;margin:0;color:#293b34}
+.intro-line p{color:#717970;margin:0;font-size:12.5px;max-width:360px;line-height:1.65;text-align:right}
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr);align-items:start;gap:28px}
+.sidebar{position:sticky;top:16px;min-width:0}
+.rail{background:var(--rail);border:1px solid #e2ded3;border-radius:8px;padding:24px 22px 20px}
+.rail-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px;gap:12px;border-bottom:1px solid #d7d4ca;padding-bottom:16px}
+.rail-heading h2{font:600 17px/1.3 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0}
+.rail-heading small{font-family:Georgia,serif;color:#9c8b78;font-style:italic;font-size:12px}
+.section-label{display:block;color:#6f746c;font-size:11px;letter-spacing:.12em;font-weight:700;margin-bottom:9px}
+.dropzone{border:1px dashed #b6b6a8;border-radius:5px;padding:23px 16px;display:block;text-align:center;background:rgba(255,255,255,.33);cursor:pointer;transition:background .18s,border-color .18s}
+.dropzone:hover,.dropzone.drag{border-color:#4d7566;background:#fffdf7}
+.dropzone .emoji{font-family:Georgia,serif;font-size:25px;color:#566d62;line-height:1.2;display:block}
+.dropzone b{display:block;font-size:13px;font-weight:600;margin:5px 0 3px}
+.dropzone small{display:block;font-size:11px;color:#858980}
+.file-info{margin:8px 0 0;font-size:11px;display:none;color:#466b60;word-break:break-word}
+.or{font-size:11px;color:#909389;text-align:center;margin:15px 0 10px}
+.text-input{display:block;width:100%;min-height:149px;max-height:310px;resize:vertical;border:1px solid #d4d2c7;border-radius:5px;padding:12px;background:#fffefa;color:#2a332e;font-size:13px;line-height:1.72}
+.text-input::placeholder{color:#acaea6}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:10px 15px;border:1px solid var(--accent);border-radius:5px;background:var(--accent);color:#fff;font-weight:600;font-size:12.5px;transition:background .18s,border-color .18s}
+.button:hover:not(:disabled){background:#224d42;border-color:#224d42}
+.button.secondary,.button.ghost{background:transparent;color:#31594e;border-color:#c8cac0}
+.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#fffefa;border-color:#aebbad}
+.button.wide{width:100%;margin-top:10px}
+.control-block{margin-top:25px;padding-top:22px;border-top:1px solid #d5d2c8}
+.form-select{display:block;width:100%;background:#fffefa;border:1px solid #d3d3c8;padding:11px;color:#354039;border-radius:5px;font-size:12px}
+.rate-row{display:flex;align-items:center;gap:10px;margin:13px 0}.field-label{font-size:12px;color:#697169;flex-shrink:0}.rate-row input{flex:1;min-width:40px;accent-color:#3d6e61}.rate-number{font-size:11px;color:#335e53;font-weight:700;min-width:40px;text-align:right}
+.toggle{display:flex;align-items:center;gap:10px;color:#5f6861;font-size:12px;margin-top:11px;cursor:pointer}.toggle input{width:15px;height:15px;accent-color:#386b5e;margin:0}
+.privacy{font-size:11px;color:#838780;margin-top:14px;padding:0 5px;line-height:1.75}
+.reading-area{min-width:0}
+.workspace{background:var(--paper);border:1px solid #e5e0d5;box-shadow:var(--shadow);border-radius:7px;overflow:hidden;min-height:630px}
+.workhead{padding:31px 42px 21px;display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.workhead .minor{font-size:10px;letter-spacing:.2em;color:#a39583;font-weight:700;text-transform:uppercase}
+.workhead h2{font:500 30px/1.27 Georgia,"Noto Serif TC",serif;letter-spacing:-.65px;color:#29342e;margin:10px 0 7px;word-break:break-word}
+.muted{color:#899088;font-size:12.5px;line-height:1.55}
+.count-pill{font-size:12px;white-space:nowrap;color:#738378;font-family:Georgia,serif;border-bottom:1px solid #c5cdc5;padding:6px 0}
+.progress-wrap{padding:0 42px 25px}.progress-label{font-size:11px;color:#8b9289;display:flex;justify-content:space-between;gap:10px;margin-bottom:9px}.progress-track{background:#eaece7;width:100%;height:3px}.progress-fill{height:100%;width:0;background:#5a8074;transition:width .2s}
+.help-strip{margin:0 42px 5px;padding:12px 0 15px;font-size:11.5px;color:#78817b;border-top:1px solid #ecebe5}
+.help-strip strong{font-weight:600;color:#536a5d}
+.sentences{padding:0 42px 45px;max-height:min(570px,70vh);overflow-y:auto;scrollbar-color:#d6d8d0 transparent}
+.sentence{display:grid;grid-template-columns:39px minmax(0,1fr) 31px;gap:14px;align-items:start;border-bottom:1px solid #ecebe5;padding:22px 5px 22px 0;margin:0;background:transparent;cursor:pointer;transition:background .18s;scroll-margin:22px}
+.sentence:first-child{border-top:1px solid #ecebe5}.sentence:hover{background:#f8f8f4}
+.sentence.active{background:#f1f5ef;box-shadow:inset 3px 0 #4b7868;padding-left:12px}
+.sentence .num{font:400 13px/2.2 Georgia,serif;color:#a5aa9f}
+.sentence.active .num{color:#356b58}
+.sentence.done .num::after{content:"·";color:#4f7768;margin-left:2px}
+.sentence .content{font:400 clamp(18px,1.9vw,21px)/1.82 Georgia,"Times New Roman",serif;color:#2a3531;letter-spacing:.005em;overflow-wrap:anywhere}
+.sentence .speaker{border:1px solid transparent;border-radius:100%;background:transparent;color:#637d6c;width:31px;height:31px;font-size:13px;display:grid;place-items:center;padding:0}
+.sentence .speaker:hover,.sentence .speaker:focus-visible{background:#e4ede5;color:#2f6251}
+.sentence .content .word-token{appearance:none;border:0;padding:1px 2px;margin:-1px -2px;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;line-height:inherit;display:inline;text-align:inherit;vertical-align:baseline;border-radius:3px;cursor:pointer;text-decoration:underline dotted rgba(70,107,89,.33);text-decoration-thickness:1px;text-underline-offset:5px}
+.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e4efe7;color:#235544;outline:0}
+.sentence .content .word-token.selected{background:#dcebe1;color:#255b47;box-shadow:inset 0 -1px #4f7768}
+.sentence .content .word-token.reading{background:#c6e3cc;color:#214b37}
+.empty{min-height:365px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#8b928c;gap:8px;padding:40px 20px}
+.empty .big{font-family:Georgia,serif;font-size:34px;color:#bbc9be;line-height:1.3;display:block}
+.empty strong{font:500 22px/1.4 Georgia,"Noto Serif TC",serif;color:#42564b;display:block}
+.empty span:last-child{font-size:12px}
+.player{display:none}
+.practice{display:flex;align-items:center;gap:22px;margin-top:18px;padding:22px 27px;border:1px solid #e5e0d5;border-radius:7px;background:#fffefa;position:relative;overflow:hidden;min-height:146px}
+.practice h3{font-size:16px;margin:0 0 6px;letter-spacing:-.2px;color:#314539;font-weight:600}
+.practice p{font-size:12px;margin:0;color:#89928b;line-height:1.68}
+.practice>div:nth-child(3){flex:1;min-width:0}
+.practice .mic{white-space:nowrap;position:relative;z-index:3}
+.voice-orb{width:67px;height:67px;flex:0 0 67px;border-radius:50%;display:grid;place-items:center;background:#e8efe9;border:1px solid #d2ddd3;position:relative;z-index:3;box-shadow:inset 0 2px 5px #f8fffa}
+.voice-orb svg{width:26px;height:33px}.voice-orb .core{fill:#3e7160}.voice-orb .stem{stroke:#3e7160;fill:none;stroke-width:2}
+.voice-glow,.voice-beam{display:none}
+.practice.is-listening .voice-orb{background:#d5e5d9;box-shadow:0 0 0 5px #e4efe7}
+.recognition{font-size:12px;color:#52685a;margin-top:9px;line-height:1.7}.recognition:empty{display:none}.recognition b{color:#2c7056}
+.voice-status{display:flex;align-items:center;gap:8px;margin-top:9px;color:#9a9f93;font-size:10px;letter-spacing:.05em}
+.voice-dot{height:6px;width:6px;border-radius:50%;background:#aab9ad}
+.practice.is-listening .voice-dot{background:#57927a}
+.voice-meter{display:flex;align-items:center;gap:3px;height:15px}.voice-meter i{height:6px;width:2px;background:#9ebda9;border-radius:2px;transition:height .12s}
+.footer-note{font-size:11px;margin:16px 0;color:#999d93}
+/* Quiet inline player: aligned with reading width and easy to reach */
+.liquid-dock{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:min(820px,calc(100% - 40px));z-index:90;border:1px solid #d7dbd3;border-radius:7px;background:#fffefa;box-shadow:0 13px 40px rgba(30,46,35,.13)}
+.liquid-dock::before,.liquid-dock::after{display:none}
+.dock-inside{display:flex;align-items:center;gap:15px;padding:14px 20px}
+.dock-label{flex:1;min-width:0}.dock-kicker{font-size:9px;font-weight:700;letter-spacing:.14em;color:#869187;display:block}.dock-current{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:400 14px/1.6 Georgia,serif;color:#425048}
+.dock-info{color:#899087;font-size:10px;white-space:nowrap}
+.dock-actions{display:flex;gap:7px;align-items:center}
+.circle-btn{border:1px solid #dfe5db;color:#425e50;background:#fffefa;width:36px;height:36px;border-radius:50%;font-size:17px;display:grid;place-items:center;line-height:1;padding:0}
+.circle-btn:hover{background:#edf5ed}.circle-btn.main{background:#315f54;color:#fff;border-color:#315f54;width:46px;height:46px;font-size:19px}
+.circle-btn.main:hover{background:#234f44}
+.repeat-btn{border:1px solid #dbe3d9;border-radius:5px;background:#fffefa;color:#6b786c;font-size:11px;padding:9px 11px;white-space:nowrap}.repeat-btn.on{background:#e9f3ec;color:#34664f}
+.dock-under{display:flex;justify-content:space-between;gap:8px;padding:0 20px 10px;font-size:10px;color:#9a9f96}
+.dock-under .tiny{white-space:nowrap;color:#b7bcb2}
+/* Word popover is a quiet typographic card */
+.word-popover{position:fixed;width:270px;z-index:110;border:1px solid #d9dfd5;border-radius:7px;background:#fffefa;box-shadow:0 14px 38px rgba(39,59,48,.16);padding:17px 17px 16px;opacity:0;pointer-events:none;transform:translateY(7px);transition:opacity .15s,transform .15s}
+.word-popover.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+.word-head{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.16em;color:#91a092;font-weight:700}
+.word-close{border:0;background:transparent;color:#7a837c;padding:2px 5px;font-size:20px;line-height:1}
+.word-value{font:500 28px/1.5 Georgia,serif;color:#2c4c3d;margin:5px 0 12px;word-break:break-word}
+.word-buttons{display:flex;gap:7px}.word-buttons button{flex:1;border:1px solid #d7e2d9;background:#f5f7f2;border-radius:4px;color:#40644f;font-weight:600;font-size:11px;padding:9px 4px}
+.word-buttons button:first-child{background:#315f54;color:#fff;border-color:#315f54}
+.word-buttons button:hover:not(:disabled){filter:brightness(.96)}
+.toast{position:fixed;bottom:120px;left:50%;transform:translate(-50%,10px);opacity:0;pointer-events:none;padding:10px 16px;background:#294638;color:white;border-radius:6px;box-shadow:0 10px 20px rgba(0,0,0,.13);font-size:12px;z-index:160;transition:opacity .2s,transform .2s;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1110px){.shell{padding:0 23px 162px}.layout{grid-template-columns:290px minmax(0,1fr);gap:19px}.workhead{padding:27px 28px 20px}.progress-wrap{padding:0 28px 24px}.help-strip{margin-left:28px;margin-right:28px}.sentences{padding-left:28px;padding-right:28px}}
+@media(max-width:770px){.layout{grid-template-columns:minmax(0,1fr)}.sidebar{position:static}.rail{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;padding:19px}.rail-heading{grid-column:1/-1;margin:0 0 2px}.rail .dropzone{min-height:115px}.rail .control-block{margin:0;padding:0 0 0 17px;border-top:0;border-left:1px solid #d5d2c8;grid-column:2;grid-row:2/8;align-self:stretch}.rail .section-label,.rail .or,.rail .text-input,.rail .button{grid-column:1}.rail .rate-row,.rail .toggle{font-size:11px}.privacy{margin-top:9px}.sentences{max-height:580px}.intro-line{padding-top:29px}}
+@media(max-width:565px){.shell{padding:0 12px 154px}.masthead{height:63px}.brand{font-size:23px}.brand i,.head-meta span:last-child{display:none}.head-meta{font-size:10px}.intro-line{padding:26px 3px 19px;display:block}.intro-line h1{font-size:26px}.intro-line p{text-align:left;margin-top:9px;font-size:11px}.rail{display:block;padding:18px}.rail-heading{margin:0 0 17px}.rail .control-block{margin-top:23px;padding-top:20px;padding-left:0;border-left:0;border-top:1px solid #d5d2c8}.workspace{min-height:550px}.workhead{padding:23px 20px 18px}.workhead h2{font-size:25px}.progress-wrap{padding:0 20px 17px}.help-strip{margin:0 20px 2px;padding:11px 0;font-size:11px}.sentences{padding:0 20px 28px;max-height:560px}.sentence{grid-template-columns:27px minmax(0,1fr) 28px;gap:9px;padding:17px 3px 17px 0}.sentence.active{padding-left:8px}.sentence .content{font-size:17px}.sentence .speaker{width:28px;height:28px;font-size:12px}.empty{min-height:320px}.practice{padding:17px 16px;gap:12px;flex-wrap:wrap}.voice-orb{width:46px;height:46px;flex-basis:46px}.voice-orb svg{width:18px;height:22px}.practice>div:nth-child(3){flex-basis:calc(100% - 66px)}.practice h3{font-size:14px}.practice .mic{margin-left:58px}.liquid-dock{bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 16px)}.dock-inside{gap:7px;padding:10px 10px 4px;flex-wrap:wrap}.dock-label{flex-basis:100%;padding:0 5px}.dock-kicker{display:none}.dock-current{font-size:11px}.dock-info{display:none}.dock-actions{width:100%;justify-content:center;gap:8px}.circle-btn{width:32px;height:32px;font-size:14px}.circle-btn.main{width:41px;height:41px;font-size:17px}.repeat-btn{font-size:9px;padding:7px 7px}.dock-under{padding:0 12px 8px}.dock-under .tiny{display:none}.word-popover{width:min(270px,calc(100vw - 24px))}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<!-- SVG optical displacement creates a gently curved refractive lens. Subtle filter, with CSS blur fallback. -->
 <svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none"><defs><filter id="liquid-refraction" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="1" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <div class="shell">
-<header><div class="brand"><span class="brand-mark" aria-hidden="true">♫</span>EchoRead <span class="tagline">STUDY PLATFORM</span></div><div class="glass-controls"><span class="top-badge">ECHO / LEARNING SYSTEM 11</span><button id="glassToggle" class="glass-toggle" type="button" aria-pressed="true" title="切換清晰專注模式">◌ 專注模式</button></div></header>
-<section class="hero"><div><div class="eyebrow">ECHOREAD · ENGLISH LEARNING PLATFORM</div><h1>讀得清楚，<br><em>說得更有自信。</em></h1><p>從每一句、每一個單字開始。<br>把自己的英文文章變成專屬口說練習。</p><a class="hero-cta" href="#practiceWorkspace">開始練習 <span aria-hidden="true">↗</span></a></div><div class="hero-aside"><span class="hero-index">01 / 03</span><span class="hero-graphic" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="hero-side-title">READ / LISTEN / SPEAK</span><span class="hero-side-caption">YOUR PRACTICE, YOUR PACE.</span></div></section>
-<div class="learning-steps" aria-label="英文跟讀流程"><div><span>01 / INPUT</span><strong>匯入文章</strong><small>上傳文字或貼上內容</small></div><div><span>02 / LISTEN</span><strong>逐句・逐字聽讀</strong><small>點選任一句、任何單字</small></div><div><span>03 / SPEAK</span><strong>自己開口跟讀</strong><small>重聽、慢速、反覆練習</small></div></div><div class="desk-heading"><div><span class="desk-eyebrow">YOUR LEARNING DESK</span><h2>開始你的英文練習 <span>／ Practice Studio</span></h2></div><span class="desk-note">STEP BY STEP, BETTER EVERY DAY</span></div><div class="layout" id="practiceWorkspace">
-<aside class="sidebar">
-<section class="panel"><h2 class="panel-title"><span class="section-number">01</span> 建立練習</h2><div class="muted">帶入想練習的英文文章，讓內容成為自己的專屬教材。</div>
-<label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>拖曳檔案或點擊上傳</b><small>TXT、DOCX、文字型 PDF</small></label>
-<input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
-<div id="fileInfo" class="file-info" role="status"></div><div class="or">或是直接貼上文章</div>
-<textarea class="text-input" id="articleInput" spellcheck="false" autocomplete="off" placeholder="Paste your English text here…"></textarea><button class="button wide" id="parseBtn">✧ 開始我的練習</button><button class="button ghost wide" id="sampleBtn">試用示範文章</button>
-<div class="control-block"><h2 class="panel-title"><span class="section-number">02</span> 聲音偏好</h2><div class="section-label">VOICE / ACCENT</div><select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得英文語音…</option></select>
-<div class="rate-row"><span class="field-label">語速</span><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
-<label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複朗讀目前句子</label>
-</div></section>
-<div class="privacy">🔒 文章在本機瀏覽器處理，不會送往 EchoRead 伺服器。Word / PDF 解析需要網路工具；麥克風辨識可能使用瀏覽器線上服務。</div>
-</aside>
-<main class="reading-area">
-<section class="panel workspace" aria-label="英文逐句練習"><div class="workhead"><div><div class="minor">PRACTICE / SENTENCE BY SENTENCE</div><h2 id="documentTitle">我的英文跟讀練習</h2><div class="muted" id="documentSubtitle">點單字只聽該字；點卡片空白處播放整句。</div></div><span id="sentenceCount" class="count-pill">0 句</span></div>
-<div class="progress-wrap"><div class="progress-label"><span>READING PROGRESS · 已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
-<div class="help-strip">✧ <strong>輕點有虛線底線的單字</strong>，會浮出發音工具；點整句空白或右側播放圖示，朗讀整句。</div>
-<div class="sentences" id="sentences"><div class="empty"><span class="big">✧</span><strong>今天想讀什麼英文？</strong><span>上傳文章或貼上文字，就能開始一字一句練習。</span></div></div>
-<div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
-</section>
-<section class="panel practice" id="practiceCard"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div><div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div><div><h3>03 / Voice Studio <span style="font-weight:450;color:#7a899c">/ 跟讀練習</span></h3><p>選擇一句英文，跟著自己的節奏唸出來。聲音會帶動玻璃球的柔和光暈。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div><button class="button secondary mic" id="micBtn">🎤 開始跟讀</button></section>
-<div class="footer-note">建議使用 Chrome / Edge。系統語音品質取決於裝置；文字相似度不代表專業口音或發音評分。</div>
-</main>
+  <header class="masthead">
+    <div class="brand">EchoRead <i>reading companion</i></div>
+    <div class="head-meta"><span>英文跟讀工作室</span><span>READ / LISTEN / REPEAT</span></div>
+  </header>
+  <div class="intro-line"><h1>你的英文閱讀桌</h1><p>放進想練習的文章，按自己的步調，一句一句讀。</p></div>
+  <div class="layout" id="practiceWorkspace">
+    <aside class="sidebar">
+      <section class="rail" aria-label="文章與朗讀設定">
+        <div class="rail-heading"><h2>文章與設定</h2><small>My desk</small></div>
+        <label class="section-label" for="fileInput">匯入文章</label>
+        <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>選擇檔案或拖曳至此</b><small>TXT · DOCX · PDF · MD</small></label>
+        <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+        <div id="fileInfo" class="file-info" role="status"></div>
+        <div class="or">或貼上英文文章</div>
+        <textarea class="text-input" id="articleInput" spellcheck="false" autocomplete="off" placeholder="將想讀的英文文字貼在這裡…"></textarea>
+        <button class="button wide" id="parseBtn">產生練習句子 →</button>
+        <button class="button ghost wide" id="sampleBtn">查看示範文章</button>
+        <div class="control-block">
+          <div class="rail-heading"><h2>朗讀偏好</h2><small>Voice</small></div>
+          <label class="section-label" for="voiceSelect">英文語音 / 腔調</label>
+          <select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得系統語音…</option></select>
+          <div class="rate-row"><label class="field-label" for="rate">語速</label><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
+          <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label>
+          <label class="toggle"><input type="checkbox" id="repeatToggle"> 重複目前句子</label>
+        </div>
+      </section>
+      <p class="privacy">文章在本機瀏覽器解析；Word / PDF 解析需網路。語音辨識可能使用瀏覽器提供的服務。</p>
+    </aside>
+    <main class="reading-area" id="readingDesk">
+      <section class="workspace" aria-label="英文逐句練習">
+        <div class="workhead"><div><div class="minor">READING NOTES / 01</div><h2 id="documentTitle">尚未匯入文章</h2><div class="muted" id="documentSubtitle">貼上或上傳文章，即可建立自己的練習內容。</div></div><span class="count-pill" id="sentenceCount">0 句</span></div>
+        <div class="progress-wrap"><div class="progress-label"><span>已聽過的句子</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div></div>
+        <div class="help-strip">點單字，聽單字發音；點整句或右側 <strong>▶</strong>，聽完整句子。</div>
+        <div id="sentences" class="sentences"><div class="empty"><span class="big">⌁</span><strong>等你放進第一篇文章</strong><span>左側匯入文章後，這裡會按句子呈現。</span></div></div>
+        <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
+      </section>
+      <section class="practice" id="practiceCard" aria-label="跟讀練習"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div>
+        <div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div>
+        <div><h3>換你開口讀</h3><p>選擇一句英文後開始跟讀，查看辨識結果並反覆練習。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+        <button class="button secondary mic" id="micBtn">開始跟讀</button>
+      </section>
+      <p class="footer-note">建議使用 Chrome 或 Edge。語音辨識僅供跟讀參考，並非專業發音評分。</p>
+    </main>
+  </div>
 </div>
-</div>
-<!-- Floating optical playback dock -->
-<div class="liquid-dock" id="liquidDock"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">NOW PLAYING</span><span class="dock-current" id="playerText">選擇一句英文開始練習</span></div><span id="nowPlaying" class="dock-info">尚未選擇句子</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="朗讀或暫停" aria-label="朗讀或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">按單字可開啟發音工具</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
-<!-- Local pronunciation lens -->
-<div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD FOCUS</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇文章中的單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽單字</button><button type="button" id="slowWordBtn" disabled>◌ 慢速發音</button></div></div>
+<div class="liquid-dock" id="liquidDock" aria-label="播放控制"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">PLAYBACK</span><span class="dock-current" id="playerText">尚未選擇句子</span></div><span id="nowPlaying" class="dock-info">尚未開始練習</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="播放或暫停" aria-label="播放或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">加入文章後即可開始朗讀</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
+<div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD / 單字</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽</button><button type="button" id="slowWordBtn" disabled>慢速發音</button></div></div>
 <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.10.0/mammoth.browser.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
@@ -355,7 +253,7 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
     }
     function renderCards() {
       els.sentences.replaceChildren();
-      if (!sentences.length) {const empty = document.createElement('div');empty.className='empty';empty.innerHTML='<span class="big">🎧</span><strong>從一篇你想讀的英文開始</strong><span>在左側上傳文章或貼上文字，這裡就會出現每一句英文。</span>';els.sentences.appendChild(empty);return;}
+      if (!sentences.length) {const empty = document.createElement('div');empty.className='empty';empty.innerHTML='<span class="big">⌁</span><strong>等你放進第一篇文章</strong><span>左側匯入文章後，這裡會按句子呈現。</span>';els.sentences.appendChild(empty);return;}
       const fragment=document.createDocumentFragment();
       sentences.forEach((sentence,i)=>{
         const card=document.createElement('div');card.className='sentence'+(i===active?' active':'')+(listened.has(i)?' done':'');card.dataset.index=String(i);card.setAttribute('role','group');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`第 ${i+1} 句，按 Enter 聽整句；也可以點單字聽單字：${sentence}`);
@@ -380,7 +278,7 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
     }
     function loadArticle(text,title='我的英文跟讀練習',silent=false) {
       const chunks=splitSentences(text);if(!chunks.length){notify('請先輸入英文內容。');return;}
-      hideWordPopover();stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點有虛線底線的單字聽發音；按 ▶ 朗讀整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);if(!silent)notify(`已成功分成 ${chunks.length} 句英文！`);
+      hideWordPopover();stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點有虛線底線的單字聽發音；按 ▶ 朗讀整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);if(!silent){notify(`已產生 ${chunks.length} 句英文。`);if(window.matchMedia('(max-width:770px)').matches)document.getElementById('readingDesk')?.scrollIntoView({behavior:'smooth',block:'start'});}
     }
     function getVoice(){const uri=els.voiceSelect.value;return voices.find(v=>v.voiceURI===uri)||voices.find(v=>/^en[-_]/i.test(v.lang))||null;}
     function fillVoices(){if(!('speechSynthesis' in window)){els.voiceSelect.innerHTML='<option>此瀏覽器不支援語音朗讀</option>';return;}
@@ -417,7 +315,7 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
       try{isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus(`準備朗讀單字「${text}」…`);window.speechSynthesis.speak(utterance);}catch(e){setStatus('無法播放單字語音，請試用 Chrome 或 Edge。');notify(e.message||'單字播放失敗');}
     }
     function togglePlay(){if(!sentences.length){notify('請先匯入文章');return;}if(isPaused){setSpeechGlow(true);window.speechSynthesis.resume();isPaused=false;isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus('繼續朗讀中…');return;}if(isSpeaking&&window.speechSynthesis.speaking){window.speechSynthesis.pause();setSpeechGlow(false);isPaused=true;isSpeaking=false;els.playBtn.textContent='▶';setStatus('已暫停');return;}speak(Math.max(0,active));}
-    function stopRecognition(){stopAudioMeter();if(recognition){try{recognition.abort();}catch(e){}recognition=null;}recognizing=false;els.micBtn.textContent='🎤 開始跟讀';els.micBtn.classList.add('secondary');}
+    function stopRecognition(){stopAudioMeter();if(recognition){try{recognition.abort();}catch(e){}recognition=null;}recognizing=false;els.micBtn.textContent='開始跟讀';els.micBtn.classList.add('secondary');}
     const normalizeWords = t => t.toLowerCase().replace(/[^a-z0-9'\s-]/g,' ').replace(/[-]+/g,' ').split(/\s+/).filter(Boolean);
     function editDistance(a,b){let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const cur=[i];for(let j=1;j<=b.length;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[b.length];}
     function renderRecognition(text){els.recognitionOutput.replaceChildren();const line=document.createElement('div');const title=document.createElement('b');title.textContent='辨識到：';line.append(title,document.createTextNode(text));els.recognitionOutput.appendChild(line);
@@ -428,10 +326,10 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
       if(!Recognition){els.recognitionOutput.textContent='此瀏覽器沒有語音辨識功能。建議改用最新版 Chrome 或 Edge，仍可正常使用句子朗讀。';return;}
       stopSpeech();els.recognitionOutput.textContent='正在準備麥克風，請允許瀏覽器使用麥克風。';
       const r=new Recognition();recognition=r;r.lang=getVoice()?.lang||'en-US';r.interimResults=false;r.continuous=false;r.maxAlternatives=1;
-      r.onstart=()=>{if(recognition!==r)return;recognizing=true;setListeningGlow(true);startAudioMeter(r);els.micBtn.textContent='⏹ 停止跟讀';els.micBtn.classList.remove('secondary');els.recognitionOutput.textContent='正在聽你說英文…';setStatus(`請念出第 ${active+1} 句`);};
+      r.onstart=()=>{if(recognition!==r)return;recognizing=true;setListeningGlow(true);startAudioMeter(r);els.micBtn.textContent='停止跟讀';els.micBtn.classList.remove('secondary');els.recognitionOutput.textContent='正在聽你說英文…';setStatus(`請念出第 ${active+1} 句`);};
       r.onresult=event=>{if(recognition!==r)return;const text=event.results[0][0].transcript;renderRecognition(text);setStatus('辨識完成，你可以重新朗讀或換下一句。');};
       r.onerror=event=>{if(recognition!==r)return;stopAudioMeter();const detail=event.error==='not-allowed'?'麥克風權限遭拒絕，請檢查瀏覽器權限。':event.error==='network'?'語音辨識服務無法連線。':'語音辨識未成功：'+event.error;els.recognitionOutput.textContent=detail;setStatus(detail);};
-      r.onend=()=>{if(recognition!==r)return;stopAudioMeter();recognizing=false;recognition=null;els.micBtn.textContent='🎤 開始跟讀';els.micBtn.classList.add('secondary');};
+      r.onend=()=>{if(recognition!==r)return;stopAudioMeter();recognizing=false;recognition=null;els.micBtn.textContent='開始跟讀';els.micBtn.classList.add('secondary');};
       try{r.start();}catch(e){stopRecognition();els.recognitionOutput.textContent='無法啟動麥克風：'+e.message;}
     }
     async function loadFile(file){if(!file)return;const extension=file.name.toLowerCase().split('.').pop();els.fileInfo.style.display='block';els.fileInfo.textContent=`正在讀取：${file.name}`;els.parseBtn.disabled=true;try{
@@ -516,10 +414,10 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
     });
     if('speechSynthesis' in window){fillVoices();window.speechSynthesis.addEventListener?.('voiceschanged',fillVoices);setTimeout(fillVoices,550);}else fillVoices();
     els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;
-    // Start with an empty workspace. Sample text is loaded only after clicking the sample button.
+    // Start with an empty workspace. The sample article is loaded only if the user clicks the sample button.
     els.articleInput.value='';
     els.documentTitle.textContent='尚未匯入文章';
-    els.documentSubtitle.textContent='上傳檔案或貼上英文內容後，即可開始逐句及單字練習。';
+    els.documentSubtitle.textContent='貼上或上傳文章，即可建立自己的練習內容。';
   })();
   </script>
 </body>
