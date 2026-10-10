@@ -255,7 +255,7 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
 <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>拖曳檔案或點擊上傳</b><small>TXT、DOCX、文字型 PDF</small></label>
 <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
 <div id="fileInfo" class="file-info" role="status"></div><div class="or">或是直接貼上文章</div>
-<textarea class="text-input" id="articleInput" spellcheck="false" placeholder="Paste your English text here…"></textarea><button class="button wide" id="parseBtn">✧ 開始我的練習</button><button class="button ghost wide" id="sampleBtn">試用示範文章</button>
+<textarea class="text-input" id="articleInput" spellcheck="false" autocomplete="off" placeholder="Paste your English text here…"></textarea><button class="button wide" id="parseBtn">✧ 開始我的練習</button><button class="button ghost wide" id="sampleBtn">試用示範文章</button>
 <div class="control-block"><h2 class="panel-title"><span class="section-number">02</span> 聲音偏好</h2><div class="section-label">VOICE / ACCENT</div><select id="voiceSelect" class="form-select" aria-label="英文語音"><option value="">正在取得英文語音…</option></select>
 <div class="rate-row"><span class="field-label">語速</span><input type="range" id="rate" min="0.5" max="1.5" step="0.05" value="0.85" aria-label="朗讀語速"><span id="rateLabel" class="rate-number">0.85×</span></div>
 <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複朗讀目前句子</label>
@@ -516,7 +516,10 @@ body.quiet-mode .liquid-dock::after{background:#132b50}body.quiet-mode .word-pop
     });
     if('speechSynthesis' in window){fillVoices();window.speechSynthesis.addEventListener?.('voiceschanged',fillVoices);setTimeout(fillVoices,550);}else fillVoices();
     els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;
-    if(!els.articleInput.value.trim()){els.articleInput.value=sample;loadArticle(sample,'English Presentation · Sample',true);}
+    // Start with an empty workspace. Sample text is loaded only after clicking the sample button.
+    els.articleInput.value='';
+    els.documentTitle.textContent='尚未匯入文章';
+    els.documentSubtitle.textContent='上傳檔案或貼上英文內容後，即可開始逐句及單字練習。';
   })();
   </script>
 </body>
