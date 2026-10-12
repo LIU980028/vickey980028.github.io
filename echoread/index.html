@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f3f5f7">
-<title>EchoRead V17｜AI 英語學習工作台</title>
+<title>EchoRead V18｜打開就能用的英文學習</title>
 <meta name="description" content="EchoRead 英文逐句朗讀及單字點讀練習。">
 <style>
 :root{--bg:#f3f5f7;--paper:#fff;--ink:#1e2934;--muted:#7e8995;--line:#e8ebef;--accent:#252b34;--violet:#a28cef;--lav:#eae5ff;--mint:#c9f5d4;--cyan:#cdf0f6;--shadow:0 6px 20px rgba(37,50,65,.045)}
@@ -97,13 +97,29 @@
 .ai-explain-result{border-top:1px solid #e4d8f4;margin-top:13px;padding-top:13px;font-size:13px;color:#4e4b5b;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere}
 .ai-explanation button,.ai-settings button{cursor:pointer}
 @media(max-width:770px){.ai-explanation{margin:8px 12px 16px;padding:15px}.ai-explain-result{font-size:12px}.ai-settings .rail-heading h2{font-size:15px}}
+
+/* V18: focus on immediate use, optional advanced AI out of the way. */
+.instant-tools .rail-heading h2{font-size:16px}.instant-desc{font-size:12px;line-height:1.75;color:#636f7c;margin:5px 0 12px}
+.instant-action{min-height:42px!important;background:#242b37!important;color:#fff!important;border:1px solid #242b37!important;font-size:13px!important}
+.instant-action:hover{background:#373f4b!important}
+.instant-status{display:flex;gap:8px;align-items:flex-start;margin:13px 0 6px;color:#4e6753;font-size:11px;font-weight:700;line-height:1.6}
+.instant-dot{width:7px;height:7px;flex:none;margin-top:5px;border-radius:100%;background:#84c8a2}
+.instant-disclaimer{font-size:10px;line-height:1.7;color:#88919c;margin:7px 0 2px}
+.advanced-models{border:1px solid #e6e8ed;background:#fff;border-radius:15px;overflow:hidden;margin-bottom:15px}
+.advanced-models>summary{padding:15px 16px;cursor:pointer;list-style-position:inside;font-weight:770;color:#535c67;font-size:12px}
+.advanced-models>summary span{float:right;font-size:10px;font-weight:500;color:#8b96a1}
+.advanced-models[open]>summary{background:#f8f9fb;border-bottom:1px solid #edf0f4}
+.advanced-models>.rail{border:0!important;border-radius:0!important;box-shadow:none!important;margin:0!important}
+.advanced-note{font-size:11px;color:#7a8493;line-height:1.7}
+@media(max-width:770px){.advanced-models>summary{padding:13px}.instant-tools{padding-bottom:16px}}
+
 </style>
 </head>
 <body>
 
 <div class="app-shell">
   <aside class="side-nav" aria-label="學習導覽">
-    <a class="logo" href="#dashboard"><span class="logo-icon" aria-hidden="true">✦</span><span>EchoRead<small>AI LEARNING STUDIO</small></span></a>
+    <a class="logo" href="#dashboard"><span class="logo-icon" aria-hidden="true">✦</span><span>EchoRead<small>READY TO LEARN</small></span></a>
     <div class="nav-title">MY WORKSPACE</div>
     <nav class="nav-links" aria-label="頁面導覽">
       <a class="nav-link active" href="#dashboard"><span class="nav-icon" aria-hidden="true">▦</span>工作區</a>
@@ -113,7 +129,7 @@
     </nav>
     <div class="nav-spacer"></div>
     <div class="sidebar-note"><b>✳ Study tip</b><p>先聽整句，再點不熟悉的單字，最後自己跟讀。</p></div>
-    <div class="nav-footer">EchoRead V17 · AI Learning Studio</div>
+    <div class="nav-footer">EchoRead V18 · Ready to Learn</div>
   </aside>
   <div class="main-page" id="dashboard">
     <header class="page-top"><div><h1>我的學習空間</h1><p>把想讀的英文放進來，照自己的節奏慢慢練習。</p></div><div class="top-tools"><span class="workspace-tag">◎ My workspace</span><span class="avatar" aria-label="EchoRead">ER</span></div></header>
@@ -133,17 +149,17 @@
             <button type="button" id="translateAllBtn" class="translate-all-btn">翻譯全部句子</button>
             <span id="translationProgress" class="translation-progress" aria-live="polite"></span>
           </div>
-          <p class="translation-notice">翻譯方式可在右側「AI 學習助理」切換。本機模型下載後在裝置執行；MyMemory 或自行設定的 API 會在你按翻譯時傳送該句英文。敏感內容請先確認服務來源。</p>
+          <p class="translation-notice">點「翻譯這句」或「翻譯全部句子」即可取得繁體中文；不需要登入或 API 金鑰。翻譯時會將所選英文傳送給 MyMemory 第三方服務，請勿上傳機密資料。</p>
           <section class="ai-explanation" id="aiExplanation" hidden aria-live="polite">
-            <div class="ai-explain-head"><div><span class="ai-eyebrow">AI STUDY NOTES</span><h3>逐句英文解析</h3><span id="aiExplainSentence" class="ai-explain-source"></span></div><button type="button" id="aiExplainClose" class="ai-explain-close" aria-label="關閉解析">×</button></div>
-            <div id="aiExplainResult" class="ai-explain-result">請選擇句子並按「解析目前句子」。</div>
+            <div class="ai-explain-head"><div><span class="ai-eyebrow">STUDY NOTES</span><h3>英文句子解析</h3><span id="aiExplainSentence" class="ai-explain-source"></span></div><button type="button" id="aiExplainClose" class="ai-explain-close" aria-label="關閉解析">×</button></div>
+            <div id="aiExplainResult" class="ai-explain-result">選擇任何英文句子，按「解析這句」就能看常見句型及文法提示。</div>
           </section>
           <div id="sentences" class="sentences"><div class="empty"><span class="big">▤</span><strong>還沒有閱讀內容</strong><span>請從右側匯入文章開始練習。</span></div></div>
           <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
         </section>
         <section class="practice" id="practiceCard" aria-label="跟讀練習"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div>
           <div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div>
-          <div><h3>Speaking practice</h3><p>選一句英文，按「開始跟讀」，聽聽自己的朗讀。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+          <div><h3>Speaking practice</h3><p>選一句英文，按「開始跟讀」，練習說出整句。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
           <button class="button secondary mic" id="micBtn">開始跟讀</button>
         </section>
         <p class="footer-note">建議使用 Chrome 或 Edge。跟讀辨識結果僅供練習，並非正式發音評分。</p>
@@ -169,9 +185,18 @@
           <p class="rate-hint">先從「慢慢聽」開始，不夠慢可再向左拉。不同語音的實際語速可能不同。</p>
           <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複目前句子</label>
         </section>
+        <section class="rail instant-tools" aria-label="立即使用的英文學習工具" id="instantTools">
+          <div class="rail-heading"><h2>學習小幫手</h2><small>READY</small></div>
+          <p class="instant-desc">不用選模型。貼上英文後，就能直接翻譯、朗讀與查看句型提示。</p>
+          <button type="button" class="button secondary wide instant-action" id="aiExplainBtn">✳ 解析目前句子</button>
+          <div class="instant-status"><span class="instant-dot" aria-hidden="true"></span><span>免設定：系統朗讀＋繁中翻譯＋基本句型解析</span></div>
+          <p class="instant-disclaimer">句型解析使用內建文法規則，不是生成式 AI；不會胡亂猜測不認識的單字。想用 Qwen／Kokoro 可展開下方進階功能。</p>
+        </section>
+        <details class="advanced-models" id="advancedModels">
+          <summary>進階 AI 模型設定 <span>選用・不影響一般練習</span></summary>
         <section class="rail ai-settings" id="aiStudio" aria-label="AI 開源模型設定">
-          <div class="rail-heading"><h2>AI 學習助理 <span class="ai-mark">V17</span></h2><small>OPEN MODELS</small></div>
-          <p class="ai-intro">選擇模型的運作位置。保留原本功能，AI 由你啟動，不會自動上傳文章。</p>
+          <div class="rail-heading"><h2>AI 學習助理 <span class="ai-mark">V18</span></h2><small>OPEN MODELS</small></div>
+          <p class="ai-intro">進階功能可選用；一般練習不需要設定模型。</p>
           <label class="section-label" for="aiTranslateMode">中文翻譯方式</label>
           <select id="aiTranslateMode" class="form-select">
             <option value="legacy">原有線上翻譯 · MyMemory</option>
@@ -180,10 +205,11 @@
           </select>
           <label class="section-label ai-gap" for="aiExplainMode">英文解析方式</label>
           <select id="aiExplainMode" class="form-select">
-            <option value="api">Qwen API · 推薦手機使用</option>
+            <option value="instant" selected>即時句型提示 · 免設定</option>
+            <option value="api">Qwen API · 需自行設定</option>
             <option value="local">本機 Qwen 0.5B · 桌面實驗</option>
           </select>
-          <button type="button" class="button secondary wide ai-action" id="aiExplainBtn">✳ 解析目前句子</button>
+          <p class="advanced-note">選擇下方的 Qwen API／本機模型後，回到上方「解析目前句子」按鈕即可使用 AI 解析。</p>
           <div class="ai-rule"></div>
           <label class="section-label" for="aiVoiceMode">英文朗讀引擎</label>
           <select id="aiVoiceMode" class="form-select">
@@ -218,8 +244,9 @@
               <p class="ai-explainer">網址須允許瀏覽器 CORS，且遠端建議 HTTPS。不要在公開 GitHub 程式碼寫入 API 金鑰；金鑰僅存在本次頁面記憶體中。</p>
             </div>
           </details>
-          <div id="aiModelStatus" class="ai-status" aria-live="polite">AI 模型待命 · 原有閱讀與朗讀仍可直接使用</div>
+          <div id="aiModelStatus" class="ai-status" aria-live="polite">進階模型為選用功能，未啟用也能正常練習。</div>
         </section>
+        </details>
         <p class="privacy">文章在瀏覽器內解析；Word / PDF 解析需要網路載入工具。語音辨識可能使用瀏覽器的雲端服務。</p>
       </aside>
     </div>
@@ -274,7 +301,7 @@
       const actions=document.createElement('div');actions.className='translation-actions';
       const trans=document.createElement('button');trans.type='button';trans.className='translation-btn translate-one-btn';trans.textContent=translations[i]?'重新翻譯':'翻譯這句';
       const edit=document.createElement('button');edit.type='button';edit.className='translation-btn edit-translation-btn';edit.textContent='編輯中文';
-      const explain=document.createElement('button');explain.type='button';explain.className='translation-btn explain-one-btn';explain.textContent='✳ AI 解析';actions.append(trans,edit,explain);
+      const explain=document.createElement('button');explain.type='button';explain.className='translation-btn explain-one-btn';explain.textContent='✳ 解析這句';actions.append(trans,edit,explain);
       const editor=document.createElement('div');editor.className='translation-editor';
       const input=document.createElement('textarea');input.className='translation-input';input.setAttribute('aria-label',`第 ${i+1} 句的繁體中文翻譯`);input.placeholder='在這裡輸入繁體中文翻譯';
       const edActions=document.createElement('div');edActions.className='editor-actions';
@@ -788,19 +815,78 @@
       if(!output)throw Error('本機 Qwen 未產出解析。');
       aiMessage('本機 Qwen 已完成解析。');return String(output);
     }
+    // Offline, transparent, deterministic sentence hints: never presented as generative AI.
+    function instantExplanation(sentence, translation){
+      const t=String(sentence||'').trim();
+      const low=t.toLowerCase();
+      const points=[];
+      const add=(condition,detail)=>{if(condition&&!points.includes(detail))points.push(detail);};
+      add(/\b(if|unless|provided that)\b/i.test(t),'條件句：if / unless 等引導條件；請留意主句的時態與條件的關係。');
+      add(/\b(have|has|had)\s+(?:never\s+|already\s+|just\s+)?(?:been|done|seen|gone|made|taken|written|spoken|worked|learned|studied|finished|visited|known|eaten|read|thought|felt)\b/i.test(t),'完成式：have / has / had ＋ 過去分詞，常用來連結過去與現在，或表達先後順序。');
+      add(/\b(am|is|are|was|were)\s+\w+ing\b/i.test(t),'進行式：be 動詞 ＋ V-ing，表示某個時間正在進行的動作。');
+      add(/\b(will|shall|going to)\b/i.test(t),'未來表達：will / be going to 常用來表達預測、意願或計畫。');
+      add(/\b(can|could|should|must|might|may|would)\b/i.test(t),'情態助動詞：can / should / would 等後面通常接動詞原形，表示能力、建議、可能性等。');
+      add(/\b(?:is|are|was|were|be|been)\s+\w+(?:ed|en)\b/i.test(t),'可能含被動語態：be ＋ 過去分詞，重點在接受動作的人或事。也可能是形容詞用法，需依上下文判斷。');
+      add(/\b(to)\s+[a-z]+\b/i.test(t),'不定詞：to ＋ 動詞原形，常表示目的、計畫或某種行為。注意部分 to 也可能是介系詞。');
+      add(/\b(because|since|as)\b/i.test(t),'原因連接詞：because / since 等用來說明原因；since 有時也表示「自從」。');
+      add(/\b(although|though|however|but)\b/i.test(t),'轉折／讓步：although / however / but 用來對比兩個意思，注意前後的語氣。');
+      add(/\b(which|who|whom|whose|that)\b/i.test(t),'關係子句／連接詞：who / which / that 有時用來補充描述名詞，也可能有其他句法用途。');
+      add(/\b(there is|there are|there was|there were)\b/i.test(t),'存在句型：there is / are 表示「有……」，be 動詞通常配合後面的名詞單複數。');
+      add(/\b(not|never|don't|doesn't|didn't|can't|won't|isn't|aren't)\b/i.test(t),'否定句：not / never / 助動詞否定，用來否定動作、狀態或頻率。');
+      add(/\b(please|could you|would you)\b/i.test(t),'請求或禮貌表達：please / could you / would you 可讓句子語氣更柔和。');
+      add(/\b(like|love|enjoy|avoid|keep|finish|practice)\s+[a-z]+ing\b/i.test(t),'動名詞：enjoy / avoid / practice 等動詞後面常接 V-ing 作為受詞。');
+      add(/\b(more|less|better|worse)\s+than\b|\b\w+er\s+than\b/i.test(t),'比較級：比較兩者時常搭配 than，留意形容詞與副詞的變化。');
+      add(/\b(when|while|before|after|until)\b/i.test(t),'時間連接詞：when / while / before / after 交代動作發生的先後或同時關係。');
+      add(/\b(in order to|so that)\b/i.test(t),'目的表達：in order to / so that 可用來說明「為了……」。');
+      const words=t.match(/[A-Za-z]+(?:['’-][A-Za-z]+)*/g)||[];
+      const glossary={
+       'enjoy':'喜歡、享受','learn':'學習','learning':'學習','practice':'練習','improve':'改善、進步',
+       'experience':'經驗','important':'重要的','different':'不同的','because':'因為','although':'雖然',
+       'however':'然而','actually':'實際上','perhaps':'或許','always':'總是','usually':'通常',
+       'sometimes':'有時','never':'從不','every':'每個','everyone':'每個人','together':'一起',
+       'understand':'理解','remember':'記得','forget':'忘記','try':'嘗試','again':'再次',
+       'another':'另一個','enough':'足夠','possible':'可能的','probably':'很可能','probably':'很可能',
+       'prefer':'比較喜歡','recommend':'推薦','suggest':'建議','support':'支持',
+       'opportunity':'機會','challenge':'挑戰','develop':'發展','education':'教育','language':'語言',
+       'fluently':'流利地','confidence':'信心','confident':'有自信的','comfortable':'舒適的',
+       'daily':'每日的','habit':'習慣','goal':'目標','progress':'進度、進步','listen':'聽',
+       'speaking':'口說','reading':'閱讀','writing':'寫作','listening':'聆聽',
+       'student':'學生','teacher':'老師','work':'工作','family':'家庭','friend':'朋友',
+       'future':'未來','today':'今天','tomorrow':'明天','yesterday':'昨天',
+       'travel':'旅行','healthy':'健康的','health':'健康','exercise':'運動',
+       'choose':'選擇','decision':'決定','question':'問題','answer':'答案','information':'資訊',
+       'finally':'最後','first':'首先','second':'第二','example':'例子','especially':'尤其',
+       'instead':'反而、代替','whether':'是否','without':'沒有','during':'在……期間',
+       'through':'透過','between':'在……之間','toward':'朝向','thought':'想法',
+      };
+      const unique=[];
+      for(const word of words){const w=word.toLowerCase();if(glossary[w]&&!unique.some(x=>x.toLowerCase()===w))unique.push(word);if(unique.length===4)break;}
+      let result='【中文對照】\n'+(translation||'尚未翻譯。可點這句下方的「翻譯這句」，立即取得繁體中文。')+'\n\n';
+      result+='【句子結構與文法】\n';
+      if(/\?$/.test(t))result+='這是一個問句；注意助動詞、主詞與主要動詞的順序。\n';
+      result+=(points.length?points.slice(0,4).map((p,i)=>(i+1)+'. '+p).join('\n'):'這句沒有符合內建規則的明顯句型。建議找出主詞（誰／什麼）、動詞（做什麼）與補充資訊，並配合上下文理解。');
+      result+='\n\n【常見單字】\n';
+      result+=unique.length?unique.map(w=>w+'：'+glossary[w.toLowerCase()]).join('　｜　'):'目前沒有可確定的內建詞義；可點英文單字聽發音。';
+      result+='\n\n※ 這是免設定的基礎學習提示，不是生成式 AI 或完整文法判定；較複雜的句子可選擇進階 Qwen。';
+      return result;
+    }
     async function explainSentence(i){
       if(i<0||i>=sentences.length){notify('請先匯入文章，選擇一個句子。');return;}
       const ownRun=++explainRun,gen=translationGeneration;
       $('aiExplanation').hidden=false;
       $('aiExplainSentence').textContent='第 '+(i+1)+' 句 · '+sentences[i];
-      $('aiExplainResult').textContent='正在由 AI 解析英文句子…';
       $('aiExplanation').scrollIntoView({block:'nearest',behavior:'smooth'});
-      const messages=[{role:'system',content:'你是英文閱讀教練。用繁體中文精簡回答，固定三個部分：1. 句意 2. 單字與片語（最多3個）3. 文法重點。不得虛構課文以外的情節。'},{role:'user',content:'請解析下列英文原句：\\n'+sentences[i]}];
+      if($('aiExplainMode').value==='instant'){
+        $('aiExplainResult').textContent=instantExplanation(sentences[i],translations[i]);
+        return;
+      }
+      $('aiExplainResult').textContent='正在使用你選擇的進階模型解析…';
+      const messages=[{role:'system',content:'你是英文閱讀教練。用繁體中文精簡回答，固定三個部分：1. 句意 2. 單字與片語（最多3個）3. 文法重點。不得虛構課文以外的情節。'},{role:'user',content:'請解析下列英文原句：\n'+sentences[i]}];
       try{
         const result=$('aiExplainMode').value==='local'?await localExplain(messages):await modelChat(messages,420);
         if(ownRun!==explainRun||gen!==translationGeneration)return;
         $('aiExplainResult').textContent=result;
-      }catch(e){if(ownRun!==explainRun||gen!==translationGeneration)return;$('aiExplainResult').textContent='AI 解析尚未完成：'+aiError(e)+'。可切換模型或設定 API 後重試。';}
+      }catch(e){if(ownRun!==explainRun||gen!==translationGeneration)return;$('aiExplainResult').textContent='進階模型尚未連線：'+aiError(e)+'。已切回免設定句型提示。\n\n'+instantExplanation(sentences[i],translations[i]);$('aiExplainMode').value='instant';}
     }
     async function loadKokoro(){
       if(kokoroEngine)return kokoroEngine;
@@ -890,7 +976,7 @@
     $('aiExplainClose').addEventListener('click',()=>{$('aiExplanation').hidden=true;++explainRun;});
     $('aiTestApi').addEventListener('click',async()=>{try{const result=await modelChat([{role:'user',content:'只回答 OK'}],20);notify('模型已連線：'+result.slice(0,80));}catch(e){notify('連線失敗，請查看 AI 訊息。');}});
     $('aiTranslateMode').addEventListener('change',()=>{aiMessage($('aiTranslateMode').value==='local'?'本機翻譯模式。首次翻譯時會下載 OPUS-MT。':$('aiTranslateMode').value==='api'?'Qwen API 模式。請先設定 API 端點。':'已切回原有 MyMemory 翻譯。');});
-    $('aiExplainMode').addEventListener('change',()=>{aiMessage($('aiExplainMode').value==='local'?'本機 Qwen 是桌面實驗模式，需 WebGPU 與較多記憶體。':'英文解析使用自行設定的 Qwen API。');});
+    $('aiExplainMode').addEventListener('change',()=>{aiMessage($('aiExplainMode').value==='instant'?'已切換免設定句型提示。':$('aiExplainMode').value==='local'?'本機 Qwen 是桌面實驗模式，需 WebGPU 與較多記憶體。':'英文解析使用自行設定的 Qwen API。');});
 
     if('speechSynthesis' in window){fillVoices();window.speechSynthesis.addEventListener?.('voiceschanged',fillVoices);setTimeout(fillVoices,550);}else fillVoices();
     els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;
