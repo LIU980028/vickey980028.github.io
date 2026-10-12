@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f3f5f7">
+<title>EchoRead V18｜打開就能用的英文學習</title>
+<meta name="description" content="EchoRead 英文逐句朗讀及單字點讀練習。">
+<style>
+:root{--bg:#f3f5f7;--paper:#fff;--ink:#1e2934;--muted:#7e8995;--line:#e8ebef;--accent:#252b34;--violet:#a28cef;--lav:#eae5ff;--mint:#c9f5d4;--cyan:#cdf0f6;--shadow:0 6px 20px rgba(37,50,65,.045)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:22px}body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.sentence:focus-visible,a:focus-visible{outline:3px solid #a9b8f7;outline-offset:3px}a{text-decoration:none;color:inherit}svg{overflow:visible}#liquid-refraction{display:none}
+.app-shell{max-width:1530px;margin:0 auto;min-height:100vh;padding:16px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px}
+.side-nav{background:#fff;border:1px solid #e9edf1;border-radius:22px;padding:22px 14px;display:flex;flex-direction:column;gap:16px;min-width:0;position:sticky;top:16px;height:calc(100vh - 32px);min-height:610px;box-shadow:var(--shadow)}
+.logo{display:flex;align-items:center;gap:10px;padding:0 10px 25px;border-bottom:1px solid var(--line);font-size:19px;font-weight:800;letter-spacing:-.6px}
+.logo-icon{display:grid;place-items:center;width:36px;height:36px;color:#fff;background:#30333b;border-radius:11px;font-size:19px;box-shadow:3px 4px 0 #e4dafe}
+.logo small{display:block;font-size:9px;font-weight:650;color:#99a3af;letter-spacing:1.4px;margin-top:-3px}
+.nav-title{font-size:10px;color:#9ca7b2;padding:0 12px;margin:8px 0 2px;font-weight:800;letter-spacing:1px}
+.nav-links{display:grid;gap:6px}.nav-link{display:flex;align-items:center;gap:13px;padding:12px 13px;font-size:13px;font-weight:660;color:#6f7b88;border-radius:12px;transition:background .15s,color .15s}.nav-link:hover{background:#f5f6f8;color:#303944}.nav-link.active{background:#252b34;color:#fff;box-shadow:0 8px 13px #242b3316}.nav-icon{font-size:17px;width:20px;text-align:center;line-height:1}.nav-link.active .nav-icon{color:#c7baff}.nav-spacer{flex:1}
+.sidebar-note{background:#f4f2ff;border:1px solid #ece8ff;border-radius:15px;padding:15px;color:#4f4964}.sidebar-note b{font-size:12px;display:block;margin-bottom:5px}.sidebar-note p{font-size:11px;color:#817995;margin:0;line-height:1.65}.nav-footer{font-size:10px;color:#a2adba;padding:6px 12px}
+.main-page{min-width:0;padding:8px 10px 160px}.page-top{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 5px 29px}.page-top h1{font-size:27px;letter-spacing:-1.1px;margin:0 0 5px;font-weight:770}.page-top p{color:#929ca6;margin:0;font-size:12px}.top-tools{display:flex;align-items:center;gap:12px}.workspace-tag{border:1px solid #e4e8ee;color:#697685;background:white;border-radius:50px;padding:9px 13px;font-size:11px;font-weight:700}.avatar{background:#ddcef9;color:#554783;border:3px solid white;box-shadow:0 1px 6px #141c2b10;border-radius:50%;width:39px;height:39px;display:grid;place-items:center;font-weight:800;font-size:12px}
+.overview{display:grid;grid-template-columns:1.28fr 1fr 1fr;gap:14px;margin-bottom:15px}.overview-card{background:#fff;border:1px solid #ebedf0;border-radius:18px;min-height:135px;padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.overview-card small{color:#9aa5b0;font-size:11px;letter-spacing:.35px;font-weight:750}.overview-card h2{font-size:19px;letter-spacing:-.7px;font-weight:760;margin:11px 0 5px}.overview-card p{color:#8995a0;font-size:12px;margin:0;max-width:260px}.overview-card .ov-symbol{position:absolute;right:17px;top:16px;font-size:21px;color:#6f687d}.overview-card.mint{background:#ccf2d6;border:1px solid #c2ebcc}.overview-card.mint small,.overview-card.mint p{color:#4f8667}.overview-card.mint h2{color:#24523a}.overview-card.lav{background:#b7a6f5;border-color:#b3a0f6}.overview-card.lav small,.overview-card.lav p{color:#554680}.overview-card.lav h2{color:#33295a}.overview-card.white{background:#fff}
+.area-grid{display:grid;grid-template-columns:minmax(0,1.52fr) minmax(300px,.86fr);gap:16px;align-items:start}.left-work{min-width:0}.right-tools{display:grid;gap:16px;min-width:0}
+.workspace,.practice,.rail{background:#fff;border:1px solid #e8ebf0;border-radius:20px;box-shadow:var(--shadow)}.workspace{overflow:hidden;min-height:520px}.workhead{padding:23px 25px 16px;display:flex;align-items:start;justify-content:space-between;gap:18px;border-bottom:1px solid #eff0f3}.workhead .minor{font-size:10px;color:#aaa5c3;letter-spacing:1.3px;font-weight:800}.workhead h2{font-size:19px;font-weight:760;letter-spacing:-.55px;margin:6px 0 4px;overflow-wrap:anywhere}.muted{font-size:12px;color:#939eaa;line-height:1.65}.count-pill{font-size:11px;color:#686388;padding:7px 10px;border-radius:999px;background:#f2f0fc;white-space:nowrap;font-weight:750}
+.progress-wrap{padding:15px 25px 10px}.progress-label{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#97a0ac;margin-bottom:8px}.progress-track{height:6px;border-radius:99px;background:#eef0f3;overflow:hidden}.progress-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#b1a0f4,#8d78df);transition:width .2s}
+.help-strip{font-size:11px;color:#7b8995;margin:7px 25px 10px;line-height:1.6}.help-strip strong{color:#685e9d;font-weight:700}
+.sentences{padding:2px 20px 23px;max-height:550px;min-height:300px;overflow-y:auto;scrollbar-color:#e6e7ed transparent}.sentence{display:grid;grid-template-columns:34px minmax(0,1fr) 36px;align-items:start;gap:10px;border:1px solid #eceef1;border-radius:13px;margin:10px 0;padding:15px 13px;background:white;cursor:pointer;transition:border .15s,box-shadow .15s,background .15s}.sentence:hover{background:#fcfbff;border-color:#e0dafa}.sentence.active{background:#f5f2ff;border-color:#c8bbf7;box-shadow:inset 3px 0 #a592eb}.sentence .num{font-size:11px;font-weight:770;color:#9da8b2;background:#f4f5f7;border-radius:8px;padding:5px 0;text-align:center}.sentence.active .num{color:#6654b0;background:#e7dfff}.sentence.done .num::after{content:' ✓';font-size:10px;color:#4c9c70}.sentence .content{font:400 17px/1.85 Georgia,"Times New Roman",serif;color:#313744;overflow-wrap:anywhere}.sentence .speaker{height:30px;width:30px;border:1px solid #edeaf7;background:#fff;color:#72659e;border-radius:10px;display:grid;place-items:center;font-size:12px;cursor:pointer}.sentence .speaker:hover{background:#ebe5ff}
+.sentence .content .word-token{appearance:none;border:0;background:none;color:inherit;display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;padding:1px 2px;margin:-1px -2px;cursor:pointer;border-radius:5px;text-decoration:underline dotted #d2c8e5;text-underline-offset:5px}.sentence .content .word-token:hover,.sentence .content .word-token:focus-visible{background:#e8e0ff;color:#514299;outline:0}.sentence .content .word-token.selected{background:#e3dbfc;color:#5d47a3;box-shadow:inset 0 -2px #aa98df}.sentence .content .word-token.reading{background:#d4f0dc;color:#27683b}
+.empty{min-height:315px;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;color:#9ba5b1;padding:20px}.empty .big{font-size:35px;color:#b4a1e9;display:block;line-height:1}.empty strong{font-size:15px;color:#4a5360;font-weight:730}.empty span:last-child{font-size:12px}.player{display:none}
+.practice{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:15px;align-items:center;padding:20px;margin-top:16px;position:relative;overflow:hidden}.voice-orb{width:50px;height:50px;border-radius:16px;background:#e7e3ff;display:grid;place-items:center;position:relative;z-index:2}.voice-orb svg{width:21px;height:26px}.voice-orb .core{fill:#7865b6}.voice-orb .stem{stroke:#7865b6;stroke-width:2;fill:none}.practice h3{font-size:15px;margin:0 0 3px}.practice p{font-size:11px;color:#9aa4b0;margin:0;line-height:1.6}.practice>div:nth-child(3){min-width:0}.voice-glow,.voice-beam{display:none}.practice.is-listening .voice-orb{box-shadow:0 0 0 5px #e9e4ff}.recognition{font-size:12px;color:#3d5164;margin-top:10px}.recognition:empty{display:none}.recognition b{color:#6b57ab}.voice-status{font-size:9px;color:#9da6b3;display:flex;align-items:center;gap:7px;margin-top:8px;letter-spacing:.4px}.voice-dot{display:inline-block;width:6px;height:6px;border-radius:100%;background:#b7bcc8}.practice.is-listening .voice-dot{background:#7bc897}.voice-meter{display:flex;gap:2px;align-items:center;height:12px}.voice-meter i{width:2px;height:6px;background:#ad9cd8;border-radius:3px;transition:height .12s}.footer-note{color:#a1aab4;font-size:10px;text-align:center;padding:15px 0}
+.rail{padding:22px}.rail-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:17px}.rail-heading h2{margin:0;font-size:15px;letter-spacing:-.2px}.rail-heading small{font-size:10px;color:#aaa6bd;font-weight:750}.section-label{display:block;font-size:11px;color:#778491;font-weight:750;margin-bottom:8px}.dropzone{display:block;border:1px dashed #cdd6df;background:#f9fafc;border-radius:14px;padding:18px 8px;text-align:center;cursor:pointer;transition:background .2s,border-color .2s}.dropzone:hover,.dropzone.drag{background:#f2f0ff;border-color:#ac9ee7}.dropzone .emoji{display:block;color:#7964b7;font-size:22px;line-height:1.2}.dropzone b{display:block;font-size:12px;margin:6px 0 4px;font-weight:700}.dropzone small{font-size:10px;color:#a0abb5}.file-info{display:none;color:#6d58a6;font-size:11px;margin:8px 0;word-break:break-all}.or{text-align:center;font-size:11px;color:#a7b1bb;margin:13px 0 8px}.text-input{display:block;width:100%;min-height:104px;max-height:380px;resize:vertical;border:1px solid #e5e7ec;border-radius:12px;padding:12px 13px;font-size:12px;color:#303b47;line-height:1.65;background:#fff}.text-input::placeholder{color:#aeb8c3}
+.button{border:0;border-radius:11px;min-height:39px;padding:10px 14px;background:#282d35;color:#fff;font-size:12px;font-weight:740;display:inline-flex;align-items:center;justify-content:center;transition:background .18s,transform .18s}.button:hover:not(:disabled){background:#4c455f;transform:translateY(-1px)}.button.secondary,.button.ghost{background:#f3f0fc;color:#6a5a9c}.button.secondary:hover:not(:disabled),.button.ghost:hover:not(:disabled){background:#e8e2fb}.button.wide{width:100%;margin-top:9px}.control-block{border-top:1px solid #edf0f2;margin-top:18px;padding-top:19px}.form-select{width:100%;font-size:11px;color:#4d5c6e;padding:10px;background:#fff;border:1px solid #e5e9ec;border-radius:10px}.rate-row{display:flex;align-items:center;gap:8px;margin-top:15px}.rate-row input{min-width:0;flex:1;accent-color:#a08be9}.field-label{font-size:11px;color:#6b7a87}.rate-number{font-size:11px;color:#6b599d;white-space:nowrap}.toggle{display:flex;gap:9px;align-items:center;font-size:11px;color:#6e7b89;margin-top:13px;cursor:pointer}.toggle input{width:15px;height:15px;margin:0;accent-color:#8972dc}.privacy{font-size:10px;color:#a4adb7;line-height:1.75;margin:0;padding:0 4px}
+.liquid-dock{position:fixed;z-index:80;left:50%;bottom:18px;transform:translateX(-50%);width:min(710px,calc(100% - 38px));padding:10px 16px;background:rgba(255,255,255,.97);border:1px solid #e1e5ec;border-radius:18px;box-shadow:0 14px 45px rgba(31,42,61,.14);backdrop-filter:blur(14px)}.liquid-dock::before,.liquid-dock::after{display:none}.dock-inside{display:flex;gap:14px;align-items:center}.dock-label{flex:1;min-width:0}.dock-kicker{font-size:9px;color:#a8a0c1;letter-spacing:1px;display:block;font-weight:800}.dock-current{display:block;max-width:100%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font:400 13px/1.55 Georgia,serif;color:#354054}.dock-info{font-size:10px;color:#9ea4ad;white-space:nowrap}.dock-actions{display:flex;align-items:center;gap:6px}.circle-btn{height:35px;width:35px;border:1px solid #eae7f3;background:#f8f7fc;color:#716487;border-radius:11px;display:grid;place-items:center;font-size:16px}.circle-btn:hover{background:#e9e3fa}.circle-btn.main{height:43px;width:43px;background:#8f7cda;color:white;border-color:#8f7cda;font-size:17px;box-shadow:0 4px 12px #9d8de72a}.circle-btn.main:hover{background:#7b67c7}.repeat-btn{font-size:10px;padding:9px 10px;border-radius:9px;border:1px solid #eae7f3;background:#fff;color:#746e83;white-space:nowrap}.repeat-btn.on{background:#f0ebff;color:#7459b6}.dock-under{display:flex;align-items:center;justify-content:space-between;padding-top:4px;gap:8px}.status{font-size:10px;color:#a2a4ac}.dock-under .tiny{font-size:9px;color:#b7bdc4;white-space:nowrap}
+.word-popover{position:fixed;width:min(266px,calc(100vw - 28px));z-index:110;border:1px solid #e7e1f3;border-radius:16px;background:white;box-shadow:0 16px 44px #3f376d2e;padding:17px;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .17s,transform .17s}.word-popover.visible{opacity:1;pointer-events:auto;transform:translateY(0)}.word-head{display:flex;align-items:center;justify-content:space-between;color:#a69abc;font-size:10px;letter-spacing:1px;font-weight:750}.word-close{border:0;background:transparent;font-size:22px;color:#9d9aab}.word-value{font:500 28px/1.5 Georgia,serif;color:#342d4a;margin:6px 0 12px;overflow-wrap:anywhere}.word-buttons{display:flex;gap:8px}.word-buttons button{flex:1;background:#f1edfc;color:#6a559a;border:1px solid #e7dff7;border-radius:10px;font-size:11px;font-weight:700;padding:10px 7px}.word-buttons button:first-child{color:#fff;background:#8a78cf;border-color:#8a78cf}.word-buttons button:hover:not(:disabled){filter:brightness(.96)}
+.toast{position:fixed;z-index:160;left:50%;bottom:117px;transform:translate(-50%,12px);background:#2b303a;color:white;padding:10px 15px;border-radius:12px;box-shadow:0 12px 25px #0002;font-size:11px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;text-align:center;max-width:90vw}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1180px){.app-shell{grid-template-columns:190px minmax(0,1fr)}.overview{grid-template-columns:1fr 1fr}.overview-card.white{display:none}.area-grid{grid-template-columns:minmax(0,1fr) 290px}}
+@media(max-width:900px){.app-shell{grid-template-columns:1fr;padding:12px;gap:8px}.side-nav{height:auto;min-height:0;position:static;display:flex;align-items:center;flex-direction:row;padding:12px 15px;gap:16px;border-radius:16px}.logo{padding:0;border:0;white-space:nowrap;font-size:16px}.logo-icon{width:32px;height:32px}.nav-title,.nav-spacer,.sidebar-note,.nav-footer{display:none}.nav-links{display:flex;gap:2px;margin-left:auto}.nav-link{font-size:11px;padding:9px 10px;gap:5px}.nav-icon{font-size:14px;width:16px}.main-page{padding:4px 2px 160px}.page-top{padding:15px 8px 20px}.area-grid{grid-template-columns:1fr}.right-tools{grid-template-columns:1fr 1fr;gap:12px}.right-tools .privacy{grid-column:1/-1}.control-block{margin:0;border-top:0;padding-top:0}.rail{padding:17px}}
+@media(max-width:640px){.app-shell{padding:8px}.side-nav{border-radius:14px;display:block;padding:11px}.logo{float:left;margin-top:4px}.logo small{display:none}.nav-links{display:flex;justify-content:flex-end;gap:0}.nav-link{font-size:0;padding:10px 11px;gap:0}.nav-icon{font-size:18px;width:auto}.nav-link.active{border-radius:9px}.main-page{padding:0 0 180px}.page-top h1{font-size:23px}.page-top p{font-size:11px}.workspace-tag{display:none}.overview{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}.overview-card{padding:14px;min-height:120px;border-radius:14px}.overview-card h2{font-size:16px;margin-top:17px}.overview-card p{font-size:10.5px}.overview-card.white{display:none}.area-grid{gap:12px}.workhead{padding:18px}.workhead h2{font-size:17px}.progress-wrap{padding:13px 18px 9px}.help-strip{margin:7px 18px 9px}.sentences{padding:2px 12px 16px;max-height:60vh}.sentence{grid-template-columns:27px minmax(0,1fr) 29px;gap:7px;padding:12px 8px}.sentence .num{font-size:10px}.sentence .content{font-size:16px}.sentence .speaker{width:28px;height:28px}.empty{min-height:270px}.practice{padding:15px;grid-template-columns:42px minmax(0,1fr);gap:10px}.voice-orb{width:42px;height:42px;border-radius:13px}.practice>div:nth-child(3){min-width:0}.practice .mic{grid-column:2;justify-self:start}.right-tools{grid-template-columns:1fr}.rail{padding:19px}.control-block{margin-top:0;padding-top:0;border:0}.liquid-dock{bottom:max(8px,env(safe-area-inset-bottom));width:calc(100% - 16px);border-radius:14px;padding:10px}.dock-inside{flex-wrap:wrap;gap:4px}.dock-label{flex-basis:100%;padding-left:5px}.dock-kicker,.dock-info{display:none}.dock-current{font-size:12px}.dock-actions{width:100%;justify-content:center;gap:7px}.circle-btn{height:31px;width:31px}.circle-btn.main{height:39px;width:39px}.repeat-btn{font-size:9px;padding:8px}.dock-under .tiny{display:none}.dock-under{padding:2px 5px 0}.word-popover{width:min(260px,calc(100vw - 20px))}}
+@media(max-width:640px){.area-grid{display:flex;flex-direction:column}.right-tools{display:contents}.right-tools #importArticle{order:1;width:100%}.left-work{order:2;width:100%}.right-tools #voiceSettings{order:3;width:100%}.right-tools .privacy{order:4;width:100%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* V14 · Slow-reading controls: accessible, low-distraction and mobile-friendly */
+.speed-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px}
+.speed-preset{min-width:0;border-radius:10px;border:1px solid #e8e9f0;background:#fbfbfd;padding:9px 4px;color:#566274;font-size:11px;font-weight:750;line-height:1.35;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;transition:background .15s,border-color .15s,color .15s;cursor:pointer}
+.speed-preset small{font-size:10px;font-weight:650;color:#8690a1;font-variant-numeric:tabular-nums}
+.speed-preset:hover{background:#f0effa;border-color:#d8d3ee}
+.speed-preset.active{background:#ebe7fc;border-color:#a99adf;color:#5a478f;box-shadow:inset 0 0 0 1px rgba(124,94,208,.08)}
+.speed-preset.active small{color:#6d5c9b}
+.speed-preset:focus-visible{outline:2px solid #846cc2;outline-offset:2px}
+.rate-hint{margin:9px 0 0;color:#87909f;font-size:10.5px;line-height:1.6}
+
+
+/* V16 bilingual sentence-reading: translation stays directly under its source sentence. */
+.translate-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:3px 25px 4px;padding:10px 13px;background:#f8f9fc;border:1px solid #edf0f4;border-radius:12px}
+.translation-visibility{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px;font-weight:650;color:#576577;cursor:pointer}
+.translation-visibility input{accent-color:#8171c9;width:16px;height:16px;margin:0}
+.translate-all-btn{border-radius:9px;border:1px solid #dcd9ec;background:#fff;color:#6756a0;padding:8px 12px;font-size:12px;font-weight:740;transition:background .15s,border-color .15s}
+.translate-all-btn:hover:not(:disabled){background:#eee9ff;border-color:#bfb4ee}
+.translation-progress{font-size:11px;color:#796c92}
+.translation-notice{font-size:10.5px;line-height:1.65;color:#8b95a2;margin:0 26px 11px}
+.sentence-body{min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.sentence .translation-area{padding-top:8px;margin-top:5px;border-top:1px dashed #ececf2;display:flex;flex-direction:column;gap:5px;min-width:0}
+.sentence .translation-area[hidden]{display:none!important}
+.sentence .translation-line{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:13px;line-height:1.7;color:#586879;overflow-wrap:anywhere;white-space:pre-wrap;user-select:text}
+.sentence .translation-line.is-placeholder{color:#a3a9b4;font-size:11.5px}
+.sentence .translation-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sentence .translation-btn{border:0;border-radius:7px;background:transparent;color:#73679b;padding:2px 6px;font-size:11px;font-weight:670}
+.sentence .translation-btn:hover:not(:disabled){background:#ece7fb;color:#5c498d}
+.sentence .translation-btn:disabled{opacity:.5}
+.sentence .translation-editor{display:none;flex-direction:column;gap:7px;margin-top:3px}
+.sentence .translation-editor.editing{display:flex}
+.sentence .translation-editor textarea{width:100%;resize:vertical;min-height:60px;font-size:13px;line-height:1.6;border:1px solid #d9d7e9;padding:8px 9px;border-radius:8px;color:#2f3d50;background:#fff}
+.sentence .translation-editor .editor-actions{display:flex;gap:8px}
+.sentence .translation-editor .editor-actions button{font-size:11px;border:1px solid #dedce9;border-radius:8px;padding:5px 12px;background:#fff;color:#586279}
+.sentence .translation-editor .editor-actions .save-translation{background:#ede9fb;color:#5f4e91;border-color:#d5ccef;font-weight:730}
+.translation-off .sentence .translation-area{display:none!important}
+@media(max-width:770px){.translate-tools{margin:3px 13px 6px;padding:9px 10px;gap:7px}.translation-notice{margin:0 15px 10px;font-size:10px}.sentence .translation-line{font-size:12px}.translation-visibility{font-size:11px}.translate-all-btn{font-size:11px}}
+
+
+/* V17 AI Studio · deliberately understated American EdTech visual design */
+.ai-settings{border-color:#e6e3f0;background:#fff}
+.ai-mark{vertical-align:middle;display:inline-block;border-radius:7px;padding:3px 5px;font-size:10px;background:#eeeaff;color:#6d54a5;margin-left:4px;font-weight:850}
+.ai-intro,.ai-explainer{font-size:11px;color:#7a8493;line-height:1.75;margin:10px 0 14px}
+.ai-intro{margin-top:0}.ai-settings .section-label{display:block;margin:12px 0 6px;font-size:11px;font-weight:760;color:#596372}
+.ai-gap{margin-top:15px!important}.ai-voice-chooser{padding:10px 0 0}.ai-voice-chooser .section-label{margin-top:5px}
+.ai-rule{border-top:1px solid #edf0f3;margin-top:18px}
+.ai-action{font-weight:750!important;min-height:37px!important}
+.ai-api-details{margin-top:16px;padding:11px;border-radius:12px;border:1px solid #e7e6ed;background:#fafafe}
+.ai-api-details summary{font-size:11px;font-weight:800;cursor:pointer;color:#5b6074;line-height:1.65}.ai-api-body{padding-top:8px}
+.ai-input{width:100%;min-height:39px;border:1px solid #e2e6ed;background:white;border-radius:9px;font-size:12px;color:#343b4b;padding:9px 10px;box-sizing:border-box}
+.ai-status{border-radius:10px;margin-top:13px;padding:10px 12px;background:#f3f7f4;font-size:11px;line-height:1.6;color:#58715e;overflow-wrap:anywhere}
+.ai-status.busy{background:#fff8e7;color:#876a36}.ai-status.error{background:#fff0ef;color:#b34f51}
+.ai-explanation{margin:9px 25px 18px;padding:19px 20px;border-radius:15px;background:#f5f0ff;border:1px solid #e8dffb}
+.ai-explanation[hidden]{display:none!important}.ai-explain-head{display:flex;justify-content:space-between;gap:12px}
+.ai-explanation h3{font-size:16px;letter-spacing:-.3px;color:#3e305b;margin:4px 0 7px}
+.ai-eyebrow{font-size:9px;letter-spacing:1.4px;color:#8c70b6;font-weight:800}.ai-explain-source{font:14px/1.65 Georgia,serif;color:#646174}
+.ai-explain-close{background:white;border:1px solid #e8dbf8;border-radius:9px;width:31px;height:31px;flex:none;font-size:22px;color:#817493;cursor:pointer}
+.ai-explain-result{border-top:1px solid #e4d8f4;margin-top:13px;padding-top:13px;font-size:13px;color:#4e4b5b;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-explanation button,.ai-settings button{cursor:pointer}
+@media(max-width:770px){.ai-explanation{margin:8px 12px 16px;padding:15px}.ai-explain-result{font-size:12px}.ai-settings .rail-heading h2{font-size:15px}}
+
+/* V18: focus on immediate use, optional advanced AI out of the way. */
+.instant-tools .rail-heading h2{font-size:16px}.instant-desc{font-size:12px;line-height:1.75;color:#636f7c;margin:5px 0 12px}
+.instant-action{min-height:42px!important;background:#242b37!important;color:#fff!important;border:1px solid #242b37!important;font-size:13px!important}
+.instant-action:hover{background:#373f4b!important}
+.instant-status{display:flex;gap:8px;align-items:flex-start;margin:13px 0 6px;color:#4e6753;font-size:11px;font-weight:700;line-height:1.6}
+.instant-dot{width:7px;height:7px;flex:none;margin-top:5px;border-radius:100%;background:#84c8a2}
+.instant-disclaimer{font-size:10px;line-height:1.7;color:#88919c;margin:7px 0 2px}
+.advanced-models{border:1px solid #e6e8ed;background:#fff;border-radius:15px;overflow:hidden;margin-bottom:15px}
+.advanced-models>summary{padding:15px 16px;cursor:pointer;list-style-position:inside;font-weight:770;color:#535c67;font-size:12px}
+.advanced-models>summary span{float:right;font-size:10px;font-weight:500;color:#8b96a1}
+.advanced-models[open]>summary{background:#f8f9fb;border-bottom:1px solid #edf0f4}
+.advanced-models>.rail{border:0!important;border-radius:0!important;box-shadow:none!important;margin:0!important}
+.advanced-note{font-size:11px;color:#7a8493;line-height:1.7}
+@media(max-width:770px){.advanced-models>summary{padding:13px}.instant-tools{padding-bottom:16px}}
+
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="side-nav" aria-label="學習導覽">
+    <a class="logo" href="#dashboard"><span class="logo-icon" aria-hidden="true">✦</span><span>EchoRead<small>READY TO LEARN</small></span></a>
+    <div class="nav-title">MY WORKSPACE</div>
+    <nav class="nav-links" aria-label="頁面導覽">
+      <a class="nav-link active" href="#dashboard"><span class="nav-icon" aria-hidden="true">▦</span>工作區</a>
+      <a class="nav-link" href="#readingDesk"><span class="nav-icon" aria-hidden="true">▤</span>閱讀練習</a>
+      <a class="nav-link" href="#importArticle"><span class="nav-icon" aria-hidden="true">↥</span>匯入文章</a>
+      <a class="nav-link" href="#practiceCard"><span class="nav-icon" aria-hidden="true">◉</span>跟讀練習</a>
+    </nav>
+    <div class="nav-spacer"></div>
+    <div class="sidebar-note"><b>✳ Study tip</b><p>先聽整句，再點不熟悉的單字，最後自己跟讀。</p></div>
+    <div class="nav-footer">EchoRead V18 · Ready to Learn</div>
+  </aside>
+  <div class="main-page" id="dashboard">
+    <header class="page-top"><div><h1>我的學習空間</h1><p>把想讀的英文放進來，照自己的節奏慢慢練習。</p></div><div class="top-tools"><span class="workspace-tag">◎ My workspace</span><span class="avatar" aria-label="EchoRead">ER</span></div></header>
+    <div class="overview" aria-label="學習提示">
+      <div class="overview-card white"><small>READING STUDIO</small><span class="ov-symbol" aria-hidden="true">◌</span><h2>今天，讀一點英文。</h2><p>匯入自己的文章，點句子或單字即可開始。</p></div>
+      <div class="overview-card mint"><small>LISTEN & LEARN</small><span class="ov-symbol" aria-hidden="true">↗</span><h2>逐字點讀</h2><p>不會的字，輕點一下就能重聽。</p></div>
+      <div class="overview-card lav"><small>SPEAKING PRACTICE</small><span class="ov-symbol" aria-hidden="true">◡</span><h2>跟讀練習</h2><p>聽完一句，再自己試著說一次。</p></div>
+    </div>
+    <div class="area-grid" id="practiceWorkspace">
+      <main class="left-work reading-area" id="readingDesk">
+        <section class="workspace" aria-label="英文逐句練習">
+          <div class="workhead"><div><div class="minor">MY READING</div><h2 id="documentTitle">尚未匯入文章</h2><div class="muted" id="documentSubtitle">上傳文章或貼上文字後，在這裡逐句練習。</div></div><span class="count-pill" id="sentenceCount">0 句</span></div>
+          <div class="progress-wrap"><div class="progress-label"><span>朗讀進度</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+          <div class="help-strip">小提示：點英文<strong>單字</strong>聽單字；點句子空白處或 ▶ 聽<strong>整句</strong>。</div>
+          <div class="translate-tools" role="group" aria-label="中文翻譯設定">
+            <label class="translation-visibility"><input type="checkbox" id="showTranslation" checked> 顯示繁體中文翻譯</label>
+            <button type="button" id="translateAllBtn" class="translate-all-btn">翻譯全部句子</button>
+            <span id="translationProgress" class="translation-progress" aria-live="polite"></span>
+          </div>
+          <p class="translation-notice">點「翻譯這句」或「翻譯全部句子」即可取得繁體中文；不需要登入或 API 金鑰。翻譯時會將所選英文傳送給 MyMemory 第三方服務，請勿上傳機密資料。</p>
+          <section class="ai-explanation" id="aiExplanation" hidden aria-live="polite">
+            <div class="ai-explain-head"><div><span class="ai-eyebrow">STUDY NOTES</span><h3>英文句子解析</h3><span id="aiExplainSentence" class="ai-explain-source"></span></div><button type="button" id="aiExplainClose" class="ai-explain-close" aria-label="關閉解析">×</button></div>
+            <div id="aiExplainResult" class="ai-explain-result">選擇任何英文句子，按「解析這句」就能看常見句型及文法提示。</div>
+          </section>
+          <div id="sentences" class="sentences"><div class="empty"><span class="big">▤</span><strong>還沒有閱讀內容</strong><span>請從右側匯入文章開始練習。</span></div></div>
+          <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
+        </section>
+        <section class="practice" id="practiceCard" aria-label="跟讀練習"><div class="voice-glow" id="voiceGlow" aria-hidden="true"><span class="voice-beam"></span></div>
+          <div class="voice-orb" aria-hidden="true"><svg width="37" height="44" viewBox="0 0 40 48"><rect class="core" x="14" y="5" width="12" height="26" rx="6"/><path class="stem" d="M8 23a12 12 0 0 0 24 0M20 35v8m-9 0h18"/></svg></div>
+          <div><h3>Speaking practice</h3><p>選一句英文，按「開始跟讀」，練習說出整句。</p><div id="recognitionOutput" class="recognition" aria-live="polite"></div><div class="voice-status"><span class="voice-dot"></span><span id="voiceState">READY TO PRACTICE</span><span class="voice-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+          <button class="button secondary mic" id="micBtn">開始跟讀</button>
+        </section>
+        <p class="footer-note">建議使用 Chrome 或 Edge。跟讀辨識結果僅供練習，並非正式發音評分。</p>
+      </main>
+      <aside class="right-tools">
+        <section class="rail" id="importArticle" aria-label="匯入文章">
+          <div class="rail-heading"><h2>匯入文章</h2><small>MY FILES</small></div>
+          <label class="dropzone" id="dropZone" for="fileInput"><span class="emoji">↥</span><b>上傳文件</b><small>TXT · DOCX · PDF · MD</small></label>
+          <input type="file" id="fileInput" accept=".txt,.md,.text,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+          <div id="fileInfo" class="file-info" role="status"></div><div class="or">或直接貼上文字</div>
+          <textarea class="text-input" id="articleInput" spellcheck="false" autocomplete="off" placeholder="在這裡貼上想讀的英文文章…"></textarea>
+          <button class="button wide" id="parseBtn">開始閱讀 →</button><button class="button ghost wide" id="sampleBtn">試用範例文章</button>
+        </section>
+        <section class="rail" id="voiceSettings" aria-label="英文語音設定">
+          <div class="rail-heading"><h2>語音設定</h2><small>VOICE</small></div>
+          <label class="section-label" for="voiceSelect">英文語音 / 腔調</label><select class="form-select" id="voiceSelect" aria-label="英文語音"><option value="">正在取得系統語音…</option></select>
+          <div class="rate-row"><label class="field-label" for="rate">播放語速</label><input type="range" id="rate" min="0.4" max="1.2" step="0.05" value="0.65" aria-label="朗讀語速"><span id="rateLabel" class="rate-number" aria-live="polite">0.65×</span></div>
+          <div class="speed-presets" role="group" aria-label="常用語速選擇">
+            <button type="button" class="speed-preset" data-speed="0.50" aria-pressed="false">慢慢聽 <small>0.50×</small></button>
+            <button type="button" class="speed-preset active" data-speed="0.65" aria-pressed="true">跟讀 <small>0.65×</small></button>
+            <button type="button" class="speed-preset" data-speed="0.90" aria-pressed="false">自然 <small>0.90×</small></button>
+          </div>
+          <p class="rate-hint">先從「慢慢聽」開始，不夠慢可再向左拉。不同語音的實際語速可能不同。</p>
+          <label class="toggle"><input type="checkbox" id="autoNext"> 播完自動播放下一句</label><label class="toggle"><input type="checkbox" id="repeatToggle"> 重複目前句子</label>
+        </section>
+        <section class="rail instant-tools" aria-label="立即使用的英文學習工具" id="instantTools">
+          <div class="rail-heading"><h2>學習小幫手</h2><small>READY</small></div>
+          <p class="instant-desc">不用選模型。貼上英文後，就能直接翻譯、朗讀與查看句型提示。</p>
+          <button type="button" class="button secondary wide instant-action" id="aiExplainBtn">✳ 解析目前句子</button>
+          <div class="instant-status"><span class="instant-dot" aria-hidden="true"></span><span>免設定：系統朗讀＋繁中翻譯＋基本句型解析</span></div>
+          <p class="instant-disclaimer">句型解析使用內建文法規則，不是生成式 AI；不會胡亂猜測不認識的單字。想用 Qwen／Kokoro 可展開下方進階功能。</p>
+        </section>
+        <details class="advanced-models" id="advancedModels">
+          <summary>進階 AI 模型設定 <span>選用・不影響一般練習</span></summary>
+        <section class="rail ai-settings" id="aiStudio" aria-label="AI 開源模型設定">
+          <div class="rail-heading"><h2>AI 學習助理 <span class="ai-mark">V18</span></h2><small>OPEN MODELS</small></div>
+          <p class="ai-intro">進階功能可選用；一般練習不需要設定模型。</p>
+          <label class="section-label" for="aiTranslateMode">中文翻譯方式</label>
+          <select id="aiTranslateMode" class="form-select">
+            <option value="legacy">原有線上翻譯 · MyMemory</option>
+            <option value="local">本機 AI · OPUS-MT 英翻中</option>
+            <option value="api">Qwen 等相容模型 API</option>
+          </select>
+          <label class="section-label ai-gap" for="aiExplainMode">英文解析方式</label>
+          <select id="aiExplainMode" class="form-select">
+            <option value="instant" selected>即時句型提示 · 免設定</option>
+            <option value="api">Qwen API · 需自行設定</option>
+            <option value="local">本機 Qwen 0.5B · 桌面實驗</option>
+          </select>
+          <p class="advanced-note">選擇下方的 Qwen API／本機模型後，回到上方「解析目前句子」按鈕即可使用 AI 解析。</p>
+          <div class="ai-rule"></div>
+          <label class="section-label" for="aiVoiceMode">英文朗讀引擎</label>
+          <select id="aiVoiceMode" class="form-select">
+            <option value="browser">系統英文語音 · 輕量且立即可用</option>
+            <option value="kokoro">Kokoro 本機 AI · 桌面優先</option>
+            <option value="kokoro-api">Kokoro 語音伺服器 · 手機推薦</option>
+          </select>
+          <div class="ai-voice-chooser">
+            <label class="section-label" for="aiKokoroVoice">Kokoro 聲線</label>
+            <select id="aiKokoroVoice" class="form-select">
+              <option value="af_heart">Heart · 美國女聲</option>
+              <option value="af_bella">Bella · 美國女聲</option>
+              <option value="af_nicole">Nicole · 美國女聲</option>
+              <option value="am_michael">Michael · 美國男聲</option>
+              <option value="am_fenrir">Fenrir · 美國男聲</option>
+            </select>
+            <button type="button" class="button secondary wide ai-action" id="aiVoicePrepare">下載／啟用 Kokoro 模型</button>
+          </div>
+          <p class="ai-explainer">本機 Kokoro 首次需下載模型，iPhone 可能因記憶體不足而失敗。手機可改選「Kokoro 語音伺服器」，填入 HTTPS TTS 網址後使用固定聲線。</p>
+          <details class="ai-api-details" id="aiApiDetails">
+            <summary>⚙ 連接開源模型伺服器（Qwen / Ollama）</summary>
+            <div class="ai-api-body">
+              <label class="section-label" for="aiApiEndpoint">OpenAI 相容 API 網址</label>
+              <input class="ai-input" id="aiApiEndpoint" type="url" inputmode="url" placeholder="https://你的主機/v1" autocomplete="off">
+              <label class="section-label" for="aiTtsEndpoint">Kokoro 音訊 API 網址（手機選用）</label>
+              <input class="ai-input" id="aiTtsEndpoint" type="url" inputmode="url" placeholder="https://你的主機/api/tts" autocomplete="off">
+              <label class="section-label" for="aiApiModel">模型名稱</label>
+              <input class="ai-input" id="aiApiModel" value="qwen2.5:3b" placeholder="qwen2.5:3b" spellcheck="false" autocomplete="off">
+              <label class="section-label" for="aiApiKey">存取金鑰（選填）</label>
+              <input class="ai-input" id="aiApiKey" type="password" placeholder="不儲存到網頁或 GitHub" autocomplete="off">
+              <button type="button" class="button secondary wide ai-action" id="aiTestApi">測試模型連線</button>
+              <p class="ai-explainer">網址須允許瀏覽器 CORS，且遠端建議 HTTPS。不要在公開 GitHub 程式碼寫入 API 金鑰；金鑰僅存在本次頁面記憶體中。</p>
+            </div>
+          </details>
+          <div id="aiModelStatus" class="ai-status" aria-live="polite">進階模型為選用功能，未啟用也能正常練習。</div>
+        </section>
+        </details>
+        <p class="privacy">文章在瀏覽器內解析；Word / PDF 解析需要網路載入工具。語音辨識可能使用瀏覽器的雲端服務。</p>
+      </aside>
+    </div>
+  </div>
+</div>
+<div class="liquid-dock" id="liquidDock" aria-label="播放控制"><div class="dock-inside"><div class="dock-label"><span class="dock-kicker">NOW PLAYING</span><span class="dock-current" id="playerText">尚未選擇句子</span></div><span id="nowPlaying" class="dock-info">尚未開始練習</span><div class="dock-actions"><button class="circle-btn" id="prevBtn" title="上一句" aria-label="上一句">‹</button><button class="circle-btn" id="stopBtn" title="停止" aria-label="停止">■</button><button class="circle-btn main" id="playBtn" title="播放或暫停" aria-label="播放或暫停">▶</button><button class="circle-btn" id="nextBtn" title="下一句" aria-label="下一句">›</button><button class="repeat-btn" id="repeatBtn">↻ 循環：關</button></div></div><div class="dock-under"><span class="status" id="playStatus" role="status">匯入文章後即可開始練習</span><span class="tiny">SPACE · PLAY / PAUSE</span></div></div>
+<div class="word-popover" id="wordPopover" role="group" aria-label="單字發音工具" aria-hidden="true"><div class="word-head"><span>WORD / 單字</span><button class="word-close" id="closeWordPopover" type="button" aria-label="關閉單字卡">×</button></div><div class="word-value" id="selectedWord">選擇單字</div><div class="word-buttons"><button type="button" id="replayWordBtn" disabled>▶ 重聽</button><button type="button" id="slowWordBtn" disabled>超慢速發音</button></div></div>
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.10.0/mammoth.browser.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+<script>
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const els = Object.fromEntries(['showTranslation','translateAllBtn','translationProgress','dropZone','fileInput','fileInfo','articleInput','parseBtn','sampleBtn','voiceSelect','rate','rateLabel','autoNext','repeatToggle','documentTitle','documentSubtitle','sentenceCount','progressText','progressFill','sentences','nowPlaying','playerText','prevBtn','stopBtn','playBtn','nextBtn','repeatBtn','playStatus','selectedWord','replayWordBtn','slowWordBtn','micBtn','recognitionOutput','toast'].map(id => [id,$(id)]));
+    const sample = `Good morning, everyone! My name is Amy. Today, I would like to share my learning experience.\nAt first, speaking English was difficult for me. I was afraid of making mistakes. But I learned that practice makes progress.\nNow, I listen to one sentence, repeat it, and try again. Every small step helps me become more confident. Thank you for listening!`;
+    let sentences = [], active = -1, listened = new Set(), voices = [], session = 0, isSpeaking = false, isPaused = false, speakingUtterance = null, recognition = null, recognizing = false, toastTimer = null, selectedWord = null, playbackKind = null;
+    let sequenceTimer=null, speechStartTime=0;
+    let translations=[],translationStates=[],translationGeneration=0,bulkTranslating=false;
+    const translationRequests=new Set();
+    function cancelTranslations(){
+      translationGeneration++;bulkTranslating=false;
+      for(const controller of translationRequests){controller.abort();}
+      translationRequests.clear();
+      els.translateAllBtn.disabled=false;els.translateAllBtn.textContent='翻譯全部句子';
+      els.translationProgress.textContent='';
+    }
+    function translationStatusMessage(i){
+      if(translationStates[i]==='loading')return '翻譯中…';
+      if(translationStates[i]==='error')return '翻譯暫時失敗，請重試或手動輸入。';
+      return '尚無中文翻譯，可翻譯或自行填寫。';
+    }
+    function refreshTranslationRow(i){
+      const card=els.sentences.querySelector(`.sentence[data-index="${i}"]`);
+      if(!card)return;
+      const area=card.querySelector('.translation-area');if(!area)return;
+      area.hidden=!els.showTranslation.checked;
+      const line=area.querySelector('.translation-line');
+      const current=translations[i]||'';
+      line.textContent=current||translationStatusMessage(i);
+      line.classList.toggle('is-placeholder',!current);
+      const action=area.querySelector('.translate-one-btn');
+      action.disabled=translationStates[i]==='loading';
+      action.textContent=translationStates[i]==='loading'?'翻譯中…':current?'重新翻譯':'翻譯這句';
+    }
+    function createTranslationArea(i){
+      const area=document.createElement('div');area.className='translation-area';
+      area.dataset.translationIndex=String(i);area.hidden=!els.showTranslation.checked;
+      const line=document.createElement('div');line.className='translation-line is-placeholder';
+      line.lang='zh-Hant';line.textContent=translations[i]||translationStatusMessage(i);
+      if(translations[i])line.classList.remove('is-placeholder');
+      const actions=document.createElement('div');actions.className='translation-actions';
+      const trans=document.createElement('button');trans.type='button';trans.className='translation-btn translate-one-btn';trans.textContent=translations[i]?'重新翻譯':'翻譯這句';
+      const edit=document.createElement('button');edit.type='button';edit.className='translation-btn edit-translation-btn';edit.textContent='編輯中文';
+      const explain=document.createElement('button');explain.type='button';explain.className='translation-btn explain-one-btn';explain.textContent='✳ 解析這句';actions.append(trans,edit,explain);
+      const editor=document.createElement('div');editor.className='translation-editor';
+      const input=document.createElement('textarea');input.className='translation-input';input.setAttribute('aria-label',`第 ${i+1} 句的繁體中文翻譯`);input.placeholder='在這裡輸入繁體中文翻譯';
+      const edActions=document.createElement('div');edActions.className='editor-actions';
+      const save=document.createElement('button');save.type='button';save.className='save-translation';save.textContent='儲存';
+      const cancel=document.createElement('button');cancel.type='button';cancel.className='cancel-translation';cancel.textContent='取消';
+      edActions.append(save,cancel);editor.append(input,edActions);
+      area.append(line,actions,editor);return area;
+    }
+    function decodeTranslatedString(s){
+      return new DOMParser().parseFromString(String(s||''),'text/html').body.textContent.trim();
+    }
+    async function requestTranslation(source){
+      if($('aiTranslateMode').value==='local')return translateWithLocalModel(source);
+      if($('aiTranslateMode').value==='api')return modelChat([{role:'system',content:'你是精準的英翻繁體中文翻譯器，請只輸出一行繁體中文譯文，不能加入解釋或引號。'},{role:'user',content:source}],220);
+      if(new TextEncoder().encode(source).length>490)throw Error('句子超過翻譯服務的長度限制，可先自行翻譯。');
+      const controller=new AbortController();translationRequests.add(controller);
+      const timer=setTimeout(()=>controller.abort(),14000);
+      try{
+        const url='https://api.mymemory.translated.net/get?q='+encodeURIComponent(source)+'&langpair='+encodeURIComponent('en|zh-TW');
+        const response=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});
+        if(!response.ok)throw Error('服務回應 '+response.status);
+        const payload=await response.json();
+        if(Number(payload.responseStatus)!==200)throw Error(payload.responseDetails||'翻譯服務無法回應');
+        const translated=decodeTranslatedString(payload.responseData?.translatedText);
+        if(!translated)throw Error('翻譯服務未傳回中文');
+        return translated;
+      }finally{clearTimeout(timer);translationRequests.delete(controller);}
+    }
+    async function translateSentence(i){
+      if(i<0||i>=sentences.length||translationStates[i]==='loading')return false;
+      const generation=translationGeneration;const phrase=sentences[i];
+      translationStates[i]='loading';refreshTranslationRow(i);
+      try{
+        const translated=await requestTranslation(phrase);
+        if(generation!==translationGeneration)return false;
+        translations[i]=translated;translationStates[i]='done';refreshTranslationRow(i);
+        return true;
+      }catch(error){
+        if(generation!==translationGeneration)return false;
+        translationStates[i]='error';refreshTranslationRow(i);
+        return false;
+      }
+    }
+    async function translateAll(){
+      if(bulkTranslating||!sentences.length){if(!sentences.length)notify('請先匯入英文文章。');return;}
+      bulkTranslating=true;els.translateAllBtn.disabled=true;els.translateAllBtn.textContent='正在翻譯…';
+      const generation=translationGeneration;let completed=0,failed=0;
+      try{
+        const indices=sentences.map((_,i)=>i).filter(i=>!translations[i]);
+        for(const i of indices){
+          if(generation!==translationGeneration)break;
+          const ok=await translateSentence(i);
+          if(generation!==translationGeneration)break;
+          ok?completed++:failed++;
+          els.translationProgress.textContent=`已完成 ${completed+failed}/${indices.length}`;
+        }
+        if(generation===translationGeneration)notify(failed?`完成 ${completed} 句，${failed} 句未能翻譯，可個別重試。`:`已完成 ${completed} 句繁體中文翻譯。`);
+      }finally{
+        if(generation===translationGeneration){bulkTranslating=false;els.translateAllBtn.disabled=false;els.translateAllBtn.textContent='翻譯全部句子';}
+      }
+    }
+    function notify(message) { els.toast.textContent = message; els.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=>els.toast.classList.remove('show'),3500); }
+    function setStatus(message) { els.playStatus.textContent = message; }
+    function splitSentences(raw) {
+      const normalized = String(raw||'').replace(/\r\n?/g,'\n').replace(/[\t\u00a0]+/g,' ').replace(/ +/g,' ').trim();
+      if (!normalized) return [];
+      const output = [];
+      const segmenter = typeof Intl.Segmenter === 'function' ? new Intl.Segmenter('en',{granularity:'sentence'}) : null;
+      for (const row of normalized.split(/\n+/)) {
+        const clean = row.trim().replace(/^[•*\-]\s*/, '');
+        if (!clean) continue;
+        const parts = segmenter ? Array.from(segmenter.segment(clean),s=>s.segment) : (clean.match(/[^.!?。！？]+(?:[.!?。！？]+["'”’)]*)?|[^.!?。！？]+$/g)||[clean]);
+        for (const p of parts) { const phrase = p.trim(); if (phrase) output.push(phrase); }
+      }
+      return output;
+    }
+    // Liquid Voice: speaking animation reflects synthesis state; microphone glow uses actual audio input.
+    const practiceCard=$('practiceCard'), playerPanel=$('playerPanel'), voiceGlow=$('voiceGlow'), voiceState=$('voiceState');
+    let audioStream=null,audioContext=null,audioAnalyser=null,voiceRaf=0,voiceData=null;
+    const meterBars=Array.from(document.querySelectorAll('.voice-meter i'));
+    function setSpeechGlow(active){playerPanel?.classList.toggle('is-speaking',!!active);}
+    function setListeningGlow(active){practiceCard?.classList.toggle('is-listening',!!active);voiceState.textContent=active?'LISTENING · 聆聽你的聲音':'READY TO PRACTICE';}
+    function stopAudioMeter(){
+      if(voiceRaf){cancelAnimationFrame(voiceRaf);voiceRaf=0;}
+      if(audioStream){audioStream.getTracks().forEach(t=>t.stop());audioStream=null;}
+      if(audioContext){audioContext.close().catch(()=>{});audioContext=null;}
+      audioAnalyser=null;voiceData=null;voiceGlow.style.setProperty('--level','.08');practiceCard.style.setProperty('--orb-scale','1.02');practiceCard.style.setProperty('--orb-blur','34px');
+      meterBars.forEach(i=>i.style.height='6px');setListeningGlow(false);
+    }
+    async function startAudioMeter(expectedRecognition){
+      if(!navigator.mediaDevices?.getUserMedia||!window.AudioContext&&!window.webkitAudioContext){setListeningGlow(true);return;}
+      let stream;
+      try{
+        stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+        if(recognition!==expectedRecognition){stream.getTracks().forEach(t=>t.stop());return;}
+        const Ctx=window.AudioContext||window.webkitAudioContext;
+        audioContext=new Ctx();audioStream=stream;
+        const src=audioContext.createMediaStreamSource(stream);audioAnalyser=audioContext.createAnalyser();audioAnalyser.fftSize=1024;audioAnalyser.smoothingTimeConstant=.76;src.connect(audioAnalyser);
+        voiceData=new Uint8Array(audioAnalyser.fftSize);
+        function tick(){if(!audioAnalyser||recognition!==expectedRecognition)return;
+          audioAnalyser.getByteTimeDomainData(voiceData);let sum=0;
+          for(let j=0;j<voiceData.length;j++){const v=(voiceData[j]-128)/128;sum+=v*v;}
+          const rms=Math.sqrt(sum/voiceData.length);
+          const intensity=Math.min(1,Math.max(.08,rms*7));
+          voiceGlow.style.setProperty('--level',intensity.toFixed(3));practiceCard.style.setProperty('--orb-scale',(1+intensity*.18).toFixed(3));practiceCard.style.setProperty('--orb-blur',(32+intensity*45).toFixed(1)+'px');
+          meterBars.forEach((b,i)=>{const sine=.5+.5*Math.sin(performance.now()/280+i*1.35);b.style.height=(5+intensity*(7+sine*16)).toFixed(0)+'px';});
+          voiceRaf=requestAnimationFrame(tick);
+        }
+        tick();
+      }catch(e){if(stream)stream.getTracks().forEach(t=>t.stop());setListeningGlow(true);}
+    }
+    function stopSpeech() {
+      if(aiAudio){aiAudio.pause();aiAudio.onended=null;aiAudio.onerror=null;aiAudio=null;}
+      setSpeechGlow(false);
+      if(sequenceTimer!==null){clearTimeout(sequenceTimer);sequenceTimer=null;}
+      session++; // Discard any late callbacks from an earlier utterance.
+      if('speechSynthesis' in window){
+        const synth=window.speechSynthesis;
+        // Avoid sending unnecessary cancel() before every new utterance on iOS.
+        if(synth.speaking||synth.pending||synth.paused){try{synth.cancel();}catch(e){}}
+      }
+      isSpeaking=false;isPaused=false;speakingUtterance=null;playbackKind=null;
+      els.sentences.querySelectorAll('.word-token.reading').forEach(w=>w.classList.remove('reading'));
+      els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','開始朗讀');
+    }
+    function renderProgress() { const total=sentences.length; els.progressText.textContent=`${listened.size} / ${total}`; els.progressFill.style.width= total? `${100*listened.size/total}%` : '0%'; }
+    // 文字以 DOM text nodes + word buttons 呈現，避免使用 innerHTML 插入文章內容。
+    function appendClickableWords(content,sentence) {
+      const pattern=/[A-Za-z]+(?:['’\-][A-Za-z]+)*|\d+(?:[.,]\d+)*/g;
+      let cursor=0,wordIndex=0;
+      for(const match of sentence.matchAll(pattern)) {
+        content.appendChild(document.createTextNode(sentence.slice(cursor,match.index)));
+        const word=document.createElement('button'); word.type='button';word.className='word-token';word.textContent=match[0];
+        word.dataset.word=match[0];word.dataset.wordIndex=String(wordIndex++);
+        word.setAttribute('aria-label',`朗讀單字 ${match[0]}`);word.title=`點一下聽「${match[0]}」的發音`;
+        content.appendChild(word);cursor=match.index+match[0].length;
+      }
+      content.appendChild(document.createTextNode(sentence.slice(cursor)));
+    }
+    function renderCards() {
+      els.sentences.replaceChildren();
+      if (!sentences.length) {const empty = document.createElement('div');empty.className='empty';empty.innerHTML='<span class="big">⌁</span><strong>還沒有閱讀內容</strong><span>請從右側匯入文章開始練習。</span>';els.sentences.appendChild(empty);return;}
+      const fragment=document.createDocumentFragment();
+      sentences.forEach((sentence,i)=>{
+        const card=document.createElement('div');card.className='sentence'+(i===active?' active':'')+(listened.has(i)?' done':'');card.dataset.index=String(i);card.setAttribute('role','group');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`第 ${i+1} 句，按 Enter 聽整句；也可以點單字聽單字：${sentence}`);
+        const num=document.createElement('span');num.className='num';num.textContent=String(i+1).padStart(2,'0');
+        const content=document.createElement('span');content.className='content';appendClickableWords(content,sentence);
+        const bilingual=document.createElement('div');bilingual.className='sentence-body';bilingual.append(content,createTranslationArea(i));
+        const speaker=document.createElement('button');speaker.type='button';speaker.className='speaker';speaker.textContent='▶';speaker.setAttribute('aria-label',`朗讀完整第 ${i+1} 句`);
+        card.append(num,bilingual,speaker);fragment.appendChild(card);
+      }); els.sentences.appendChild(fragment);
+    }
+    function updateWordHighlight() {
+      els.sentences.querySelectorAll('.word-token.selected').forEach(w=>w.classList.remove('selected'));
+      const chosen=selectedWord&&els.sentences.querySelector(`.sentence[data-index="${selectedWord.index}"] .word-token[data-word-index="${selectedWord.wordIndex}"]`);
+      if(chosen) chosen.classList.add('selected');
+      els.selectedWord.textContent=selectedWord?selectedWord.text:'選擇文章中的單字';
+      els.replayWordBtn.disabled=!selectedWord; els.slowWordBtn.disabled=!selectedWord;
+    }
+    function updateSelection(scroll=true) {
+      for (const node of els.sentences.querySelectorAll('.sentence')) { const idx=Number(node.dataset.index);node.classList.toggle('active',idx===active);node.classList.toggle('done',listened.has(idx));const num=node.querySelector('.num');if(num)num.textContent=String(idx+1).padStart(2,'0'); }
+      if(active>=0) { els.nowPlaying.textContent=`第 ${active+1} / ${sentences.length} 句`;els.playerText.textContent=sentences[active]; if(scroll) els.sentences.querySelector(`.sentence[data-index="${active}"]`)?.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+      else {els.nowPlaying.textContent='尚未選擇句子';els.playerText.textContent='選擇一句英文開始練習';}
+      renderProgress();updateWordHighlight();
+    }
+    function loadArticle(text,title='我的英文跟讀練習',silent=false) {
+      const chunks=splitSentences(text);if(!chunks.length){notify('請先輸入英文內容。');return;}
+      ++explainRun;$('aiExplanation').hidden=true;cancelTranslations();hideWordPopover();stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;translations=Array(chunks.length).fill('');translationStates=Array(chunks.length).fill('');active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點有虛線底線的單字聽發音；按 ▶ 朗讀整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);if(!silent){notify(`已產生 ${chunks.length} 句英文。`);if(window.matchMedia('(max-width:770px)').matches)document.getElementById('readingDesk')?.scrollIntoView({behavior:'smooth',block:'start'});}
+    }
+    function getVoice(){const uri=els.voiceSelect.value;return voices.find(v=>v.voiceURI===uri)||voices.find(v=>/^en[-_]/i.test(v.lang))||null;}
+    function fillVoices(){if(!('speechSynthesis' in window)){els.voiceSelect.innerHTML='<option>此瀏覽器不支援語音朗讀</option>';return;}
+      const all=window.speechSynthesis.getVoices();const english=all.filter(v=>/^en([-_]|$)/i.test(v.lang));const filtered=english.length?english:all;const last=els.voiceSelect.value;voices=filtered;
+      els.voiceSelect.replaceChildren(); if(!voices.length){els.voiceSelect.add(new Option('使用系統預設語音',''));return;}
+      const preferred=voices.find(v=>/en-US/i.test(v.lang)&&(/natural|google|microsoft|samantha|aria/i.test(v.name)))||voices.find(v=>/en-US/i.test(v.lang))||voices[0];
+      voices.forEach(v=>els.voiceSelect.add(new Option(`${v.name}（${v.lang}）`,v.voiceURI)));
+      els.voiceSelect.value=voices.some(v=>v.voiceURI===last)?last:preferred.voiceURI;
+    }
+    // Continuous playback is deliberately separate from a manual request.
+    // During auto-next/repeat we must NOT cancel the synthesizer at every sentence boundary.
+    function speak(index, fromSequence=false, continuation=null, recovery=0) {
+      if($('aiVoiceMode').value!=='browser'){speakKokoro(index,fromSequence);return;}
+      if(!sentences.length){notify('請先上傳或貼上英文文章。');return;}
+      if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能。');return;}
+      if(index<0||index>=sentences.length)return;
+      if(!fromSequence){hideWordPopover();stopRecognition();stopSpeech();}
+      if(sequenceTimer!==null){clearTimeout(sequenceTimer);sequenceTimer=null;}
+      active=index;selectedWord=null;playbackKind='sentence';updateSelection(!fromSequence);
+      const mySession=session;
+      const requested=typeof continuation==='string' ? continuation : sentences[index];
+      const utterance=new SpeechSynthesisUtterance(requested);
+      speakingUtterance=utterance;
+      const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';
+      utterance.rate=Number(els.rate.value);utterance.pitch=1;
+      const synth=window.speechSynthesis;
+      let startedAt=0,furthestWordEnd=0,hasBoundary=false;
+      const words=requested.match(/[A-Za-z]+(?:['’\-][A-Za-z]+)*/g)||[];
+      const minimumDuration=Math.min(2500,Math.max(650,words.length*115));
+      utterance.onstart=()=>{
+        if(mySession!==session)return;
+        startedAt=performance.now();speechStartTime=startedAt;
+        setSpeechGlow(true);isSpeaking=true;isPaused=false;
+        els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');
+        setStatus(`正在朗讀第 ${index+1} 句 · ${utterance.rate.toFixed(2)}×`);
+      };
+      utterance.onboundary=event=>{
+        if(mySession!==session||typeof event.charIndex!=='number')return;
+        if(event.name&&event.name!=='word')return;
+        const at=Math.max(0,Math.min(requested.length,event.charIndex));
+        let end=at;
+        while(end<requested.length&&!/\s/.test(requested[end]))end++;
+        furthestWordEnd=Math.max(furthestWordEnd,end);
+        hasBoundary=true;
+      };
+      utterance.onend=()=>{
+        if(mySession!==session)return;
+        setSpeechGlow(false);isSpeaking=false;isPaused=false;speakingUtterance=null;
+        els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','重新朗讀');
+        const elapsed=startedAt ? performance.now()-startedAt : 0;
+        const remainder=requested.slice(furthestWordEnd).trim();
+        const remainingWords=remainder.match(/[A-Za-z]+(?:['’\-][A-Za-z]+)*/g)||[];
+        const suspicious=startedAt>0 && elapsed<minimumDuration &&
+          (hasBoundary ? remainingWords.length>=1 : words.length>=5);
+        // Some mobile voices prematurely emit 'end' after the first word.
+        // When word boundaries are reported, resume ONLY the unspoken part.
+        const maxRecovery=hasBoundary?Math.min(50,(sentences[index].match(/[A-Za-z]+/g)||[]).length+3):2;
+        if(suspicious&&recovery<maxRecovery){
+          const nextPart=hasBoundary&&furthestWordEnd>0&&remainder?remainder:requested;
+          setStatus('偵測到語音提早結束，正在接續朗讀…');
+          sequenceTimer=setTimeout(()=>{if(mySession===session)speak(index,true,nextPart,recovery+1);},220);
+          return;
+        }
+        if(suspicious){
+          setStatus('這個手機語音可能提前中斷，請換另一個英文聲音再試。');
+          return; // Do not mistakenly repeat only the first word forever.
+        }
+        listened.add(index);updateSelection(false);
+        const repeat=els.repeatToggle.checked;
+        const next=repeat?index:(els.autoNext.checked?index+1:-1);
+        if(next>=0&&next<sentences.length){
+          setStatus(repeat?'本句已播完，準備重複…':'本句已播完，準備下一句…');
+          sequenceTimer=setTimeout(()=>{
+            sequenceTimer=null;
+            // Keep the existing speech session / voice queue; no cancel() here.
+            if(mySession===session)speak(next,true);
+          },950);
+        }else if(next>=sentences.length){setStatus('全部句子已朗讀完成！');}
+        else{setStatus(`第 ${index+1} 句播放完成`);}
+      };
+      utterance.onerror=(event)=>{
+        if(mySession!==session)return;
+        setSpeechGlow(false);isSpeaking=false;isPaused=false;speakingUtterance=null;
+        els.playBtn.textContent='▶';
+        if(event.error!=='canceled'&&event.error!=='interrupted')
+          setStatus(`語音朗讀失敗（${event.error||'未知原因'}），請更換英文聲音後重試。`);
+      };
+      try{
+        isSpeaking=true;els.playBtn.textContent='Ⅱ';
+        setStatus(`準備朗讀第 ${index+1} 句…`);
+        // Keep a strong reference until onend/onerror; preserve the original sentence.
+        synth.speak(utterance);
+      }catch(error){
+        isSpeaking=false;els.playBtn.textContent='▶';
+        setStatus('無法啟動語音，請改用其他語音或瀏覽器。');notify(error.message||'語音功能啟動失敗');
+      }
+    }
+    function speakWord(index, text, wordIndex, slow=false) {
+      if($('aiVoiceMode').value!=='browser'){speakKokoroWord(index,text,wordIndex,slow);return;}
+      if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能，請改用 Chrome 或 Edge。');return;}
+      if(index<0||index>=sentences.length||!text)return;
+      stopRecognition();stopSpeech();active=index;selectedWord={index,text,wordIndex};playbackKind='word';updateSelection(false);
+      const mySession=session;const utterance=new SpeechSynthesisUtterance(text);speakingUtterance=utterance;
+      const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';
+      utterance.rate=slow?Math.min(0.45,Number(els.rate.value)):Number(els.rate.value);utterance.pitch=1;
+      const wordButton=els.sentences.querySelector(`.sentence[data-index="${index}"] .word-token[data-word-index="${wordIndex}"]`);
+      utterance.onstart=()=>{if(mySession!==session)return;setSpeechGlow(true);isSpeaking=true;isPaused=false;wordButton?.classList.add('reading');els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');setStatus(`正在${slow?'慢速':''}朗讀單字「${text}」· ${utterance.rate.toFixed(2)}×`);};
+      utterance.onend=()=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;wordButton?.classList.remove('reading');els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','朗讀完整句子');setStatus(`單字「${text}」播放完成，可直接再點一次重聽`);};
+      utterance.onerror=e=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;wordButton?.classList.remove('reading');els.playBtn.textContent='▶';if(e.error!=='canceled'&&e.error!=='interrupted')setStatus(`單字播放失敗（${e.error||'未知原因'}）`);};
+      try{isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus(`準備朗讀單字「${text}」…`);window.speechSynthesis.speak(utterance);}catch(e){setStatus('無法播放單字語音，請試用 Chrome 或 Edge。');notify(e.message||'單字播放失敗');}
+    }
+    function togglePlay(){if(aiAudio){if(aiAudio.paused){aiAudio.play().then(()=>{isSpeaking=true;isPaused=false;els.playBtn.textContent='Ⅱ';}).catch(()=>notify('請再點一次播放以啟動音訊'));}else{aiAudio.pause();isSpeaking=false;isPaused=true;els.playBtn.textContent='▶';}return;}if(!sentences.length){notify('請先匯入文章');return;}if(isPaused){setSpeechGlow(true);window.speechSynthesis.resume();isPaused=false;isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus('繼續朗讀中…');return;}if(isSpeaking&&window.speechSynthesis.speaking){window.speechSynthesis.pause();setSpeechGlow(false);isPaused=true;isSpeaking=false;els.playBtn.textContent='▶';setStatus('已暫停');return;}speak(Math.max(0,active));}
+    function stopRecognition(){stopAudioMeter();if(recognition){try{recognition.abort();}catch(e){}recognition=null;}recognizing=false;els.micBtn.textContent='開始跟讀';els.micBtn.classList.add('secondary');}
+    const normalizeWords = t => t.toLowerCase().replace(/[^a-z0-9'\s-]/g,' ').replace(/[-]+/g,' ').split(/\s+/).filter(Boolean);
+    function editDistance(a,b){let prev=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const cur=[i];for(let j=1;j<=b.length;j++)cur[j]=Math.min(cur[j-1]+1,prev[j]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[b.length];}
+    function renderRecognition(text){els.recognitionOutput.replaceChildren();const line=document.createElement('div');const title=document.createElement('b');title.textContent='辨識到：';line.append(title,document.createTextNode(text));els.recognitionOutput.appendChild(line);
+      if(active>=0){const reference=normalizeWords(sentences[active]);const heard=normalizeWords(text);const dist=editDistance(reference,heard);const similarity=Math.max(0,Math.round(100*(1-dist/Math.max(1,reference.length,heard.length))));const indicator=document.createElement('div');indicator.className='muted';indicator.textContent=`文字相似度約 ${similarity}%（僅比較辨識文字，不能代表口音或發音準確度）`;els.recognitionOutput.appendChild(indicator);}
+    }
+    function toggleMic(){if(recognizing){stopRecognition();setStatus('已停止語音辨識');return;}if(!sentences.length){notify('請先匯入文章並選擇練習句子');return;}
+      const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+      if(!Recognition){els.recognitionOutput.textContent='此瀏覽器沒有語音辨識功能。建議改用最新版 Chrome 或 Edge，仍可正常使用句子朗讀。';return;}
+      stopSpeech();els.recognitionOutput.textContent='正在準備麥克風，請允許瀏覽器使用麥克風。';
+      const r=new Recognition();recognition=r;r.lang=getVoice()?.lang||'en-US';r.interimResults=false;r.continuous=false;r.maxAlternatives=1;
+      r.onstart=()=>{if(recognition!==r)return;recognizing=true;setListeningGlow(true);startAudioMeter(r);els.micBtn.textContent='停止跟讀';els.micBtn.classList.remove('secondary');els.recognitionOutput.textContent='正在聽你說英文…';setStatus(`請念出第 ${active+1} 句`);};
+      r.onresult=event=>{if(recognition!==r)return;const text=event.results[0][0].transcript;renderRecognition(text);setStatus('辨識完成，你可以重新朗讀或換下一句。');};
+      r.onerror=event=>{if(recognition!==r)return;stopAudioMeter();const detail=event.error==='not-allowed'?'麥克風權限遭拒絕，請檢查瀏覽器權限。':event.error==='network'?'語音辨識服務無法連線。':'語音辨識未成功：'+event.error;els.recognitionOutput.textContent=detail;setStatus(detail);};
+      r.onend=()=>{if(recognition!==r)return;stopAudioMeter();recognizing=false;recognition=null;els.micBtn.textContent='開始跟讀';els.micBtn.classList.add('secondary');};
+      try{r.start();}catch(e){stopRecognition();els.recognitionOutput.textContent='無法啟動麥克風：'+e.message;}
+    }
+    async function loadFile(file){if(!file)return;const extension=file.name.toLowerCase().split('.').pop();els.fileInfo.style.display='block';els.fileInfo.textContent=`正在讀取：${file.name}`;els.parseBtn.disabled=true;try{
+      let content='';
+      if(['txt','md','text'].includes(extension)||file.type.startsWith('text/'))content=await file.text();
+      else if(extension==='docx'){if(typeof window.mammoth==='undefined')throw Error('Word 解析工具未載入。請連上網路重試，或將檔案另存為 TXT。');const result=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});content=result.value;}
+      else if(extension==='pdf'){if(typeof window.pdfjsLib==='undefined')throw Error('PDF 解析工具未載入。請連上網路重試，或複製 PDF 文字貼入左側。');window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await window.pdfjsLib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;const pages=[];for(let pageNumber=1;pageNumber<=pdf.numPages;pageNumber++){const page=await pdf.getPage(pageNumber);const items=(await page.getTextContent()).items;pages.push(items.map(it=>it.str+(it.hasEOL?'\n':' ')).join(''));}content=pages.join('\n');}
+      else throw Error('不支援這種檔案，請使用 TXT、MD、DOCX 或文字型 PDF。');
+      if(!content.trim())throw Error('沒有擷取到文字。若是掃描型 PDF（圖片），請先轉成可選取文字的檔案。');
+      els.articleInput.value=content;loadArticle(content,file.name.replace(/\.[^.]+$/,''));els.fileInfo.textContent=`✓ 已載入 ${file.name}`;
+    }catch(err){els.fileInfo.textContent='⚠ '+err.message;notify(err.message);}finally{els.parseBtn.disabled=false;els.fileInput.value='';}}
+    els.showTranslation.addEventListener('change',()=>{
+      els.sentences.classList.toggle('translation-off',!els.showTranslation.checked);
+      els.sentences.querySelectorAll('.translation-area').forEach(area=>area.hidden=!els.showTranslation.checked);
+    });
+    els.translateAllBtn.addEventListener('click',translateAll);
+    // Text/translation controls must never trigger the parent card's sentence playback.
+    els.sentences.addEventListener('click',e=>{
+      const area=e.target.closest('.translation-area');
+      if(!area)return;
+      e.stopPropagation();
+      const index=Number(area.dataset.translationIndex);
+      const editor=area.querySelector('.translation-editor');
+      const input=area.querySelector('.translation-input');
+      if(e.target.closest('.translate-one-btn')){translateSentence(index);return;}
+      if(e.target.closest('.explain-one-btn')){explainSentence(index);return;}
+      if(e.target.closest('.edit-translation-btn')){input.value=translations[index]||'';editor.classList.add('editing');input.focus();return;}
+      if(e.target.closest('.save-translation')){
+        translations[index]=input.value.trim();translationStates[index]=translations[index]?'manual':'';
+        editor.classList.remove('editing');refreshTranslationRow(index);return;
+      }
+      if(e.target.closest('.cancel-translation')){editor.classList.remove('editing');return;}
+    });
+    els.sentences.addEventListener('click',e=>{
+      if(e.target.closest('.translation-area'))return;
+      const word=e.target.closest('.word-token');
+      if(word){const card=word.closest('.sentence');speakWord(Number(card.dataset.index),word.dataset.word,Number(word.dataset.wordIndex));showWordPopover(word);return;}
+      const card=e.target.closest('.sentence');if(card)speak(Number(card.dataset.index));
+    });
+    els.sentences.addEventListener('keydown',e=>{
+      if(e.target.matches('.sentence')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.stopPropagation();speak(Number(e.target.dataset.index));}
+    });
+    els.replayWordBtn.addEventListener('click',()=>{if(selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);});
+    els.slowWordBtn.addEventListener('click',()=>{if(selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex,true);});
+    els.parseBtn.addEventListener('click',()=>loadArticle(els.articleInput.value,'我的英文跟讀練習'));
+    els.sampleBtn.addEventListener('click',()=>{els.articleInput.value=sample;loadArticle(sample,'英文自我介紹｜示範練習');});
+    els.fileInput.addEventListener('change',e=>loadFile(e.target.files?.[0]));
+    ['dragenter','dragover'].forEach(eventName=>els.dropZone.addEventListener(eventName,e=>{e.preventDefault();els.dropZone.classList.add('drag');}));
+    ['dragleave','drop'].forEach(eventName=>els.dropZone.addEventListener(eventName,e=>{e.preventDefault();els.dropZone.classList.remove('drag');if(eventName==='drop'&&e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);}));
+    const speedPresets=Array.from(document.querySelectorAll('.speed-preset'));
+    function refreshSpeedUI(){
+      const rate=Number(els.rate.value);
+      els.rateLabel.textContent=`${rate.toFixed(2)}×`;
+      speedPresets.forEach(btn=>{
+        const current=Math.abs(Number(btn.dataset.speed)-rate)<0.001;
+        btn.classList.toggle('active',current);
+        btn.setAttribute('aria-pressed',String(current));
+      });
+    }
+    function replayAfterSpeedChange(){
+      if(isSpeaking||isPaused){
+        if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);
+        else speak(Math.max(0,active));
+      }
+    }
+    els.rate.addEventListener('input',refreshSpeedUI);
+    els.rate.addEventListener('change',replayAfterSpeedChange);
+    speedPresets.forEach(btn=>btn.addEventListener('click',()=>{
+      els.rate.value=btn.dataset.speed;
+      refreshSpeedUI();
+      replayAfterSpeedChange();
+    }));
+    els.voiceSelect.addEventListener('change',()=>{if(isSpeaking||isPaused){if(playbackKind==='word'&&selectedWord)speakWord(selectedWord.index,selectedWord.text,selectedWord.wordIndex);else speak(Math.max(0,active));}});
+    els.prevBtn.addEventListener('click',()=>speak(Math.max(0,active-1)));
+    els.nextBtn.addEventListener('click',()=>speak(Math.min(sentences.length-1,active+1)));
+    els.playBtn.addEventListener('click',togglePlay);
+    els.stopBtn.addEventListener('click',()=>{stopSpeech();setStatus('已停止播放');});
+    function syncRepeat(){const on=els.repeatToggle.checked;els.repeatBtn.textContent=`↻ 單句循環：${on?'開':'關'}`;els.repeatBtn.classList.toggle('on',on);}
+    els.repeatBtn.addEventListener('click',()=>{
+      els.repeatToggle.checked=!els.repeatToggle.checked;
+      if(els.repeatToggle.checked)els.autoNext.checked=false;
+      syncRepeat();
+    });
+    els.repeatToggle.addEventListener('change',()=>{
+      if(els.repeatToggle.checked)els.autoNext.checked=false;
+      syncRepeat();
+    });
+    els.autoNext.addEventListener('change',()=>{
+      if(els.autoNext.checked)els.repeatToggle.checked=false;
+      syncRepeat();
+    });
+    els.micBtn.addEventListener('click',toggleMic);
+    document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const tag=document.activeElement?.tagName;if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(tag))return;if(e.code==='Space'){e.preventDefault();togglePlay();}else if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();speak(Math.min(sentences.length-1,active+1));}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();speak(Math.max(0,active-1));}else if(e.key==='Escape'){stopSpeech();stopRecognition();setStatus('已停止');}});
+    // V8 floating word pronunciation lens
+    const wordPopover=$('wordPopover');
+    const wordClose=$('closeWordPopover');
+    let anchorWord=null;
+    function hideWordPopover(){anchorWord=null;wordPopover?.classList.remove('visible');wordPopover?.setAttribute('aria-hidden','true');}
+    function positionWordPopover(){
+      if(!anchorWord||!wordPopover?.classList.contains('visible'))return;
+      if(!document.contains(anchorWord)){hideWordPopover();return;}
+      const rect=anchorWord.getBoundingClientRect();
+      if(rect.bottom<8||rect.top>innerHeight-80){hideWordPopover();return;}
+      const w=wordPopover.offsetWidth||285;
+      const left=Math.max(12,Math.min(innerWidth-w-12,rect.left+rect.width/2-w/2));
+      const below=rect.bottom+14;
+      const top=below+wordPopover.offsetHeight<innerHeight-122 ? below : Math.max(12,rect.top-wordPopover.offsetHeight-14);
+      wordPopover.style.left=left+'px';wordPopover.style.top=top+'px';
+      wordPopover.dataset.side=top>rect.top?'bottom':'top';
+    }
+    function showWordPopover(word){anchorWord=word;wordPopover?.classList.add('visible');wordPopover?.setAttribute('aria-hidden','false');positionWordPopover();}
+    wordClose?.addEventListener('click',hideWordPopover);
+    document.addEventListener('pointerdown',event=>{
+      if(!wordPopover?.classList.contains('visible'))return;
+      if(wordPopover.contains(event.target)||event.target.closest('.word-token'))return;
+      hideWordPopover();
+    });
+    els.sentences.addEventListener('scroll',()=>{if(anchorWord)positionWordPopover();},{passive:true});
+    window.addEventListener('resize',positionWordPopover,{passive:true});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape')hideWordPopover();});
+    // Liquid surface: pointer-driven light travel inside the dock and lens only.
+    const pointerSurface=window.matchMedia?.('(hover:hover) and (pointer:fine)').matches;
+    if(pointerSurface){
+      document.querySelectorAll('.liquid-dock,.word-popover,.voice-orb,.glass-toggle').forEach(node=>{
+        node.addEventListener('pointermove',event=>{
+          const r=node.getBoundingClientRect();
+          node.style.setProperty('--light-x',(((event.clientX-r.left)/r.width)*100).toFixed(1)+'%');
+          node.style.setProperty('--light-y',(((event.clientY-r.top)/r.height)*100).toFixed(1)+'%');
+        },{passive:true});
+      });
+    }
+    const glassToggle=$('glassToggle');
+    glassToggle?.addEventListener('click',()=>{
+      const quiet=document.body.classList.toggle('quiet-mode');
+      glassToggle.textContent=quiet?'◌ 開啟柔光':'◌ 柔光模式';
+      glassToggle.setAttribute('aria-pressed',String(!quiet));
+      glassToggle.title=quiet?'開啟柔光效果':'關閉柔光以提高閱讀專注度';
+    });
+    // V17 Open-weight AI modules: lazy, explicit, never embed provider secrets.
+    let localTranslationPipe=null,localTranslationPromise=null,openccConvert=null;
+    let localQwenPipe=null,localQwenPromise=null,kokoroEngine=null,kokoroPromise=null,aiAudio=null;
+    const audioCache=new Map();
+    let explainRun=0;
+    const aiStatus=$('aiModelStatus');
+    function aiMessage(message,type=''){aiStatus.textContent=message;aiStatus.className='ai-status'+(type?' '+type:'');}
+    function aiError(e){return e?.message||String(e||'未知錯誤');}
+    function progressLabel(prefix,info){if(!info)return;const n=Number(info.progress);if(Number.isFinite(n)&&n>=0)aiMessage(prefix+' · '+Math.min(100,Math.round(n))+'%','busy');}
+    async function moduleTransformers(){return import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/+esm');}
+    async function convertTraditional(s){
+      try{if(!openccConvert){const mod=await import('https://cdn.jsdelivr.net/npm/opencc-js@1.4.1/dist/esm/full.js');const opencc=mod.default||mod;openccConvert=opencc.Converter({from:'cn',to:'tw'});}
+        return openccConvert(String(s));
+      }catch(err){aiMessage('無法載入繁體轉換字典，請連網重試：'+aiError(err),'error');throw err;}
+    }
+    async function getLocalTranslator(){
+      if(localTranslationPipe)return localTranslationPipe;
+      if(!localTranslationPromise)localTranslationPromise=(async()=>{
+        aiMessage('正在下載 OPUS-MT 英翻中模型。首次使用可能需要較長時間…','busy');
+        const {pipeline}=await moduleTransformers();
+        const p=await pipeline('translation','Xenova/opus-mt-en-zh',{device:'wasm',dtype:'q8',progress_callback:p=>progressLabel('下載翻譯模型',p)});
+        localTranslationPipe=p;aiMessage('OPUS-MT 翻譯模型已載入，英文句子會在本機處理。');return p;
+      })().catch(e=>{localTranslationPromise=null;aiMessage('OPUS-MT 載入失敗：'+aiError(e),'error');throw e;});
+      return localTranslationPromise;
+    }
+    async function translateWithLocalModel(source){
+      const p=await getLocalTranslator();aiMessage('正在以本機 OPUS-MT 翻譯…','busy');
+      const data=await p(source,{max_new_tokens:180});
+      const s=data?.[0]?.translation_text||data?.[0]?.generated_text;
+      if(!s)throw Error('OPUS-MT 沒有傳回翻譯文字');
+      const result=await convertTraditional(s);aiMessage('本機 AI 翻譯已完成（已轉為繁體中文）。');return result;
+    }
+    function completionURL(){
+      const raw=$('aiApiEndpoint').value.trim();
+      if(!raw)throw Error('請先展開「連接開源模型伺服器」並輸入 API 網址。');
+      let u;try{u=new URL(raw);}catch{throw Error('API 網址格式不正確。');}
+      if(u.username||u.password||u.hash)throw Error('請勿在 API 網址內放帳密或片段。');
+      const loopback=['localhost','127.0.0.1','[::1]'].includes(u.hostname);
+      if(u.protocol!=='https:' && !(u.protocol==='http:'&&loopback))throw Error('請使用 HTTPS API；本機僅可用 http://localhost。');
+      const clean=u.pathname.replace(/\/+$/,'');
+      if(clean.endsWith('/chat/completions'))return u.origin+clean;
+      if(clean.endsWith('/v1'))return u.origin+clean+'/chat/completions';
+      return u.origin+clean+'/v1/chat/completions';
+    }
+    async function modelChat(messages,maxTokens=380){
+      const url=completionURL(),model=$('aiApiModel').value.trim();
+      if(!model)throw Error('請輸入已安裝的 Qwen 模型名稱。');
+      const headers={'Content-Type':'application/json','Accept':'application/json'};
+      const key=$('aiApiKey').value.trim();if(key)headers.Authorization='Bearer '+key;
+      const controller=new AbortController();translationRequests.add(controller);
+      const timer=setTimeout(()=>controller.abort(),65000);
+      try{
+        aiMessage('正在連接 '+model+' …','busy');
+        const response=await fetch(url,{method:'POST',headers,body:JSON.stringify({model,messages,stream:false,temperature:0.2,max_tokens:maxTokens}),signal:controller.signal,cache:'no-store'});
+        if(!response.ok)throw Error('API 回應 HTTP '+response.status+'：'+(await response.text()).slice(0,190));
+        const json=await response.json();const output=json?.choices?.[0]?.message?.content;
+        if(typeof output!=='string'||!output.trim())throw Error('API 沒有傳回內容。請檢查模型名稱與端點。');
+        aiMessage('開源模型 API 已回應：'+model);return output.trim().replace(/^「([\s\S]*)」$/,'$1');
+      }catch(e){aiMessage('API 呼叫失敗：'+aiError(e)+'。請檢查 CORS／HTTPS／模型名稱。','error');throw e;}
+      finally{clearTimeout(timer);translationRequests.delete(controller);}
+    }
+    async function getLocalQwen(){
+      if(localQwenPipe)return localQwenPipe;
+      if(!navigator.gpu)throw Error('此瀏覽器未提供 WebGPU。手機建議使用 Qwen API 方式。');
+      if(!localQwenPromise)localQwenPromise=(async()=>{
+        aiMessage('下載本機 Qwen 0.5B 模型（數百 MB；較適合桌面電腦）…','busy');
+        const {pipeline}=await moduleTransformers();
+        const p=await pipeline('text-generation','onnx-community/Qwen2.5-0.5B-Instruct',{device:'webgpu',dtype:'q4',progress_callback:p=>progressLabel('下載 Qwen',p)});
+        localQwenPipe=p;aiMessage('本機 Qwen 已準備完成。');return p;
+      })().catch(e=>{localQwenPromise=null;aiMessage('本機 Qwen 載入失敗：'+aiError(e),'error');throw e;});
+      return localQwenPromise;
+    }
+    async function localExplain(messages){
+      const p=await getLocalQwen();aiMessage('本機 Qwen 正在解析英文…','busy');
+      const result=await p(messages,{max_new_tokens:320,do_sample:false});
+      const raw=result?.[0]?.generated_text;
+      let output=typeof raw==='string'?raw:Array.isArray(raw)?raw[raw.length-1]?.content:'';
+      if(!output)throw Error('本機 Qwen 未產出解析。');
+      aiMessage('本機 Qwen 已完成解析。');return String(output);
+    }
+    // Offline, transparent, deterministic sentence hints: never presented as generative AI.
+    function instantExplanation(sentence, translation){
+      const t=String(sentence||'').trim();
+      const low=t.toLowerCase();
+      const points=[];
+      const add=(condition,detail)=>{if(condition&&!points.includes(detail))points.push(detail);};
+      add(/\b(if|unless|provided that)\b/i.test(t),'條件句：if / unless 等引導條件；請留意主句的時態與條件的關係。');
+      add(/\b(have|has|had)\s+(?:never\s+|already\s+|just\s+)?(?:been|done|seen|gone|made|taken|written|spoken|worked|learned|studied|finished|visited|known|eaten|read|thought|felt)\b/i.test(t),'完成式：have / has / had ＋ 過去分詞，常用來連結過去與現在，或表達先後順序。');
+      add(/\b(am|is|are|was|were)\s+\w+ing\b/i.test(t),'進行式：be 動詞 ＋ V-ing，表示某個時間正在進行的動作。');
+      add(/\b(will|shall|going to)\b/i.test(t),'未來表達：will / be going to 常用來表達預測、意願或計畫。');
+      add(/\b(can|could|should|must|might|may|would)\b/i.test(t),'情態助動詞：can / should / would 等後面通常接動詞原形，表示能力、建議、可能性等。');
+      add(/\b(?:is|are|was|were|be|been)\s+\w+(?:ed|en)\b/i.test(t),'可能含被動語態：be ＋ 過去分詞，重點在接受動作的人或事。也可能是形容詞用法，需依上下文判斷。');
+      add(/\b(to)\s+[a-z]+\b/i.test(t),'不定詞：to ＋ 動詞原形，常表示目的、計畫或某種行為。注意部分 to 也可能是介系詞。');
+      add(/\b(because|since|as)\b/i.test(t),'原因連接詞：because / since 等用來說明原因；since 有時也表示「自從」。');
+      add(/\b(although|though|however|but)\b/i.test(t),'轉折／讓步：although / however / but 用來對比兩個意思，注意前後的語氣。');
+      add(/\b(which|who|whom|whose|that)\b/i.test(t),'關係子句／連接詞：who / which / that 有時用來補充描述名詞，也可能有其他句法用途。');
+      add(/\b(there is|there are|there was|there were)\b/i.test(t),'存在句型：there is / are 表示「有……」，be 動詞通常配合後面的名詞單複數。');
+      add(/\b(not|never|don't|doesn't|didn't|can't|won't|isn't|aren't)\b/i.test(t),'否定句：not / never / 助動詞否定，用來否定動作、狀態或頻率。');
+      add(/\b(please|could you|would you)\b/i.test(t),'請求或禮貌表達：please / could you / would you 可讓句子語氣更柔和。');
+      add(/\b(like|love|enjoy|avoid|keep|finish|practice)\s+[a-z]+ing\b/i.test(t),'動名詞：enjoy / avoid / practice 等動詞後面常接 V-ing 作為受詞。');
+      add(/\b(more|less|better|worse)\s+than\b|\b\w+er\s+than\b/i.test(t),'比較級：比較兩者時常搭配 than，留意形容詞與副詞的變化。');
+      add(/\b(when|while|before|after|until)\b/i.test(t),'時間連接詞：when / while / before / after 交代動作發生的先後或同時關係。');
+      add(/\b(in order to|so that)\b/i.test(t),'目的表達：in order to / so that 可用來說明「為了……」。');
+      const words=t.match(/[A-Za-z]+(?:['’-][A-Za-z]+)*/g)||[];
+      const glossary={
+       'enjoy':'喜歡、享受','learn':'學習','learning':'學習','practice':'練習','improve':'改善、進步',
+       'experience':'經驗','important':'重要的','different':'不同的','because':'因為','although':'雖然',
+       'however':'然而','actually':'實際上','perhaps':'或許','always':'總是','usually':'通常',
+       'sometimes':'有時','never':'從不','every':'每個','everyone':'每個人','together':'一起',
+       'understand':'理解','remember':'記得','forget':'忘記','try':'嘗試','again':'再次',
+       'another':'另一個','enough':'足夠','possible':'可能的','probably':'很可能','probably':'很可能',
+       'prefer':'比較喜歡','recommend':'推薦','suggest':'建議','support':'支持',
+       'opportunity':'機會','challenge':'挑戰','develop':'發展','education':'教育','language':'語言',
+       'fluently':'流利地','confidence':'信心','confident':'有自信的','comfortable':'舒適的',
+       'daily':'每日的','habit':'習慣','goal':'目標','progress':'進度、進步','listen':'聽',
+       'speaking':'口說','reading':'閱讀','writing':'寫作','listening':'聆聽',
+       'student':'學生','teacher':'老師','work':'工作','family':'家庭','friend':'朋友',
+       'future':'未來','today':'今天','tomorrow':'明天','yesterday':'昨天',
+       'travel':'旅行','healthy':'健康的','health':'健康','exercise':'運動',
+       'choose':'選擇','decision':'決定','question':'問題','answer':'答案','information':'資訊',
+       'finally':'最後','first':'首先','second':'第二','example':'例子','especially':'尤其',
+       'instead':'反而、代替','whether':'是否','without':'沒有','during':'在……期間',
+       'through':'透過','between':'在……之間','toward':'朝向','thought':'想法',
+      };
+      const unique=[];
+      for(const word of words){const w=word.toLowerCase();if(glossary[w]&&!unique.some(x=>x.toLowerCase()===w))unique.push(word);if(unique.length===4)break;}
+      let result='【中文對照】\n'+(translation||'尚未翻譯。可點這句下方的「翻譯這句」，立即取得繁體中文。')+'\n\n';
+      result+='【句子結構與文法】\n';
+      if(/\?$/.test(t))result+='這是一個問句；注意助動詞、主詞與主要動詞的順序。\n';
+      result+=(points.length?points.slice(0,4).map((p,i)=>(i+1)+'. '+p).join('\n'):'這句沒有符合內建規則的明顯句型。建議找出主詞（誰／什麼）、動詞（做什麼）與補充資訊，並配合上下文理解。');
+      result+='\n\n【常見單字】\n';
+      result+=unique.length?unique.map(w=>w+'：'+glossary[w.toLowerCase()]).join('　｜　'):'目前沒有可確定的內建詞義；可點英文單字聽發音。';
+      result+='\n\n※ 這是免設定的基礎學習提示，不是生成式 AI 或完整文法判定；較複雜的句子可選擇進階 Qwen。';
+      return result;
+    }
+    async function explainSentence(i){
+      if(i<0||i>=sentences.length){notify('請先匯入文章，選擇一個句子。');return;}
+      const ownRun=++explainRun,gen=translationGeneration;
+      $('aiExplanation').hidden=false;
+      $('aiExplainSentence').textContent='第 '+(i+1)+' 句 · '+sentences[i];
+      $('aiExplanation').scrollIntoView({block:'nearest',behavior:'smooth'});
+      if($('aiExplainMode').value==='instant'){
+        $('aiExplainResult').textContent=instantExplanation(sentences[i],translations[i]);
+        return;
+      }
+      $('aiExplainResult').textContent='正在使用你選擇的進階模型解析…';
+      const messages=[{role:'system',content:'你是英文閱讀教練。用繁體中文精簡回答，固定三個部分：1. 句意 2. 單字與片語（最多3個）3. 文法重點。不得虛構課文以外的情節。'},{role:'user',content:'請解析下列英文原句：\n'+sentences[i]}];
+      try{
+        const result=$('aiExplainMode').value==='local'?await localExplain(messages):await modelChat(messages,420);
+        if(ownRun!==explainRun||gen!==translationGeneration)return;
+        $('aiExplainResult').textContent=result;
+      }catch(e){if(ownRun!==explainRun||gen!==translationGeneration)return;$('aiExplainResult').textContent='進階模型尚未連線：'+aiError(e)+'。已切回免設定句型提示。\n\n'+instantExplanation(sentences[i],translations[i]);$('aiExplainMode').value='instant';}
+    }
+    async function loadKokoro(){
+      if(kokoroEngine)return kokoroEngine;
+      if(!kokoroPromise)kokoroPromise=(async()=>{
+        aiMessage('正在下載 Kokoro 美式英語模型，請保持網路連線…','busy');
+        const mod=await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
+        const engine=await mod.KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX',{dtype:'q8',device:'wasm'});
+        kokoroEngine=engine;aiMessage('Kokoro 本機 AI 美式語音已載入。');return engine;
+      })().catch(e=>{kokoroPromise=null;aiMessage('Kokoro 載入失敗：'+aiError(e)+'。已保留系統語音。','error');throw e;});
+      return kokoroPromise;
+    }
+    function floatAudioWav(samples,sampleRate){
+      // RawAudio from Transformers.js exposes Float32Array audio and sampling_rate.
+      const n=samples.length,buffer=new ArrayBuffer(44+n*2),v=new DataView(buffer);
+      function str(p,s){for(let i=0;i<s.length;i++)v.setUint8(p+i,s.charCodeAt(i));}
+      str(0,'RIFF');v.setUint32(4,36+n*2,true);str(8,'WAVE');str(12,'fmt ');
+      v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);
+      v.setUint32(24,sampleRate,true);v.setUint32(28,sampleRate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);
+      str(36,'data');v.setUint32(40,n*2,true);
+      for(let i=0;i<n;i++){const a=Math.max(-1,Math.min(1,samples[i]));v.setInt16(44+i*2,a<0?a*32768:a*32767,true);}
+      return new Blob([buffer],{type:'audio/wav'});
+    }
+    async function getRemoteKokoroWav(text,rate,voice){
+      const raw=$('aiTtsEndpoint').value.trim();if(!raw)throw Error('請先在 API 設定中填入 Kokoro 語音 API 網址。');
+      let url;try{url=new URL(raw);}catch{throw Error('TTS API 網址格式不正確。');}
+      const isLocal=['localhost','127.0.0.1','[::1]'].includes(url.hostname);
+      if(url.protocol!=='https:'&&!(url.protocol==='http:'&&isLocal))throw Error('手機遠端語音 API 需使用 HTTPS。');
+      const headers={'Content-Type':'application/json','Accept':'audio/wav, audio/mpeg'};
+      const key=$('aiApiKey').value.trim();if(key)headers.Authorization='Bearer '+key;
+      const controller=new AbortController();translationRequests.add(controller);
+      const timer=setTimeout(()=>controller.abort(),90000);
+      try{
+        aiMessage('正在由 Kokoro 伺服器生成語音…','busy');
+        const response=await fetch(url.href,{method:'POST',headers,signal:controller.signal,body:JSON.stringify({text,voice,speed:rate}),cache:'no-store'});
+        if(!response.ok)throw Error('Kokoro 伺服器回應 HTTP '+response.status);
+        const type=response.headers.get('Content-Type')||'';
+        if(!/audio\/(wav|wave|x-wav|mpeg|mp3|ogg)/i.test(type))throw Error('伺服器必須傳回音訊 MIME 類型。');
+        const blob=await response.blob();if(!blob.size)throw Error('Kokoro 伺服器傳回空音訊。');
+        aiMessage('Kokoro 遠端美式語音已生成。');return blob;
+      }finally{clearTimeout(timer);translationRequests.delete(controller);}
+    }
+    async function getKokoroWav(text,rate,voice){
+      const key=voice+'|'+rate+'|'+text;if(audioCache.has(key))return audioCache.get(key);
+      const k=await loadKokoro();aiMessage('Kokoro 正在生成語音…','busy');
+      const generated=await k.generate(text,{voice,speed:rate});
+      const samples=generated.audio,rateHz=generated.sampling_rate;
+      if(!samples?.length||!rateHz)throw Error('Kokoro 音訊資料不完整。');
+      const blob=floatAudioWav(samples,rateHz);
+      if(audioCache.size>=14)audioCache.delete(audioCache.keys().next().value);
+      audioCache.set(key,blob);aiMessage('Kokoro 已生成美式英文朗讀。');return blob;
+    }
+    async function playAIText(text,index,word=false,slow=false,fromSequence=false){
+      if(!sentences.length||index<0||index>=sentences.length)return;
+      if(!fromSequence){hideWordPopover();stopRecognition();stopSpeech();}
+      if(sequenceTimer!==null){clearTimeout(sequenceTimer);sequenceTimer=null;}
+      active=index;playbackKind=word?'word':'sentence';updateSelection(!fromSequence);
+      const mySession=session,voice=$('aiKokoroVoice').value,rate=slow?Math.min(.45,Number(els.rate.value)):Number(els.rate.value);
+      try{
+        isSpeaking=true;isPaused=false;els.playBtn.textContent='Ⅱ';setStatus('AI 正在準備第 '+(index+1)+' 句語音…');
+        const blob=$('aiVoiceMode').value==='kokoro-api'?await getRemoteKokoroWav(text,rate,voice):await getKokoroWav(text,rate,voice);
+        if(mySession!==session)return;
+        const url=URL.createObjectURL(blob);const audio=new Audio(url);aiAudio=audio;
+        audio.onended=()=>{
+          URL.revokeObjectURL(url);if(mySession!==session)return;
+          aiAudio=null;isSpeaking=false;isPaused=false;setSpeechGlow(false);els.playBtn.textContent='▶';
+          if(word){setStatus('AI 單字發音完成');return;}
+          listened.add(index);updateSelection(false);
+          const next=els.repeatToggle.checked?index:(els.autoNext.checked?index+1:-1);
+          if(next>=0&&next<sentences.length){setStatus('AI 本句完成，準備接續…');sequenceTimer=setTimeout(()=>{sequenceTimer=null;if(mySession===session)playAIText(sentences[next],next,false,false,true);},1050);}
+          else setStatus(next>=sentences.length?'全文播放完成':'AI 第 '+(index+1)+' 句播放完成');
+        };
+        audio.onerror=()=>{URL.revokeObjectURL(url);if(mySession!==session)return;aiAudio=null;isSpeaking=false;setSpeechGlow(false);els.playBtn.textContent='▶';setStatus('Kokoro 音訊播放失敗，請切換系統語音。');};
+        await audio.play();
+        if(mySession!==session){audio.pause();URL.revokeObjectURL(url);return;}
+        setSpeechGlow(true);setStatus('Kokoro 美式英文 · '+rate.toFixed(2)+'×');
+      }catch(e){if(mySession!==session)return;isSpeaking=false;els.playBtn.textContent='▶';setSpeechGlow(false);setStatus('Kokoro 朗讀未成功：'+aiError(e));aiMessage('Kokoro 朗讀失敗：'+aiError(e)+'。請切回系統語音。','error');}
+    }
+    function speakKokoro(index,fromSequence=false){if(!sentences.length){notify('請先匯入文章');return;}playAIText(sentences[index],index,false,false,fromSequence);}
+    function speakKokoroWord(index,text,wordIndex,slow=false){selectedWord={index,text,wordIndex};playAIText(text,index,true,slow,false);}
+    $('aiVoicePrepare').addEventListener('click',()=>{
+      if(!confirm('將下載 Kokoro AI 語音模型。手機下載量較大，建議使用 Wi-Fi；iPhone 可能因記憶體限制無法運作。要繼續嗎？'))return;
+      loadKokoro().then(()=>{$('aiVoiceMode').value='kokoro';}).catch(e=>notify('無法啟用 Kokoro：'+aiError(e)));
+    });
+    $('aiVoiceMode').addEventListener('change',()=>{stopSpeech();if($('aiVoiceMode').value==='kokoro'&&!kokoroEngine)aiMessage('本機 Kokoro 首次朗讀時需下載模型。','busy');else if($('aiVoiceMode').value==='kokoro-api')aiMessage('Kokoro 伺服器模式。請在 API 設定中填入 HTTPS 語音網址。');else aiMessage($('aiVoiceMode').value==='browser'?'已切回系統語音。':'本機 Kokoro 已啟用。');});
+    $('aiKokoroVoice').addEventListener('change',()=>{stopSpeech();audioCache.clear();});
+    $('aiExplainBtn').addEventListener('click',()=>explainSentence(active));
+    $('aiExplainClose').addEventListener('click',()=>{$('aiExplanation').hidden=true;++explainRun;});
+    $('aiTestApi').addEventListener('click',async()=>{try{const result=await modelChat([{role:'user',content:'只回答 OK'}],20);notify('模型已連線：'+result.slice(0,80));}catch(e){notify('連線失敗，請查看 AI 訊息。');}});
+    $('aiTranslateMode').addEventListener('change',()=>{aiMessage($('aiTranslateMode').value==='local'?'本機翻譯模式。首次翻譯時會下載 OPUS-MT。':$('aiTranslateMode').value==='api'?'Qwen API 模式。請先設定 API 端點。':'已切回原有 MyMemory 翻譯。');});
+    $('aiExplainMode').addEventListener('change',()=>{aiMessage($('aiExplainMode').value==='instant'?'已切換免設定句型提示。':$('aiExplainMode').value==='local'?'本機 Qwen 是桌面實驗模式，需 WebGPU 與較多記憶體。':'英文解析使用自行設定的 Qwen API。');});
+
+    if('speechSynthesis' in window){fillVoices();window.speechSynthesis.addEventListener?.('voiceschanged',fillVoices);setTimeout(fillVoices,550);}else fillVoices();
+    els.rateLabel.textContent=`${Number(els.rate.value).toFixed(2)}×`;
+    // Start with an empty workspace. The sample article is loaded only if the user clicks the sample button.
+    els.articleInput.value='';
+    els.documentTitle.textContent='尚未匯入文章';
+    els.documentSubtitle.textContent='貼上或上傳文章，即可建立自己的練習內容。';
+  })();
+  </script>
+</body>
+</html>
