@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f3f5f7">
-<title>EchoRead V14｜美式學習工作台・慢速跟讀</title>
+<title>EchoRead V15｜美式學習工作台・慢速跟讀</title>
 <meta name="description" content="EchoRead 英文逐句朗讀及單字點讀練習。">
 <style>
 :root{--bg:#f3f5f7;--paper:#fff;--ink:#1e2934;--muted:#7e8995;--line:#e8ebef;--accent:#252b34;--violet:#a28cef;--lav:#eae5ff;--mint:#c9f5d4;--cyan:#cdf0f6;--shadow:0 6px 20px rgba(37,50,65,.045)}
@@ -127,6 +127,7 @@
     const els = Object.fromEntries(['dropZone','fileInput','fileInfo','articleInput','parseBtn','sampleBtn','voiceSelect','rate','rateLabel','autoNext','repeatToggle','documentTitle','documentSubtitle','sentenceCount','progressText','progressFill','sentences','nowPlaying','playerText','prevBtn','stopBtn','playBtn','nextBtn','repeatBtn','playStatus','selectedWord','replayWordBtn','slowWordBtn','micBtn','recognitionOutput','toast'].map(id => [id,$(id)]));
     const sample = `Good morning, everyone! My name is Amy. Today, I would like to share my learning experience.\nAt first, speaking English was difficult for me. I was afraid of making mistakes. But I learned that practice makes progress.\nNow, I listen to one sentence, repeat it, and try again. Every small step helps me become more confident. Thank you for listening!`;
     let sentences = [], active = -1, listened = new Set(), voices = [], session = 0, isSpeaking = false, isPaused = false, speakingUtterance = null, recognition = null, recognizing = false, toastTimer = null, selectedWord = null, playbackKind = null;
+    let sequenceTimer=null, speechStartTime=0;
     function notify(message) { els.toast.textContent = message; els.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=>els.toast.classList.remove('show'),3500); }
     function setStatus(message) { els.playStatus.textContent = message; }
     function splitSentences(raw) {
@@ -177,7 +178,19 @@
         tick();
       }catch(e){if(stream)stream.getTracks().forEach(t=>t.stop());setListeningGlow(true);}
     }
-    function stopSpeech() { setSpeechGlow(false); session++; if ('speechSynthesis' in window) window.speechSynthesis.cancel(); isSpeaking = false; isPaused = false; speakingUtterance = null; playbackKind = null; els.sentences.querySelectorAll('.word-token.reading').forEach(w=>w.classList.remove('reading')); els.playBtn.textContent='▶'; els.playBtn.setAttribute('aria-label','開始朗讀'); }
+    function stopSpeech() {
+      setSpeechGlow(false);
+      if(sequenceTimer!==null){clearTimeout(sequenceTimer);sequenceTimer=null;}
+      session++; // Discard any late callbacks from an earlier utterance.
+      if('speechSynthesis' in window){
+        const synth=window.speechSynthesis;
+        // Avoid sending unnecessary cancel() before every new utterance on iOS.
+        if(synth.speaking||synth.pending||synth.paused){try{synth.cancel();}catch(e){}}
+      }
+      isSpeaking=false;isPaused=false;speakingUtterance=null;playbackKind=null;
+      els.sentences.querySelectorAll('.word-token.reading').forEach(w=>w.classList.remove('reading'));
+      els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','開始朗讀');
+    }
     function renderProgress() { const total=sentences.length; els.progressText.textContent=`${listened.size} / ${total}`; els.progressFill.style.width= total? `${100*listened.size/total}%` : '0%'; }
     // 文字以 DOM text nodes + word buttons 呈現，避免使用 innerHTML 插入文章內容。
     function appendClickableWords(content,sentence) {
@@ -229,18 +242,92 @@
       voices.forEach(v=>els.voiceSelect.add(new Option(`${v.name}（${v.lang}）`,v.voiceURI)));
       els.voiceSelect.value=voices.some(v=>v.voiceURI===last)?last:preferred.voiceURI;
     }
-    function speak(index) {
-      if (!sentences.length) {notify('請先上傳或貼上英文文章。');return;}
-      if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能，請改用 Chrome 或 Edge。');return;}
+    // Continuous playback is deliberately separate from a manual request.
+    // During auto-next/repeat we must NOT cancel the synthesizer at every sentence boundary.
+    function speak(index, fromSequence=false, continuation=null, recovery=0) {
+      if(!sentences.length){notify('請先上傳或貼上英文文章。');return;}
+      if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能。');return;}
       if(index<0||index>=sentences.length)return;
-      hideWordPopover();stopRecognition();stopSpeech();active=index;selectedWord=null;playbackKind='sentence';updateSelection();
-      const mySession=session;const utterance=new SpeechSynthesisUtterance(sentences[index]);speakingUtterance=utterance;const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';utterance.rate=Number(els.rate.value);utterance.pitch=1;
-      utterance.onstart=()=>{if(mySession!==session)return;setSpeechGlow(true);isSpeaking=true;isPaused=false;els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');setStatus(`正在朗讀第 ${index+1} 句 · ${utterance.rate.toFixed(2)}×`);};
-      utterance.onend=()=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;listened.add(index);els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','重新朗讀');updateSelection(false);setStatus(`第 ${index+1} 句播放完成`);
-        if(els.repeatToggle.checked||els.autoNext.checked){const next=els.repeatToggle.checked?index:index+1;if(next<sentences.length)setTimeout(()=>{if(mySession===session)speak(next);},1350);else setStatus('全部句子已朗讀完成！');}
+      if(!fromSequence){hideWordPopover();stopRecognition();stopSpeech();}
+      if(sequenceTimer!==null){clearTimeout(sequenceTimer);sequenceTimer=null;}
+      active=index;selectedWord=null;playbackKind='sentence';updateSelection(!fromSequence);
+      const mySession=session;
+      const requested=typeof continuation==='string' ? continuation : sentences[index];
+      const utterance=new SpeechSynthesisUtterance(requested);
+      speakingUtterance=utterance;
+      const v=getVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}else utterance.lang='en-US';
+      utterance.rate=Number(els.rate.value);utterance.pitch=1;
+      const synth=window.speechSynthesis;
+      let startedAt=0,furthestWordEnd=0,hasBoundary=false;
+      const words=requested.match(/[A-Za-z]+(?:['’\-][A-Za-z]+)*/g)||[];
+      const minimumDuration=Math.min(2500,Math.max(650,words.length*115));
+      utterance.onstart=()=>{
+        if(mySession!==session)return;
+        startedAt=performance.now();speechStartTime=startedAt;
+        setSpeechGlow(true);isSpeaking=true;isPaused=false;
+        els.playBtn.textContent='Ⅱ';els.playBtn.setAttribute('aria-label','暫停朗讀');
+        setStatus(`正在朗讀第 ${index+1} 句 · ${utterance.rate.toFixed(2)}×`);
       };
-      utterance.onerror=(event)=>{if(mySession!==session)return;setSpeechGlow(false);isSpeaking=false;isPaused=false;els.playBtn.textContent='▶';if(event.error!=='canceled'&&event.error!=='interrupted')setStatus(`語音朗讀失敗（${event.error||'未知原因'}）。請嘗試更換語音。`);};
-      try{isSpeaking=true;els.playBtn.textContent='Ⅱ';setStatus('準備朗讀…');window.speechSynthesis.speak(utterance);}catch(error){setStatus('無法啟動語音，請嘗試 Chrome 或 Edge。');notify(error.message||'語音功能啟動失敗');}
+      utterance.onboundary=event=>{
+        if(mySession!==session||typeof event.charIndex!=='number')return;
+        if(event.name&&event.name!=='word')return;
+        const at=Math.max(0,Math.min(requested.length,event.charIndex));
+        let end=at;
+        while(end<requested.length&&!/\s/.test(requested[end]))end++;
+        furthestWordEnd=Math.max(furthestWordEnd,end);
+        hasBoundary=true;
+      };
+      utterance.onend=()=>{
+        if(mySession!==session)return;
+        setSpeechGlow(false);isSpeaking=false;isPaused=false;speakingUtterance=null;
+        els.playBtn.textContent='▶';els.playBtn.setAttribute('aria-label','重新朗讀');
+        const elapsed=startedAt ? performance.now()-startedAt : 0;
+        const remainder=requested.slice(furthestWordEnd).trim();
+        const remainingWords=remainder.match(/[A-Za-z]+(?:['’\-][A-Za-z]+)*/g)||[];
+        const suspicious=startedAt>0 && elapsed<minimumDuration &&
+          (hasBoundary ? remainingWords.length>=1 : words.length>=5);
+        // Some mobile voices prematurely emit 'end' after the first word.
+        // When word boundaries are reported, resume ONLY the unspoken part.
+        const maxRecovery=hasBoundary?Math.min(50,(sentences[index].match(/[A-Za-z]+/g)||[]).length+3):2;
+        if(suspicious&&recovery<maxRecovery){
+          const nextPart=hasBoundary&&furthestWordEnd>0&&remainder?remainder:requested;
+          setStatus('偵測到語音提早結束，正在接續朗讀…');
+          sequenceTimer=setTimeout(()=>{if(mySession===session)speak(index,true,nextPart,recovery+1);},220);
+          return;
+        }
+        if(suspicious){
+          setStatus('這個手機語音可能提前中斷，請換另一個英文聲音再試。');
+          return; // Do not mistakenly repeat only the first word forever.
+        }
+        listened.add(index);updateSelection(false);
+        const repeat=els.repeatToggle.checked;
+        const next=repeat?index:(els.autoNext.checked?index+1:-1);
+        if(next>=0&&next<sentences.length){
+          setStatus(repeat?'本句已播完，準備重複…':'本句已播完，準備下一句…');
+          sequenceTimer=setTimeout(()=>{
+            sequenceTimer=null;
+            // Keep the existing speech session / voice queue; no cancel() here.
+            if(mySession===session)speak(next,true);
+          },950);
+        }else if(next>=sentences.length){setStatus('全部句子已朗讀完成！');}
+        else{setStatus(`第 ${index+1} 句播放完成`);}
+      };
+      utterance.onerror=(event)=>{
+        if(mySession!==session)return;
+        setSpeechGlow(false);isSpeaking=false;isPaused=false;speakingUtterance=null;
+        els.playBtn.textContent='▶';
+        if(event.error!=='canceled'&&event.error!=='interrupted')
+          setStatus(`語音朗讀失敗（${event.error||'未知原因'}），請更換英文聲音後重試。`);
+      };
+      try{
+        isSpeaking=true;els.playBtn.textContent='Ⅱ';
+        setStatus(`準備朗讀第 ${index+1} 句…`);
+        // Keep a strong reference until onend/onerror; preserve the original sentence.
+        synth.speak(utterance);
+      }catch(error){
+        isSpeaking=false;els.playBtn.textContent='▶';
+        setStatus('無法啟動語音，請改用其他語音或瀏覽器。');notify(error.message||'語音功能啟動失敗');
+      }
     }
     function speakWord(index, text, wordIndex, slow=false) {
       if(!('speechSynthesis' in window)){notify('這個瀏覽器不支援朗讀功能，請改用 Chrome 或 Edge。');return;}
@@ -326,7 +413,19 @@
     els.playBtn.addEventListener('click',togglePlay);
     els.stopBtn.addEventListener('click',()=>{stopSpeech();setStatus('已停止播放');});
     function syncRepeat(){const on=els.repeatToggle.checked;els.repeatBtn.textContent=`↻ 單句循環：${on?'開':'關'}`;els.repeatBtn.classList.toggle('on',on);}
-    els.repeatBtn.addEventListener('click',()=>{els.repeatToggle.checked=!els.repeatToggle.checked;syncRepeat();});els.repeatToggle.addEventListener('change',syncRepeat);
+    els.repeatBtn.addEventListener('click',()=>{
+      els.repeatToggle.checked=!els.repeatToggle.checked;
+      if(els.repeatToggle.checked)els.autoNext.checked=false;
+      syncRepeat();
+    });
+    els.repeatToggle.addEventListener('change',()=>{
+      if(els.repeatToggle.checked)els.autoNext.checked=false;
+      syncRepeat();
+    });
+    els.autoNext.addEventListener('change',()=>{
+      if(els.autoNext.checked)els.repeatToggle.checked=false;
+      syncRepeat();
+    });
     els.micBtn.addEventListener('click',toggleMic);
     document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const tag=document.activeElement?.tagName;if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(tag))return;if(e.code==='Space'){e.preventDefault();togglePlay();}else if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();speak(Math.min(sentences.length-1,active+1));}else if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();speak(Math.max(0,active-1));}else if(e.key==='Escape'){stopSpeech();stopRecognition();setStatus('已停止');}});
     // V8 floating word pronunciation lens
