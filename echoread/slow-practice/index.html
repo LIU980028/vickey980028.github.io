@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f3f5f7">
-<title>EchoRead V15｜美式學習工作台・慢速跟讀</title>
+<title>EchoRead V16｜美式學習工作台・慢速跟讀</title>
 <meta name="description" content="EchoRead 英文逐句朗讀及單字點讀練習。">
 <style>
 :root{--bg:#f3f5f7;--paper:#fff;--ink:#1e2934;--muted:#7e8995;--line:#e8ebef;--accent:#252b34;--violet:#a28cef;--lav:#eae5ff;--mint:#c9f5d4;--cyan:#cdf0f6;--shadow:0 6px 20px rgba(37,50,65,.045)}
@@ -48,6 +48,33 @@
 .speed-preset:focus-visible{outline:2px solid #846cc2;outline-offset:2px}
 .rate-hint{margin:9px 0 0;color:#87909f;font-size:10.5px;line-height:1.6}
 
+
+/* V16 bilingual sentence-reading: translation stays directly under its source sentence. */
+.translate-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:3px 25px 4px;padding:10px 13px;background:#f8f9fc;border:1px solid #edf0f4;border-radius:12px}
+.translation-visibility{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px;font-weight:650;color:#576577;cursor:pointer}
+.translation-visibility input{accent-color:#8171c9;width:16px;height:16px;margin:0}
+.translate-all-btn{border-radius:9px;border:1px solid #dcd9ec;background:#fff;color:#6756a0;padding:8px 12px;font-size:12px;font-weight:740;transition:background .15s,border-color .15s}
+.translate-all-btn:hover:not(:disabled){background:#eee9ff;border-color:#bfb4ee}
+.translation-progress{font-size:11px;color:#796c92}
+.translation-notice{font-size:10.5px;line-height:1.65;color:#8b95a2;margin:0 26px 11px}
+.sentence-body{min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.sentence .translation-area{padding-top:8px;margin-top:5px;border-top:1px dashed #ececf2;display:flex;flex-direction:column;gap:5px;min-width:0}
+.sentence .translation-area[hidden]{display:none!important}
+.sentence .translation-line{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:13px;line-height:1.7;color:#586879;overflow-wrap:anywhere;white-space:pre-wrap;user-select:text}
+.sentence .translation-line.is-placeholder{color:#a3a9b4;font-size:11.5px}
+.sentence .translation-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sentence .translation-btn{border:0;border-radius:7px;background:transparent;color:#73679b;padding:2px 6px;font-size:11px;font-weight:670}
+.sentence .translation-btn:hover:not(:disabled){background:#ece7fb;color:#5c498d}
+.sentence .translation-btn:disabled{opacity:.5}
+.sentence .translation-editor{display:none;flex-direction:column;gap:7px;margin-top:3px}
+.sentence .translation-editor.editing{display:flex}
+.sentence .translation-editor textarea{width:100%;resize:vertical;min-height:60px;font-size:13px;line-height:1.6;border:1px solid #d9d7e9;padding:8px 9px;border-radius:8px;color:#2f3d50;background:#fff}
+.sentence .translation-editor .editor-actions{display:flex;gap:8px}
+.sentence .translation-editor .editor-actions button{font-size:11px;border:1px solid #dedce9;border-radius:8px;padding:5px 12px;background:#fff;color:#586279}
+.sentence .translation-editor .editor-actions .save-translation{background:#ede9fb;color:#5f4e91;border-color:#d5ccef;font-weight:730}
+.translation-off .sentence .translation-area{display:none!important}
+@media(max-width:770px){.translate-tools{margin:3px 13px 6px;padding:9px 10px;gap:7px}.translation-notice{margin:0 15px 10px;font-size:10px}.sentence .translation-line{font-size:12px}.translation-visibility{font-size:11px}.translate-all-btn{font-size:11px}}
+
 </style>
 </head>
 <body>
@@ -79,6 +106,12 @@
           <div class="workhead"><div><div class="minor">MY READING</div><h2 id="documentTitle">尚未匯入文章</h2><div class="muted" id="documentSubtitle">上傳文章或貼上文字後，在這裡逐句練習。</div></div><span class="count-pill" id="sentenceCount">0 句</span></div>
           <div class="progress-wrap"><div class="progress-label"><span>朗讀進度</span><span id="progressText">0 / 0</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
           <div class="help-strip">小提示：點英文<strong>單字</strong>聽單字；點句子空白處或 ▶ 聽<strong>整句</strong>。</div>
+          <div class="translate-tools" role="group" aria-label="中文翻譯設定">
+            <label class="translation-visibility"><input type="checkbox" id="showTranslation" checked> 顯示繁體中文翻譯</label>
+            <button type="button" id="translateAllBtn" class="translate-all-btn">翻譯全部句子</button>
+            <span id="translationProgress" class="translation-progress" aria-live="polite"></span>
+          </div>
+          <p class="translation-notice">翻譯需連線：按下翻譯按鈕後，英文句子才會傳送到第三方 MyMemory 翻譯服務。請勿翻譯敏感或機密資料，結果可手動修正。</p>
           <div id="sentences" class="sentences"><div class="empty"><span class="big">▤</span><strong>還沒有閱讀內容</strong><span>請從右側匯入文章開始練習。</span></div></div>
           <div class="player" id="playerPanel"><div class="player-glow" aria-hidden="true"></div></div>
         </section>
@@ -124,10 +157,106 @@
   (() => {
     'use strict';
     const $ = id => document.getElementById(id);
-    const els = Object.fromEntries(['dropZone','fileInput','fileInfo','articleInput','parseBtn','sampleBtn','voiceSelect','rate','rateLabel','autoNext','repeatToggle','documentTitle','documentSubtitle','sentenceCount','progressText','progressFill','sentences','nowPlaying','playerText','prevBtn','stopBtn','playBtn','nextBtn','repeatBtn','playStatus','selectedWord','replayWordBtn','slowWordBtn','micBtn','recognitionOutput','toast'].map(id => [id,$(id)]));
+    const els = Object.fromEntries(['showTranslation','translateAllBtn','translationProgress','dropZone','fileInput','fileInfo','articleInput','parseBtn','sampleBtn','voiceSelect','rate','rateLabel','autoNext','repeatToggle','documentTitle','documentSubtitle','sentenceCount','progressText','progressFill','sentences','nowPlaying','playerText','prevBtn','stopBtn','playBtn','nextBtn','repeatBtn','playStatus','selectedWord','replayWordBtn','slowWordBtn','micBtn','recognitionOutput','toast'].map(id => [id,$(id)]));
     const sample = `Good morning, everyone! My name is Amy. Today, I would like to share my learning experience.\nAt first, speaking English was difficult for me. I was afraid of making mistakes. But I learned that practice makes progress.\nNow, I listen to one sentence, repeat it, and try again. Every small step helps me become more confident. Thank you for listening!`;
     let sentences = [], active = -1, listened = new Set(), voices = [], session = 0, isSpeaking = false, isPaused = false, speakingUtterance = null, recognition = null, recognizing = false, toastTimer = null, selectedWord = null, playbackKind = null;
     let sequenceTimer=null, speechStartTime=0;
+    let translations=[],translationStates=[],translationGeneration=0,bulkTranslating=false;
+    const translationRequests=new Set();
+    function cancelTranslations(){
+      translationGeneration++;bulkTranslating=false;
+      for(const controller of translationRequests){controller.abort();}
+      translationRequests.clear();
+      els.translateAllBtn.disabled=false;els.translateAllBtn.textContent='翻譯全部句子';
+      els.translationProgress.textContent='';
+    }
+    function translationStatusMessage(i){
+      if(translationStates[i]==='loading')return '翻譯中…';
+      if(translationStates[i]==='error')return '翻譯暫時失敗，請重試或手動輸入。';
+      return '尚無中文翻譯，可翻譯或自行填寫。';
+    }
+    function refreshTranslationRow(i){
+      const card=els.sentences.querySelector(`.sentence[data-index="${i}"]`);
+      if(!card)return;
+      const area=card.querySelector('.translation-area');if(!area)return;
+      area.hidden=!els.showTranslation.checked;
+      const line=area.querySelector('.translation-line');
+      const current=translations[i]||'';
+      line.textContent=current||translationStatusMessage(i);
+      line.classList.toggle('is-placeholder',!current);
+      const action=area.querySelector('.translate-one-btn');
+      action.disabled=translationStates[i]==='loading';
+      action.textContent=translationStates[i]==='loading'?'翻譯中…':current?'重新翻譯':'翻譯這句';
+    }
+    function createTranslationArea(i){
+      const area=document.createElement('div');area.className='translation-area';
+      area.dataset.translationIndex=String(i);area.hidden=!els.showTranslation.checked;
+      const line=document.createElement('div');line.className='translation-line is-placeholder';
+      line.lang='zh-Hant';line.textContent=translations[i]||translationStatusMessage(i);
+      if(translations[i])line.classList.remove('is-placeholder');
+      const actions=document.createElement('div');actions.className='translation-actions';
+      const trans=document.createElement('button');trans.type='button';trans.className='translation-btn translate-one-btn';trans.textContent=translations[i]?'重新翻譯':'翻譯這句';
+      const edit=document.createElement('button');edit.type='button';edit.className='translation-btn edit-translation-btn';edit.textContent='編輯中文';
+      actions.append(trans,edit);
+      const editor=document.createElement('div');editor.className='translation-editor';
+      const input=document.createElement('textarea');input.className='translation-input';input.setAttribute('aria-label',`第 ${i+1} 句的繁體中文翻譯`);input.placeholder='在這裡輸入繁體中文翻譯';
+      const edActions=document.createElement('div');edActions.className='editor-actions';
+      const save=document.createElement('button');save.type='button';save.className='save-translation';save.textContent='儲存';
+      const cancel=document.createElement('button');cancel.type='button';cancel.className='cancel-translation';cancel.textContent='取消';
+      edActions.append(save,cancel);editor.append(input,edActions);
+      area.append(line,actions,editor);return area;
+    }
+    function decodeTranslatedString(s){
+      return new DOMParser().parseFromString(String(s||''),'text/html').body.textContent.trim();
+    }
+    async function requestTranslation(source){
+      if(new TextEncoder().encode(source).length>490)throw Error('句子超過翻譯服務的長度限制，可先自行翻譯。');
+      const controller=new AbortController();translationRequests.add(controller);
+      const timer=setTimeout(()=>controller.abort(),14000);
+      try{
+        const url='https://api.mymemory.translated.net/get?q='+encodeURIComponent(source)+'&langpair='+encodeURIComponent('en|zh-TW');
+        const response=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});
+        if(!response.ok)throw Error('服務回應 '+response.status);
+        const payload=await response.json();
+        if(Number(payload.responseStatus)!==200)throw Error(payload.responseDetails||'翻譯服務無法回應');
+        const translated=decodeTranslatedString(payload.responseData?.translatedText);
+        if(!translated)throw Error('翻譯服務未傳回中文');
+        return translated;
+      }finally{clearTimeout(timer);translationRequests.delete(controller);}
+    }
+    async function translateSentence(i){
+      if(i<0||i>=sentences.length||translationStates[i]==='loading')return false;
+      const generation=translationGeneration;const phrase=sentences[i];
+      translationStates[i]='loading';refreshTranslationRow(i);
+      try{
+        const translated=await requestTranslation(phrase);
+        if(generation!==translationGeneration)return false;
+        translations[i]=translated;translationStates[i]='done';refreshTranslationRow(i);
+        return true;
+      }catch(error){
+        if(generation!==translationGeneration)return false;
+        translationStates[i]='error';refreshTranslationRow(i);
+        return false;
+      }
+    }
+    async function translateAll(){
+      if(bulkTranslating||!sentences.length){if(!sentences.length)notify('請先匯入英文文章。');return;}
+      bulkTranslating=true;els.translateAllBtn.disabled=true;els.translateAllBtn.textContent='正在翻譯…';
+      const generation=translationGeneration;let completed=0,failed=0;
+      try{
+        const indices=sentences.map((_,i)=>i).filter(i=>!translations[i]);
+        for(const i of indices){
+          if(generation!==translationGeneration)break;
+          const ok=await translateSentence(i);
+          if(generation!==translationGeneration)break;
+          ok?completed++:failed++;
+          els.translationProgress.textContent=`已完成 ${completed+failed}/${indices.length}`;
+        }
+        if(generation===translationGeneration)notify(failed?`完成 ${completed} 句，${failed} 句未能翻譯，可個別重試。`:`已完成 ${completed} 句繁體中文翻譯。`);
+      }finally{
+        if(generation===translationGeneration){bulkTranslating=false;els.translateAllBtn.disabled=false;els.translateAllBtn.textContent='翻譯全部句子';}
+      }
+    }
     function notify(message) { els.toast.textContent = message; els.toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(()=>els.toast.classList.remove('show'),3500); }
     function setStatus(message) { els.playStatus.textContent = message; }
     function splitSentences(raw) {
@@ -213,8 +342,9 @@
         const card=document.createElement('div');card.className='sentence'+(i===active?' active':'')+(listened.has(i)?' done':'');card.dataset.index=String(i);card.setAttribute('role','group');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`第 ${i+1} 句，按 Enter 聽整句；也可以點單字聽單字：${sentence}`);
         const num=document.createElement('span');num.className='num';num.textContent=String(i+1).padStart(2,'0');
         const content=document.createElement('span');content.className='content';appendClickableWords(content,sentence);
+        const bilingual=document.createElement('div');bilingual.className='sentence-body';bilingual.append(content,createTranslationArea(i));
         const speaker=document.createElement('button');speaker.type='button';speaker.className='speaker';speaker.textContent='▶';speaker.setAttribute('aria-label',`朗讀完整第 ${i+1} 句`);
-        card.append(num,content,speaker);fragment.appendChild(card);
+        card.append(num,bilingual,speaker);fragment.appendChild(card);
       }); els.sentences.appendChild(fragment);
     }
     function updateWordHighlight() {
@@ -232,7 +362,7 @@
     }
     function loadArticle(text,title='我的英文跟讀練習',silent=false) {
       const chunks=splitSentences(text);if(!chunks.length){notify('請先輸入英文內容。');return;}
-      hideWordPopover();stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點有虛線底線的單字聽發音；按 ▶ 朗讀整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);if(!silent){notify(`已產生 ${chunks.length} 句英文。`);if(window.matchMedia('(max-width:770px)').matches)document.getElementById('readingDesk')?.scrollIntoView({behavior:'smooth',block:'start'});}
+      cancelTranslations();hideWordPopover();stopRecognition();stopSpeech();selectedWord=null;sentences=chunks;translations=Array(chunks.length).fill('');translationStates=Array(chunks.length).fill('');active=0;listened.clear();els.documentTitle.textContent=title;els.documentSubtitle.textContent='點有虛線底線的單字聽發音；按 ▶ 朗讀整句。';els.sentenceCount.textContent=`${chunks.length} 句`;els.recognitionOutput.replaceChildren();renderCards();updateSelection(false);setStatus(`已產生 ${chunks.length} 句，請點選任一句開始。`);if(!silent){notify(`已產生 ${chunks.length} 句英文。`);if(window.matchMedia('(max-width:770px)').matches)document.getElementById('readingDesk')?.scrollIntoView({behavior:'smooth',block:'start'});}
     }
     function getVoice(){const uri=els.voiceSelect.value;return voices.find(v=>v.voiceURI===uri)||voices.find(v=>/^en[-_]/i.test(v.lang))||null;}
     function fillVoices(){if(!('speechSynthesis' in window)){els.voiceSelect.innerHTML='<option>此瀏覽器不支援語音朗讀</option>';return;}
@@ -369,7 +499,29 @@
       if(!content.trim())throw Error('沒有擷取到文字。若是掃描型 PDF（圖片），請先轉成可選取文字的檔案。');
       els.articleInput.value=content;loadArticle(content,file.name.replace(/\.[^.]+$/,''));els.fileInfo.textContent=`✓ 已載入 ${file.name}`;
     }catch(err){els.fileInfo.textContent='⚠ '+err.message;notify(err.message);}finally{els.parseBtn.disabled=false;els.fileInput.value='';}}
+    els.showTranslation.addEventListener('change',()=>{
+      els.sentences.classList.toggle('translation-off',!els.showTranslation.checked);
+      els.sentences.querySelectorAll('.translation-area').forEach(area=>area.hidden=!els.showTranslation.checked);
+    });
+    els.translateAllBtn.addEventListener('click',translateAll);
+    // Text/translation controls must never trigger the parent card's sentence playback.
     els.sentences.addEventListener('click',e=>{
+      const area=e.target.closest('.translation-area');
+      if(!area)return;
+      e.stopPropagation();
+      const index=Number(area.dataset.translationIndex);
+      const editor=area.querySelector('.translation-editor');
+      const input=area.querySelector('.translation-input');
+      if(e.target.closest('.translate-one-btn')){translateSentence(index);return;}
+      if(e.target.closest('.edit-translation-btn')){input.value=translations[index]||'';editor.classList.add('editing');input.focus();return;}
+      if(e.target.closest('.save-translation')){
+        translations[index]=input.value.trim();translationStates[index]=translations[index]?'manual':'';
+        editor.classList.remove('editing');refreshTranslationRow(index);return;
+      }
+      if(e.target.closest('.cancel-translation')){editor.classList.remove('editing');return;}
+    });
+    els.sentences.addEventListener('click',e=>{
+      if(e.target.closest('.translation-area'))return;
       const word=e.target.closest('.word-token');
       if(word){const card=word.closest('.sentence');speakWord(Number(card.dataset.index),word.dataset.word,Number(word.dataset.wordIndex));showWordPopover(word);return;}
       const card=e.target.closest('.sentence');if(card)speak(Number(card.dataset.index));
