@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 工具箱｜Canva 素材筆記</title>
+<meta name="description" content="Agnes AI 影片生成、AI 圖片生成與免費簡易圖片去背。">
+<style>
+:root{--bg:#fcf6ec;--paper:#fffdfa;--ink:#4c372c;--muted:#a58e7c;--gold:#e7a258;--border:#ead4b8;--soft:#fff0d9;--ok:#287a4c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.6}
+header{padding:38px 20px 18px;text-align:center}a{color:#a96828}button,input,select,textarea{font:inherit}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:#b18e6c;font-weight:800}.title{font-size:clamp(29px,4vw,38px);font-weight:900;margin:5px 0}.subtitle{color:var(--muted);margin:5px 0 14px}
+.back{display:inline-flex;text-decoration:none;border:1px solid var(--border);background:#fff;border-radius:99px;padding:6px 18px;color:var(--ink);font-weight:700}
+.wrap{max-width:1080px;padding:16px 18px 55px;margin:auto}
+.notice,.status{padding:12px 16px;border:1px solid var(--border);background:#fff;border-radius:13px;color:#766053;font-size:14px}
+.notice strong{color:var(--ink)}.status{margin:12px 0}.status.ok{border-color:#b7ddc0;background:#f1fbf4;color:var(--ok)}.status.warn{background:#fff9ef}
+.auth{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 20px}.auth button{padding:9px 18px;border:1px solid var(--border);background:#fff;border-radius:10px;color:var(--ink);cursor:pointer}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 17px}.tab{border:1px solid var(--border);border-radius:12px;background:#fff;padding:11px 18px;color:var(--ink);font-weight:750;cursor:pointer}.tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
+section.panel{background:var(--paper);border:1px solid var(--border);border-radius:19px;padding:clamp(18px,3vw,26px);box-shadow:0 14px 32px #8c6d4c0b}
+.panel[hidden]{display:none}.panel h2{margin:0 0 5px;font-size:22px}.panel .desc{color:var(--muted);font-size:14px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:6px}.full{grid-column:1/-1}
+label{font-weight:700;font-size:14px}input[type="text"],input[type="file"],select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;background:#fff;padding:11px 13px;color:var(--ink);outline:none}
+textarea{resize:vertical;min-height:126px}input:focus,select:focus,textarea:focus{border-color:#dd994f;box-shadow:0 0 0 3px #f8dab157}.hint{font-size:12px;color:#987d69}.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.primary{border:0;background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-weight:750;cursor:pointer}.primary:disabled{opacity:.45;cursor:not-allowed}
+.secondary{border:1px solid var(--border);background:#fff;color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
+.output{margin-top:20px;padding:15px;border:1px dashed #e9ceaa;border-radius:13px;background:#fffbf4;min-height:65px;overflow-wrap:anywhere}
+.output img,.output video{display:block;max-width:100%;max-height:440px;margin:12px auto;border-radius:10px}
+.poster{display:grid;place-items:center;min-height:190px;border-radius:12px;border:1px solid #e6cdaa;background:linear-gradient(45deg,#f8e9d9 25%,transparent 25%,transparent 75%,#f8e9d9 75%),linear-gradient(45deg,#f8e9d9 25%,#fffefa 25%,#fffefa 75%,#f8e9d9 75%);background-size:22px 22px;background-position:0 0,11px 11}
+.poster canvas,.poster img{max-width:100%;max-height:390px;height:auto;width:auto}
+.note{font-size:12px;color:#937c6c;margin-top:13px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 10px}
+@media(max-width:670px){.grid{grid-template-columns:1fr}.wrap{padding:12px 12px 30px}.tab{flex:1;padding:10px 8px;font-size:14px}.panel{border-radius:14px}header{padding:24px 10px 10px}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">CANVA DESIGN NOTES</div>
+<h1 class="title">AI 創作工具箱</h1>
+<p class="subtitle">Agnes AI 影片與圖片創作 · 簡易透明去背</p>
+<a class="back" href="./index.html">← 回到 Canva 素材筆記</a>
+</header>
+<main class="wrap">
+<div class="notice"><strong>使用說明：</strong> 影片與 AI 圖片功能需先設定 Firebase 後端、Agnes 金鑰與講師授權。純色去背直接在你的瀏覽器處理，無需上傳到伺服器。</div>
+<div class="auth">
+<button id="login" type="button" hidden>使用 Google 登入講師帳號</button>
+<button id="logout" type="button" hidden>登出</button>
+<span id="loginState" class="hint">正在讀取設定…</span>
+</div>
+<div class="tabs" role="tablist" aria-label="AI 工具分類">
+<button class="tab active" type="button" data-tab="video" role="tab" aria-selected="true">影片生成</button>
+<button class="tab" type="button" data-tab="image" role="tab" aria-selected="false">AI 圖片</button>
+<button class="tab" type="button" data-tab="remove" role="tab" aria-selected="false">免費去背</button>
+</div>
+<section id="video" class="panel">
+<h2>Agnes AI 影片生成</h2><p class="desc">文字生成影片，或上傳首幀圖片製作動態影片。選用 Flash 可優先使用 720P 模型。</p>
+<div class="grid">
+<div class="field full"><label for="videoPrompt">影片描述／提示詞</label><textarea id="videoPrompt" maxlength="2400" placeholder="例：一位古風少女站在櫻花樹下，微風吹動髮絲，鏡頭緩緩推近，電影級光影，保持角色五官一致。"></textarea></div>
+<div class="field"><label for="videoModel">模型</label><select id="videoModel"><option value="agnes-video-2.5-flash">Video 2.5 Flash（720P）</option><option value="agnes-video-2.5">Video 2.5（可能付費）</option></select></div>
+<div class="field"><label for="videoRatio">畫面比例</label><select id="videoRatio"><option>16:9</option><option>9:16</option><option>1:1</option><option>4:3</option><option>3:4</option></select></div>
+<div class="field"><label for="videoSecs">秒數（4–12 秒）</label><select id="videoSecs"><option>4</option><option selected>5</option><option>6</option><option>8</option><option>10</option><option>12</option></select></div>
+<div class="field"><label for="videoResolution">解析度</label><select id="videoResolution"><option>720P</option><option>1080P</option></select><span class="hint">Flash 一律 720P；1080P 僅 Video 2.5 可用。</span></div>
+<div class="field full"><label for="videoImage">首幀圖片（選填）</label><input id="videoImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">大型圖片會在瀏覽器壓縮後傳給 Agnes；首幀模式是否成功由模型實際回應決定。</span></div>
+</div>
+<div class="actions"><button id="startVideo" class="primary" type="button" disabled>生成影片</button><button id="checkVideo" class="secondary" type="button" hidden>查詢生成進度</button><span id="videoState" class="hint">需完成後端設定</span></div>
+<div id="videoOutput" class="output" aria-live="polite">影片生成結果會顯示在這裡。</div>
+<p class="note">提示：影片建立後會使用 video_id 查詢進度。帳號權限、排隊與費用以 Agnes 平台為準。</p>
+</section>
+<section id="image" class="panel" hidden>
+<h2>Agnes AI 圖片生成／編輯</h2><p class="desc">文字生成圖片，也能選擇參考圖片，再透過提示詞生成新效果。</p>
+<div class="grid">
+<div class="field full"><label for="imagePrompt">圖片提示詞</label><textarea id="imagePrompt" maxlength="2400" placeholder="例：電影級東方國漫女主角，高精度半寫實 BJD 人偶質感，純白背景，全身定妝照。"></textarea></div>
+<div class="field"><label for="imageRatio">畫面比例</label><select id="imageRatio"><option>1:1</option><option>16:9</option><option>9:16</option><option>3:4</option><option>4:3</option><option>3:2</option></select></div>
+<div class="field"><label for="imageSize">圖片解析度</label><select id="imageSize"><option>1K</option><option>2K</option></select></div>
+<div class="field full"><label for="imageReference">參考圖片（選填）</label><input id="imageReference" type="file" accept="image/png,image/jpeg,image/webp"></div>
+</div>
+<div class="actions"><button id="startImage" class="primary" type="button" disabled>生成圖片</button><span id="imageState" class="hint">需完成後端設定</span></div>
+<div id="imageOutput" class="output" aria-live="polite">生成圖片會顯示在這裡。</div>
+<p class="note">此功能使用 Agnes Image 2.5 Flash。修改參考圖片後並不保證輸出具有透明背景。</p>
+</section>
+<section id="remove" class="panel" hidden>
+<h2>純色背景去背 · 透明 PNG</h2><p class="desc">免費、不需要 API Key。適合白底商品、單色背景角色圖，複雜髮絲與雜亂背景請改用專業 AI 去背工具。</p>
+<div class="grid">
+<div class="field full"><label for="removeFile">選擇需要去背的圖片</label><input id="removeFile" type="file" accept="image/png,image/jpeg,image/webp"></div>
+<div class="field full"><label for="tolerance">去背範圍：<output id="tolValue">45</output></label><input id="tolerance" type="range" min="10" max="120" value="45"><span class="hint">數值越高，移除的背景顏色越多；過高可能連人物內部相近顏色一起移除。</span></div>
+<div class="field"><label>原始圖片</label><div class="poster"><img id="beforeImage" alt="原始圖片預覽" hidden></div></div>
+<div class="field"><label>去背結果</label><div class="poster"><canvas id="resultCanvas" aria-label="透明背景預覽"></canvas></div></div>
+</div>
+<div class="actions"><button id="removeButton" class="primary" type="button" disabled>一鍵純色去背</button><button id="savePng" class="secondary" type="button" disabled>下載透明 PNG</button><span id="removeState" class="hint">請先上傳圖片</span></div>
+<p class="note">圖片在本機瀏覽器處理，不會發送到 Agnes 或 Firebase。去背演算法為邊緣連通純色移除，不是人體語意分割模型。</p>
+</section>
+<footer class="footer">Canva 素材筆記 · AI 工具箱｜只讓授權講師呼叫付費 API</footer>
+</main>
+<script type="module" src="./ai-tools.js"></script>
+</body></html>
