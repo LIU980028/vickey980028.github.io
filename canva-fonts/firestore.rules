@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 學員公開讀取，只有指定 Google 登入帳號 UID 可寫入。
+    match /ckCanvaPublic/catalog {
+      allow get: if true;
+      allow list: if false;
+      allow create, update: if request.auth != null
+        && request.auth.uid == 'REPLACE_WITH_YOUR_FIREBASE_AUTH_UID'
+        && request.resource.data.keys().hasOnly(['material', 'font', 'tip', 'schemaVersion', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['material', 'font', 'tip', 'schemaVersion', 'updatedAt'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.updatedAt is timestamp
+        && request.resource.data.material is list
+        && request.resource.data.font is list
+        && request.resource.data.tip is list
+        && request.resource.data.material.size() <= 250
+        && request.resource.data.font.size() <= 250
+        && request.resource.data.tip.size() <= 250;
+      allow delete: if false;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
