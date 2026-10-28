@@ -64,6 +64,12 @@ async function agnes(path,body,method="POST"){
   throw new HttpsError("unavailable","目前無法連接 Agnes，請稍後再試。");
  }finally{clearTimeout(timeout)}
 }
+exports.agnesHealth=onCall(OPTIONS,async req=>{
+ teacher(req);
+ if(String(AGNES_API_KEY.value()||"").trim().length<8)
+  throw new HttpsError("failed-precondition","尚未在 Firebase Secret Manager 設定 AGNES_API_KEY。");
+ return {ready:true,models:["agnes-video-2.5-flash","agnes-video-2.5","agnes-image-2.5-flash"]};
+});
 exports.agnesCreateVideo=onCall(OPTIONS,async req=>{
  teacher(req);
  const x=req.data||{};
