@@ -190,7 +190,7 @@ function migrateShowcaseTips(x){
 const DELETED_FONT_GROUPS=new Set(["中文質感字體","英文字體・商務簡報","英文字體・社群標題","英文字體・優雅襯線","英文字體・手寫風格","英文字體・可愛活潑"]);
 function removeLegacyFontGroups(x){
  if(!x||!Array.isArray(x.font))return x;
- x.font=x.font.filter(f=>!DELETED_FONT_GROUPS.has(String(f.group||'')));
+ x.font=x.font.filter(f=>!DELETED_FONT_GROUPS.has(String(f.group||''))&&String(f.id||'')!=='ck-featured-new-05'&&String(f.name||'').trim()!=='テンドウ');
  return x;
 }
 const FONT_STATUS_FIX_V2=Object.freeze({
