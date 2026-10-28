@@ -79,8 +79,39 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),STORAGE='ck_deerstyle_canva_resources_v1';const defaults=JSON.parse($('seed-data').textContent);let data=structuredClone(defaults),page='material',search='',filter='全部',managing=false,toastTimer;let cloudMode=false,cloudAdmin=false,cloudSave=null,lastRemote=null;
 const featuredDefaultFonts=defaults.font.filter(x=>x.group&&x.group.startsWith('CANVA 字體推薦｜'));
-function mergeNewFeatured(x){if(!x||!Array.isArray(x.font))return x;const existing=new Set(x.font.map(f=>String(f.name||'').trim().toLocaleLowerCase()));const additions=featuredDefaultFonts.filter(f=>!existing.has(f.name.toLocaleLowerCase()));if(additions.length)x.font=[...additions,...x.font];return x;}
-try{const saved=JSON.parse(localStorage.getItem(STORAGE));if(saved&&typeof saved==='object'&&['material','font','tip'].every(k=>Array.isArray(saved[k])))data=mergeNewFeatured(saved)}catch(e){}
+const FONT_STATUS_FIX_V2=Object.freeze({
+ 'UD角ゴC70':'PAID',
+ '源流明朝':'FREE',
+ 'モード明朝':'PAID',
+ '可畫柔圓-繁':'FREE'
+});
+function reconcileFontStatuses(x){
+ if(!x||!Array.isArray(x.font))return false;
+ let corrected=false;
+ for(const font of x.font){
+  const prescribed=FONT_STATUS_FIX_V2[String(font.name||'').trim()];
+  if(prescribed && (font.status==='CHECK'||font.status==='待確認'||!font.status)){
+   font.status=prescribed;corrected=true;
+  }
+ }
+ return corrected;
+}
+function mergeNewFeatured(x){
+ if(!x||!Array.isArray(x.font))return x;
+ const existing=new Set(x.font.map(f=>String(f.name||'').trim().toLocaleLowerCase()));
+ const additions=featuredDefaultFonts.filter(f=>!existing.has(f.name.toLocaleLowerCase()));
+ if(additions.length)x.font=[...additions,...x.font];
+ reconcileFontStatuses(x);
+ return x;
+}
+try{
+ const saved=JSON.parse(localStorage.getItem(STORAGE));
+ if(saved&&typeof saved==='object'&&['material','font','tip'].every(k=>Array.isArray(saved[k]))){
+  const oldJSON=JSON.stringify(saved);
+  data=mergeNewFeatured(saved);
+  if(JSON.stringify(data)!==oldJSON)localStorage.setItem(STORAGE,JSON.stringify(data));
+ }
+}catch(e){}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=v=>{try{const x=new URL(v);return ['https:','http:'].includes(x.protocol)?x.href:''}catch{return ''}};
 const uId=()=>`custom-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
