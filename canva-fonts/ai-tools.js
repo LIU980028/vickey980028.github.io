@@ -1,9 +1,9 @@
 import {firebaseConfig,ADMIN_UID} from "./firebase-config.js";
 const $=id=>document.getElementById(id);
-let functionsApi=null,auth=null,currentJob=null,busy=false,removalReady=false;
+let functionsApi=null,auth=null,currentJob=null,busy=false,removalReady=false,backendReady=false;
 const clean=t=>String(t??"").trim();
 function state(id,message){$(id).textContent=message}
-function setBusy(working){busy=working;const enabled=Boolean(functionsApi && auth?.currentUser && ADMIN_UID && auth.currentUser.uid===ADMIN_UID);$("startVideo").disabled=working||!enabled;$("startImage").disabled=working||!enabled;}
+function setBusy(working){busy=working;const enabled=Boolean(backendReady && functionsApi && auth?.currentUser && ADMIN_UID && auth.currentUser.uid===ADMIN_UID);$("startVideo").disabled=working||!enabled;$("startImage").disabled=working||!enabled;}
 function activate(tab){
  document.querySelectorAll("[data-tab]").forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle("active",on);b.setAttribute("aria-selected",on?"true":"false")});
  for(const id of ["video","image","remove"])$(id).hidden=id!==tab;
@@ -97,10 +97,21 @@ async function startFirebase(){
   $("login").hidden=false;
   $("login").addEventListener("click",async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(err){state("loginState","登入失敗："+(err.message||"請檢查 Firebase 設定"))}});
   $("logout").addEventListener("click",()=>signOut(auth));
-  onAuthStateChanged(auth,user=>{
+  onAuthStateChanged(auth,async user=>{
+   backendReady=false;
    const allowed=Boolean(user&&ADMIN_UID&&user.uid===ADMIN_UID);
    $("login").hidden=!!user;$("logout").hidden=!user;
-   state("loginState",allowed?"講師已登入，可開始呼叫 Agnes。":user?"此 Google 帳號尚未獲得講師授權。":"尚未登入講師帳號。");
+   state("loginState",allowed?"講師已登入，正在檢查 Agnes 後端…":user?"此 Google 帳號尚未獲得講師授權。":"尚未登入講師帳號。");
+   setBusy(false);
+   if(!allowed)return;
+   try{
+    const status=await httpsCallable(fns,"agnesHealth",{timeout:25000})({});
+    backendReady=Boolean(status.data?.ready);
+    state("loginState",backendReady?"Agnes 後端已就緒，講師可以開始生成。":"Agnes 後端尚未就緒。");
+   }catch(error){
+    backendReady=false;
+    state("loginState","後端尚未啟用：請完成 Firebase Functions 與 Secret Manager 部署。");
+   }
    setBusy(false);
   });
  }catch(err){functionsApi=null;state("loginState","Firebase 初始化失敗："+(err.message||"請檢查 Firebase 設定"))}
