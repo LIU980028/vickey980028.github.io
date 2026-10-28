@@ -47,6 +47,7 @@ Firebase Web apiKey 不是 Agnes 私密金鑰。仍需 Firebase Security Rules �
     firebase deploy --only functions
 
 本專案後端使用 asia-east1 區域，提供：
+- agnesHealth：核對 Firebase 講師授權及 Agnes Secret 是否就緒，成功才開放生成按鈕。
 - agnesCreateVideo：Video 2.5 Flash／Video 2.5
 - agnesVideoStatus：影片狀態輪詢（video_id + model_name）
 - agnesCreateImage：Image 2.5 Flash 圖片生成／參考圖片編輯
