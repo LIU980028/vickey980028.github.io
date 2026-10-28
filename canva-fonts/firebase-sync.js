@@ -61,7 +61,7 @@ async function startFirebase() {
         if(!item||typeof item.name!=='string'||!item.name.trim())
           throw Error('資源名稱不可空白');
         const output={};
-        for(const field of ['id','type','name','group','desc','format','url','graphic','status','category','lang','fontCss']){
+        for(const field of ['id','type','name','group','desc','note','format','url','graphic','status','category','lang','fontCss']){
           if(typeof item[field]==='string')output[field]=item[field].slice(0,800);
         }
         output.tags=Array.isArray(item.tags)
